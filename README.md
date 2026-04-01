@@ -26,8 +26,3 @@ Diferente de canais de reclamação tradicionais, o projeto foca em **dados estr
 - [ ] **Desduplicação Inteligente:** Backend agrupa múltiplos relatos sobre o mesmo problema.
 - [ ] **Painel de Gestão:** Filtros por tipo de ocorrência (calçada, semáforo, rampa).
 
-## ⚙️ Como Executar o Projeto
-
-1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com
