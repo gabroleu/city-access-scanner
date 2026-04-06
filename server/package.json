@@ -4,7 +4,9 @@
   "description": "O **City Access Scanner** é uma plataforma de dados georreferenciados que transforma o relato de cidadãos em mapas de calor acionáveis. O objetivo é permitir que qualquer pessoa mapeie problemas de acessibilidade urbana (calçadas danificadas, ausência de rampas ou semáforos sonoros com defeito) em tempo real.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -13,26 +15,27 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/gabroleu/city-access-scanner/issues"
   },
   "homepage": "https://github.com/gabroleu/city-access-scanner#readme",
   "dependencies": {
-    "@prisma/client": "^7.6.0",
+    "@prisma/client": "^5.22.0",
     "cloudinary": "^2.9.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.0",
     "express": "^5.2.1",
-    "multer": "^2.1.1"
+    "multer": "^2.1.1",
+    "prisma": "^5.22.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/multer": "^2.1.0",
     "@types/node": "^25.5.2",
-    "prisma": "^7.6.0",
     "ts-node-dev": "^2.0.0",
+    "tsx": "^4.21.0",
     "typescript": "^6.0.2"
   }
 }
