@@ -1,73 +1,111 @@
-# React + TypeScript + Vite
+# 🌍 City Access Scanner — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interface web do **City Access Scanner**, uma plataforma de mapeamento colaborativo de problemas de acessibilidade urbana.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🎯 Objetivo
 
-## React Compiler
+Permitir a visualização, em mapa interativo, das denúncias registradas pelos usuários, transformando dados georreferenciados em insights visuais (heatmaps e marcadores).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Stack Tecnológica
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* React + TypeScript
+* Vite
+* React Leaflet
+* Leaflet (mapas interativos)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🚀 Funcionalidades
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+* 📍 Visualização de denúncias em mapa
+* 🗺️ Renderização de marcadores por coordenadas (latitude/longitude)
+* 🖼️ Exibição de imagens das irregularidades
+* 📊 Base para implementação de heatmaps
+* 🔗 Integração com API backend (`/issues`)
+
+---
+
+## 🔌 Integração com Backend
+
+O frontend consome a API do backend:
+
+```
+GET http://localhost:3333/issues
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Retorno esperado:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
+```json
+[
   {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+    "id": "string",
+    "type": "string",
+    "description": "string",
+    "imageUrl": "string",
+    "latitude": number,
+    "longitude": number
+  }
+]
 ```
+
+---
+
+## ⚙️ Como rodar o projeto
+
+```bash
+# entrar na pasta
+cd web
+
+# instalar dependências
+npm install
+
+# rodar aplicação
+npm run dev
+```
+
+Aplicação disponível em:
+
+```
+http://localhost:5173
+```
+
+---
+
+## 📂 Estrutura do Projeto
+
+```
+web/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── services/
+│   └── App.tsx
+├── public/
+└── index.html
+```
+
+---
+
+## 🧠 Próximos Passos
+
+* Implementação de heatmaps
+* Filtros por tipo de ocorrência
+* Agrupamento de pontos (clustering)
+* Interface mobile-first otimizada
+* Integração com geolocalização em tempo real
+
+---
+
+## 💡 Visão
+
+Este frontend é a camada visual de um sistema de inteligência urbana baseado em dados crowdsourced, com potencial de apoio à gestão pública e tomada de decisão em infraestrutura urbana.
+
+---
+
+## 👨‍💻 Autor
+
+Projeto desenvolvido como parte de um sistema fullstack para portfólio e aplicações reais em smart cities.
