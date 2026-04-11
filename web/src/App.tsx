@@ -74,7 +74,7 @@ function App() {
   const [position, setPosition] = useState<[number, number] | null>(null);
   const [zoom, setZoom] = useState(18);
 
-  // 🔥 BUSCA DADOS
+  // busca os dados
   useEffect(() => {
     fetch('http://localhost:3333/issues')
       .then(res => res.json())
