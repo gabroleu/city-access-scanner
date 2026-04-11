@@ -22,3 +22,10 @@
 
 #### 💣 Em outras palavras:
 **Já tem um MVP (Minimum Viable Product) de backend pronto para deploy!**
+
+
+
+### Implementação
+> * Validação de Entrada - input validation
+> * Proteção contra dados corruptos
+> * Prevenção de bug em produção

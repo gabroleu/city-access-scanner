@@ -2,6 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import cloudinary from '../lib/cloudinary.js';
 import { prisma } from '../lib/prisma.js';
+import { error } from 'node:console';
 
 const issuesRoutes = Router();
 
@@ -32,14 +33,28 @@ issuesRoutes.post('/', upload.single('image'), async (req, res) => {
 
     const imageUrl = (result as any).secure_url;
 
+    const lat = parseFloat(latitude);
+    const lng = parseFloat(longitude);
+
+
+    // validação básica
+    if(isNaN(lat) || isNaN(lng)) {
+      return res.status(400).json({ error: 'Latidude ou longitude inválidas.' });
+    }
+
+    // validação geográfica (Brasil - hesmisfério oeste)
+    if (lat > 5 || lat < -35 || lng > -30 || lng < -75){
+      return res.status(400).json({ error: 'Coordenadas fora do Brasil' });
+    }
+
     // 2. Salvar no Banco de Dados
     const issue = await prisma.issue.create({
       data: {
         type,
         description,
         imageUrl,
-        latitude: parseFloat(latitude),
-        longitude: parseFloat(longitude),
+        latitude: lat,
+        longitude: lng,
       },
     });
 
