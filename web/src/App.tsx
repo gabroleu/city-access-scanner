@@ -13,7 +13,7 @@ type Issue = {
   longitude: number;
 };
 
-// aqui eu controlo o mapa (zoom + centralização)
+// controla zoom + centralização
 function MapController({ position, zoom }: { position: [number, number], zoom: number }) {
   const map = useMap();
 
@@ -27,7 +27,7 @@ function MapController({ position, zoom }: { position: [number, number], zoom: n
   return null;
 }
 
-// HEATMAP
+// heatmap
 function Heatmap({ issues }: { issues: Issue[] }) {
   const map = useMap();
 
@@ -55,16 +55,16 @@ function Heatmap({ issues }: { issues: Issue[] }) {
   return null;
 }
 
-// aqui eu seleciono no mapa onde quero colocar o marker (clique no mapa)
-function LocationSelector({ setPosition }: { setPosition: any }) {
+// clique no mapa para selecionar ponto
+function LocationSelector({ setSelectedPosition }: { setSelectedPosition: any }) {
   const map = useMap();
 
   useEffect(() => {
     map.on('click', (e: any) => {
       const { lat, lng } = e.latlng;
-      setPosition([lat, lng]);
+      setSelectedPosition([lat, lng]);
     });
-  }, [map, setPosition]);
+  }, [map, setSelectedPosition]);
 
   return null;
 }
@@ -72,9 +72,10 @@ function LocationSelector({ setPosition }: { setPosition: any }) {
 function App() {
   const [issues, setIssues] = useState<Issue[]>([]);
   const [position, setPosition] = useState<[number, number] | null>(null);
+  const [selectedPosition, setSelectedPosition] = useState<[number, number] | null>(null);
   const [zoom, setZoom] = useState(18);
 
-  // busca os dados
+  // busca dados
   useEffect(() => {
     fetch('http://localhost:3333/issues')
       .then(res => res.json())
@@ -84,7 +85,7 @@ function App() {
       });
   }, []);
 
-  // geolocalização com precião alta -- preciso verificar 
+  // geolocalização
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -113,53 +114,107 @@ function App() {
     );
   }, []);
 
-  // evita renderizar antes da localização
   if (!position) return <p>Carregando localização...</p>;
 
   return (
-    <MapContainer
-      center={position}
-      zoom={zoom}
-      style={{ height: '100vh', width: '100%' }}
-    >
-      <MapController position={position} zoom={zoom} />
+    <div style={{ position: 'relative' }}>
+      <MapContainer
+        center={position}
+        zoom={zoom}
+        style={{ height: '100vh', width: '100%' }}
+      >
+        <MapController position={position} zoom={zoom} />
 
-      <TileLayer
-        attribution="&copy; OpenStreetMap"
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+        <TileLayer
+          attribution="&copy; OpenStreetMap"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
-      {/* posição do usuário */}
-      <Marker position={position}>
-        <Popup>Você está aqui (aproximado)</Popup>
-      </Marker>
+        {/* marcador do usuário */}
+        <Marker position={position}>
+          <Popup>Você está aqui (aproximado)</Popup>
+        </Marker>
 
-      {/*permite clicar e ajustar posição */}
-      <LocationSelector setPosition={setPosition} />
-
-      <Heatmap issues={issues} />
-
-      <MarkerClusterGroup>
-        {issues.map(issue => (
-          <Marker
-            key={issue.id}
-            position={[issue.latitude, issue.longitude]}
-          >
-            <Popup>
-              <strong>{issue.type}</strong>
-              <br />
-              {issue.description}
-              <br />
-              <img
-                src={issue.imageUrl}
-                alt="denúncia"
-                style={{ width: '200px', marginTop: '10px' }}
-              />
-            </Popup>
+        {/* ponto selecionado */}
+        {selectedPosition && (
+          <Marker position={selectedPosition}>
+            <Popup>Ponto da denúncia</Popup>
           </Marker>
-        ))}
-      </MarkerClusterGroup>
-    </MapContainer>
+        )}
+
+        <LocationSelector setSelectedPosition={setSelectedPosition} />
+
+        <Heatmap issues={issues} />
+
+        <MarkerClusterGroup>
+          {issues.map(issue => (
+            <Marker
+              key={issue.id}
+              position={[issue.latitude, issue.longitude]}
+            >
+              <Popup>
+                <strong>{issue.type}</strong>
+                <br />
+                {issue.description}
+                <br />
+                <img
+                  src={issue.imageUrl}
+                  alt="denúncia"
+                  style={{ width: '200px', marginTop: '10px' }}
+                />
+              </Popup>
+            </Marker>
+          ))}
+        </MarkerClusterGroup>
+      </MapContainer>
+
+      {/* botão enviar */}
+      <div
+  style={{
+    position: 'fixed',
+    bottom: '20px',
+    left: '20px',
+    zIndex: 1000,
+  }}
+>
+  <button
+    style={{
+      padding: '12px 16px',
+      fontSize: '14px',
+      backgroundColor: '#2563eb',
+      color: 'white',
+      border: 'none',
+      borderRadius: '8px',
+      cursor: 'pointer',
+      boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+    }}
+    onClick={async () => {
+      if (!selectedPosition) {
+        alert('Selecione um ponto no mapa!');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('type', 'buraco_calcada');
+      formData.append('description', 'denúncia via mapa');
+      formData.append('latitude', selectedPosition[0].toString());
+      formData.append('longitude', selectedPosition[1].toString());
+
+      const blob = new Blob(['fake'], { type: 'image/png' });
+      formData.append('image', blob, 'teste.png');
+
+      await fetch('http://localhost:3333/issues', {
+        method: 'POST',
+        body: formData,
+      });
+
+      alert('Denúncia enviada!');
+    }}
+  >
+    Enviar denúncia
+  </button>
+</div>
+    </div>
   );
 }
 
