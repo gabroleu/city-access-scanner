@@ -74,16 +74,23 @@ function App() {
   const [position, setPosition] = useState<[number, number] | null>(null);
   const [selectedPosition, setSelectedPosition] = useState<[number, number] | null>(null);
   const [zoom, setZoom] = useState(18);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   // busca dados
-  useEffect(() => {
-    fetch('http://localhost:3333/issues')
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        setIssues(data);
-      });
-  }, []);
+  const fetchIssues = () => {
+    console.log('Buscando Issues...')
+    
+  fetch('http://localhost:3333/issues')
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      setIssues(data);
+    });
+};
+
+useEffect(() => {
+  fetchIssues();
+}, []);
 
   // geolocalização
   useEffect(() => {
@@ -119,6 +126,7 @@ function App() {
   return (
     <div style={{ position: 'relative' }}>
       <MapContainer
+        key={issues.length}
         center={position}
         zoom={zoom}
         style={{ height: '100vh', width: '100%' }}
@@ -146,7 +154,7 @@ function App() {
 
         <Heatmap issues={issues} />
 
-        <MarkerClusterGroup>
+        <MarkerClusterGroup key={issues.length}>
           {issues.map(issue => (
             <Marker
               key={issue.id}
@@ -167,6 +175,30 @@ function App() {
           ))}
         </MarkerClusterGroup>
       </MapContainer>
+
+
+
+      <input
+  type="file"
+  accept="image/*"
+  style={{
+    position: 'fixed',
+    bottom: '80px',
+    left: '20px',
+    zIndex: 2000,
+    background: 'white',
+    padding: '10px',
+    borderRadius: '8px',
+  }}
+  onChange={(e) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      console.log('📸 IMAGEM:', file);
+      setSelectedImage(file);
+    }
+  }}
+/>
 
       {/* botão enviar */}
       <div
@@ -197,18 +229,26 @@ function App() {
       const formData = new FormData();
       formData.append('type', 'buraco_calcada');
       formData.append('description', 'denúncia via mapa');
+      console.log('📍 ENVIANDO POSIÇÃO:', selectedPosition);
       formData.append('latitude', selectedPosition[0].toString());
       formData.append('longitude', selectedPosition[1].toString());
 
-      const blob = new Blob(['fake'], { type: 'image/png' });
-      formData.append('image', blob, 'teste.png');
+      if (!selectedImage) {
+  alert('Selecione uma imagem!');
+  return;
+}
+
+formData.append('image', selectedImage);
 
       await fetch('http://localhost:3333/issues', {
-        method: 'POST',
-        body: formData,
-      });
+  method: 'POST',
+  body: formData,
+});
 
-      alert('Denúncia enviada!');
+// 🔥 NOVO
+fetchIssues();
+
+alert('Denúncia enviada!');
     }}
   >
     Enviar denúncia
