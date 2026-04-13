@@ -75,6 +75,8 @@ function App() {
   const [selectedPosition, setSelectedPosition] = useState<[number, number] | null>(null);
   const [zoom, setZoom] = useState(18);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string |null>(null); // URL temporária da imagem (não é uplado)
+  const [loading, setLoading] = useState(false); //criado para o botão entrar em loading
 
   // busca dados
   const fetchIssues = () => {
@@ -175,7 +177,25 @@ useEffect(() => {
           ))}
         </MarkerClusterGroup>
       </MapContainer>
-
+      
+      {preview && (
+  <img
+    src={preview}
+    alt="Preview"
+    style={{
+      position: 'fixed',
+      bottom: '140px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      width: '120px',
+      height: '120px',
+      objectFit: 'cover',
+      borderRadius: '12px',
+      zIndex: 2000,
+      boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+    }}
+  />
+)}
 
 
       <label
@@ -199,11 +219,17 @@ useEffect(() => {
     accept="image/*"
     style={{ display: 'none' }}
     onChange={(e) => {
-      const file = e.target.files?.[0];
-      if (file) {
-        setSelectedImage(file);
-      }
-    }}
+  const file = e.target.files?.[0];
+
+  if (file) {
+    setSelectedImage(file);
+
+    const imageUrl = URL.createObjectURL(file); // cria link local da imagem
+    setPreview(imageUrl);
+
+    console.log('📸 PREVIEW:', imageUrl);
+  }
+}}
   />
 </label>
 
@@ -218,6 +244,7 @@ useEffect(() => {
 >
   <button
     style={{
+      
       padding: '12px 16px',
       fontSize: '14px',
       backgroundColor: '#2563eb',
@@ -226,39 +253,49 @@ useEffect(() => {
       borderRadius: '8px',
       cursor: 'pointer',
       boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+      opacity: loading ? 0.7 : 1,
+      cursor: loading ? 'not-allowed' : 'pointer',
     }}
+    disabled={loading}
     onClick={async () => {
-      if (!selectedPosition) {
-        alert('Selecione um ponto no mapa!');
-        return;
-      }
+  if (!selectedPosition) {
+    alert('Selecione um ponto no mapa!');
+    return;
+  }
 
-      const formData = new FormData();
-      formData.append('type', 'buraco_calcada');
-      formData.append('description', 'denúncia via mapa');
-      console.log('📍 ENVIANDO POSIÇÃO:', selectedPosition);
-      formData.append('latitude', selectedPosition[0].toString());
-      formData.append('longitude', selectedPosition[1].toString());
+  if (!selectedImage) {
+    alert('Selecione uma imagem!');
+    return;
+  }
 
-      if (!selectedImage) {
-  alert('Selecione uma imagem!');
-  return;
-}
+  const formData = new FormData();
+  formData.append('type', 'buraco_calcada');
+  formData.append('description', 'denúncia via mapa');
+  formData.append('latitude', selectedPosition[0].toString());
+  formData.append('longitude', selectedPosition[1].toString());
+  formData.append('image', selectedImage);
 
-formData.append('image', selectedImage);
+  setLoading(true); // começa loading
 
-      await fetch('http://localhost:3333/issues', {
-  method: 'POST',
-  body: formData,
-});
+  try {
+    await fetch('http://localhost:3333/issues', {
+      method: 'POST',
+      body: formData,
+    });
 
-// NOVO
-fetchIssues();
-
-alert('Denúncia enviada!');
-    }}
+    fetchIssues(); // atualiza mapa
+    alert('Denúncia enviada!');
+  } catch (error) {
+    console.error(error);
+    alert('Erro ao enviar denúncia');
+  } finally {
+    setLoading(false); //  termina loading
+    setPreview(null); // Limpa preview
+    setSelectedImage(null); //Limpa imagem
+  }
+}}
   >
-    Enviar denúncia
+    {loading ? 'Enviando...' : 'Enviar denúncia'}
   </button>
 </div>
     </div>
