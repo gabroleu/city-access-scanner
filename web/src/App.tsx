@@ -178,27 +178,34 @@ useEffect(() => {
 
 
 
-      <input
-  type="file"
-  accept="image/*"
+      <label
   style={{
     position: 'fixed',
-    bottom: '80px',
-    left: '20px',
+    bottom: '90px',
+    left: '50%',
+    transform: 'translateX(-50%)',
     zIndex: 2000,
     background: 'white',
-    padding: '10px',
-    borderRadius: '8px',
+    padding: '10px 16px',
+    borderRadius: '20px',
+    boxShadow: '0 4px 10px rgba(231, 83, 14, 0.77)',
+    cursor: 'pointer',
+    fontWeight: '500',
   }}
-  onChange={(e) => {
-    const file = e.target.files?.[0];
-
-    if (file) {
-      console.log('📸 IMAGEM:', file);
-      setSelectedImage(file);
-    }
-  }}
-/>
+>
+  📸 Selecionar imagem
+  <input
+    type="file"
+    accept="image/*"
+    style={{ display: 'none' }}
+    onChange={(e) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        setSelectedImage(file);
+      }
+    }}
+  />
+</label>
 
       {/* botão enviar */}
       <div
@@ -245,7 +252,7 @@ formData.append('image', selectedImage);
   body: formData,
 });
 
-// 🔥 NOVO
+// NOVO
 fetchIssues();
 
 alert('Denúncia enviada!');
@@ -255,6 +262,7 @@ alert('Denúncia enviada!');
   </button>
 </div>
     </div>
+    
   );
 }
 
