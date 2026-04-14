@@ -1,3 +1,4 @@
+import toast, { Toaster } from 'react-hot-toast';
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
@@ -126,13 +127,24 @@ useEffect(() => {
   if (!position) return <p>Carregando localização...</p>;
 
   return (
-    <div style={{ position: 'relative' }}>
-      <MapContainer
-        key={issues.length}
-        center={position}
-        zoom={zoom}
-        style={{ height: '100vh', width: '100%' }}
-      >
+  <div style={{ position: 'relative' }}>
+    
+    <Toaster
+      position="top-center"
+      toastOptions={{
+        style: {
+          background: '#333',
+          color: '#fff',
+        },
+      }}
+    />
+
+    <MapContainer
+      key={issues.length}
+      center={position}
+      zoom={zoom}
+      style={{ height: '100vh', width: '100%' }}
+    >
         <MapController position={position} zoom={zoom} />
 
         <TileLayer
@@ -177,6 +189,8 @@ useEffect(() => {
           ))}
         </MarkerClusterGroup>
       </MapContainer>
+
+      <Toaster position="top-center" />
       
       {preview && (
   <img
@@ -259,12 +273,12 @@ useEffect(() => {
     disabled={loading}
     onClick={async () => {
   if (!selectedPosition) {
-    alert('Selecione um ponto no mapa!');
+    toast.error('Selecione um ponto no maapa!');
     return;
   }
 
   if (!selectedImage) {
-    alert('Selecione uma imagem!');
+    toast.error('Selecione uma imagem!');
     return;
   }
 
@@ -284,10 +298,10 @@ useEffect(() => {
     });
 
     fetchIssues(); // atualiza mapa
-    alert('Denúncia enviada!');
+    toast.success('Denúncia enviada com sucesso!');
   } catch (error) {
     console.error(error);
-    alert('Erro ao enviar denúncia');
+    toast.error('Erro ao enviar denúncia!');
   } finally {
     setLoading(false); //  termina loading
     setPreview(null); // Limpa preview
