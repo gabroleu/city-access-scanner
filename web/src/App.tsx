@@ -76,24 +76,25 @@ function App() {
   const [selectedPosition, setSelectedPosition] = useState<[number, number] | null>(null);
   const [zoom, setZoom] = useState(18);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string |null>(null); // URL temporária da imagem (não é uplado)
-  const [loading, setLoading] = useState(false); //criado para o botão entrar em loading
+  const [preview, setPreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [type, setType] = useState('buraco_calcada');
+  const [severity, setSeverity] = useState(1);
 
-  // busca dados
+  // buscar dados
   const fetchIssues = () => {
     console.log('Buscando Issues...')
-    
-  fetch('http://localhost:3333/issues')
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      setIssues(data);
-    });
-};
+    fetch('http://localhost:3333/issues')
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        setIssues(data);
+      });
+  };
 
-useEffect(() => {
-  fetchIssues();
-}, []);
+  useEffect(() => {
+    fetchIssues();
+  }, []);
 
   // geolocalização
   useEffect(() => {
@@ -127,24 +128,23 @@ useEffect(() => {
   if (!position) return <p>Carregando localização...</p>;
 
   return (
-  <div style={{ position: 'relative' }}>
-    
-    <Toaster
-      position="top-center"
-      toastOptions={{
-        style: {
-          background: '#333',
-          color: '#fff',
-        },
-      }}
-    />
+    <div style={{ position: 'relative' }}>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+        }}
+      />
 
-    <MapContainer
-      key={issues.length}
-      center={position}
-      zoom={zoom}
-      style={{ height: '100vh', width: '100%' }}
-    >
+      <MapContainer
+        key={issues.length}
+        center={position}
+        zoom={zoom}
+        style={{ height: '100vh', width: '100%' }}
+      >
         <MapController position={position} zoom={zoom} />
 
         <TileLayer
@@ -190,130 +190,141 @@ useEffect(() => {
         </MarkerClusterGroup>
       </MapContainer>
 
-      <Toaster position="top-center" />
-      
-      {preview && (
-  <img
-    src={preview}
-    alt="Preview"
-    style={{
-      position: 'fixed',
-      bottom: '140px',
-      left: '50%',
-      transform: 'translateX(-50%)',
-      width: '120px',
-      height: '120px',
-      objectFit: 'cover',
-      borderRadius: '12px',
-      zIndex: 2000,
-      boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
-    }}
-  />
-)}
 
+      <select
+        value={type}
+        onChange={(e) => setType(e.target.value)}
+        style={{
+          position: 'fixed',
+          top: '20px',
+          left: '50%',
+          zIndex: 2000,
+          padding: '10px',
+          borderRadius: '8px',
+        }}
+      >
+
+        <option value="buraco_calcada">Buraco na calçada</option>
+        <option value="iluminacao">Iluminação Pública</option>
+        <option value="lixo">Acúmulo de lixo</option>
+        <option value="acessibilidade">Problema de acessibilidade</option>
+      </select>
+
+
+      {preview && (
+        <img
+          src={preview}
+          alt="Preview"
+          style={{
+            position: 'fixed',
+            bottom: '140px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '120px',
+            height: '120px',
+            objectFit: 'cover',
+            borderRadius: '12px',
+            zIndex: 2000,
+            boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+          }}
+        />
+      )}
 
       <label
-  style={{
-    position: 'fixed',
-    bottom: '90px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    zIndex: 2000,
-    background: 'white',
-    padding: '10px 16px',
-    borderRadius: '20px',
-    boxShadow: '0 4px 10px rgba(231, 83, 14, 0.77)',
-    cursor: 'pointer',
-    fontWeight: '500',
-  }}
->
-  📸 Selecionar imagem
-  <input
-    type="file"
-    accept="image/*"
-    style={{ display: 'none' }}
-    onChange={(e) => {
-  const file = e.target.files?.[0];
+        style={{
+          position: 'fixed',
+          bottom: '90px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 2000,
+          background: 'white',
+          padding: '10px 16px',
+          borderRadius: '20px',
+          boxShadow: '0 4px 10px rgba(231, 83, 14, 0.77)',
+          cursor: 'pointer',
+          fontWeight: '500',
+        }}
+      >
+        Selecionar imagem
+        <input
+          type="file"
+          accept="image/*"
+          style={{ display: 'none' }}
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) {
+              setSelectedImage(file);
+              const imageUrl = URL.createObjectURL(file);
+              setPreview(imageUrl);
+              console.log(' PREVIEW:', imageUrl);
+            }
+          }}
+        />
+      </label>
 
-  if (file) {
-    setSelectedImage(file);
-
-    const imageUrl = URL.createObjectURL(file); // cria link local da imagem
-    setPreview(imageUrl);
-
-    console.log('📸 PREVIEW:', imageUrl);
-  }
-}}
-  />
-</label>
-
-      {/* botão enviar */}
       <div
-  style={{
-    position: 'fixed',
-    bottom: '20px',
-    left: '20px',
-    zIndex: 1000,
-  }}
->
-  <button
-    style={{
-      
-      padding: '12px 16px',
-      fontSize: '14px',
-      backgroundColor: '#2563eb',
-      color: 'white',
-      border: 'none',
-      borderRadius: '8px',
-      cursor: 'pointer',
-      boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
-      opacity: loading ? 0.7 : 1,
-      cursor: loading ? 'not-allowed' : 'pointer',
-    }}
-    disabled={loading}
-    onClick={async () => {
-  if (!selectedPosition) {
-    toast.error('Selecione um ponto no maapa!');
-    return;
-  }
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          left: '20px',
+          zIndex: 1000,
+        }}
+      >
+        <button
+          style={{
+            padding: '12px 16px',
+            fontSize: '14px',
+            backgroundColor: '#2563eb',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+            opacity: loading ? 0.7 : 1,
+            cursor: loading ? 'not-allowed' : 'pointer',
+          }}
+          disabled={loading}
+          onClick={async () => {
+            if (!selectedPosition) {
+              toast.error('Selecione um ponto no mapa!');
+              return;
+            }
 
-  if (!selectedImage) {
-    toast.error('Selecione uma imagem!');
-    return;
-  }
+            if (!selectedImage) {
+              toast.error('Selecione uma imagem!');
+              return;
+            }
 
-  const formData = new FormData();
-  formData.append('type', 'buraco_calcada');
-  formData.append('description', 'denúncia via mapa');
-  formData.append('latitude', selectedPosition[0].toString());
-  formData.append('longitude', selectedPosition[1].toString());
-  formData.append('image', selectedImage);
+            const formData = new FormData();
+            formData.append('type', 'buraco_calcada');
+            formData.append('description', 'denúncia via mapa');
+            formData.append('latitude', selectedPosition[0].toString());
+            formData.append('longitude', selectedPosition[1].toString());
+            formData.append('image', selectedImage);
 
-  setLoading(true); // começa loading
+            setLoading(true);
 
-  try {
-    await fetch('http://localhost:3333/issues', {
-      method: 'POST',
-      body: formData,
-    });
+            try {
+              await fetch('http://localhost:3333/issues', {
+                method: 'POST',
+                body: formData,
+              });
 
-    fetchIssues(); // atualiza mapa
-    toast.success('Denúncia enviada com sucesso!');
-  } catch (error) {
-    console.error(error);
-    toast.error('Erro ao enviar denúncia!');
-  } finally {
-    setLoading(false); //  termina loading
-    setPreview(null); // Limpa preview
-    setSelectedImage(null); //Limpa imagem
-  }
-}}
-  >
-    {loading ? 'Enviando...' : 'Enviar denúncia'}
-  </button>
-</div>
+              fetchIssues();
+              toast.success('Denúncia enviada com sucesso!');
+            } catch (error) {
+              console.error(error);
+              toast.error('Erro ao enviar denúncia!');
+            } finally {
+              setLoading(false);
+              setPreview(null);
+              setSelectedImage(null);
+            }
+          }}
+        >
+          {loading ? 'Enviando...' : 'Enviar denúncia'}
+        </button>
+      </div>
     </div>
-    
   );
 }
 
