@@ -312,11 +312,12 @@ function App() {
             }
 
             const formData = new FormData();
-            formData.append('type', 'buraco_calcada');
+            formData.append('type', type);
             formData.append('description', 'denúncia via mapa');
             formData.append('latitude', selectedPosition[0].toString());
             formData.append('longitude', selectedPosition[1].toString());
             formData.append('image', selectedImage);
+            formData.append('severity', severity.toString());
 
             setLoading(true);
 
