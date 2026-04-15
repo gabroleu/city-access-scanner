@@ -80,6 +80,8 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState('buraco_calcada');
   const [severity, setSeverity] = useState(1);
+  const [filterType, setFilterType] = useState('all');
+  const [filterSeverity, setFilterSeverity] = useState('0');
 
 
 
@@ -146,6 +148,18 @@ function createCustomIcon(color: string) {
 
   if (!position) return <p>Carregando localização...</p>;
 
+
+
+
+  const filteredIssues = issues.filter(issue => {
+    const matchesType = 
+      filterType === 'all' || issue.type === filterType;
+    const matchesSeverity = 
+      filterSeverity === '0' || issue.severity.toString() === filterSeverity;
+    
+      return matchesType && matchesSeverity;
+  });
+
   return (
     <div style={{ position: 'relative' }}>
       <Toaster
@@ -188,7 +202,7 @@ function createCustomIcon(color: string) {
         <Heatmap issues={issues} />
 
         <MarkerClusterGroup key={issues.length}>
-          {issues.map(issue => (
+          {filteredIssues.map(issue => (
             <Marker
               key={issue.id}
               position={[issue.latitude, issue.longitude]}
@@ -246,6 +260,49 @@ function createCustomIcon(color: string) {
           <option value={2}>🟡 Moderada</option>
           <option value={3}>🔴 Grave</option>
       </select>
+
+
+      // filtro de tipos e severidade
+
+
+      <select
+        value={filterType}
+        onChange={(e) => setFilterType(e.target.value)}
+          style={{
+          position: 'fixed',
+          top: '120px',
+          left: '20px',
+          zIndex: 2000,
+          padding: '10px',
+          borderRadius: '8px',
+    }}
+      >
+            <option value="all">Todos</option>
+            <option value="buraco_calcada">Buraco</option>
+            <option value="iluminacao">Iluminação</option>
+            <option value="lixo">Lixo</option>
+            <option value="acessibilidade">Acessibilidade</option>
+        </select>
+
+    
+
+        <select
+        value={filterSeverity}
+        onChange={(e) => setFilterSeverity(Number(e.target.value))}
+            style={{
+            position: 'fixed',
+            top: '170px',
+            left: '20px',
+            zIndex: 2000,
+            padding: '10px',
+            borderRadius: '8px',
+    }}
+    >
+            <option value={0}>Todas</option>
+            <option value={1}>Leve</option>
+            <option value={2}>Média</option>
+            <option value={3}>Grave</option>
+          </select>
 
 
       {preview && (
