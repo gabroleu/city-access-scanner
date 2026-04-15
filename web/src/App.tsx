@@ -204,10 +204,27 @@ function App() {
         }}
       >
 
-        <option value="buraco_calcada">Buraco na calçada</option>
-        <option value="iluminacao">Iluminação Pública</option>
-        <option value="lixo">Acúmulo de lixo</option>
-        <option value="acessibilidade">Problema de acessibilidade</option>
+          <option value="buraco_calcada">Buraco na calçada</option>
+          <option value="iluminacao">Iluminação Pública</option>
+          <option value="lixo">Acúmulo de lixo</option>
+          <option value="acessibilidade">Problema de acessibilidade</option>
+      </select>
+
+      <select
+        value={severity}
+        onChange={(e) => setSeverity(Number(e.target.value))}
+        style={{
+          position: 'fixed',
+          top: '70px',
+          left: '20%',
+          zIndex: 2000,
+          padding: '10px',
+          borderRadius: '8px',
+        }}
+      >
+          <option value={1}>🟢 Leve</option>
+          <option value={2}>🟡 Moderada</option>
+          <option value={3}>🔴 Grave</option>
       </select>
 
 
