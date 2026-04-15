@@ -12,7 +12,9 @@ const upload = multer({ storage: multer.memoryStorage() });
 // Rota para cadastrar uma nova denúncia
 issuesRoutes.post('/', upload.single('image'), async (req, res) => {
   try {
-    const { type, description, latitude, longitude } = req.body;
+    const { type, description, latitude, longitude, severity } = req.body;
+      console.log('Body recebido:', req.body);
+
     const file = req.file;
 
     if (!file) {
@@ -55,6 +57,7 @@ issuesRoutes.post('/', upload.single('image'), async (req, res) => {
         imageUrl,
         latitude: lat,
         longitude: lng,
+        severity: Number(severity)
       },
     });
 
