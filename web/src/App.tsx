@@ -81,6 +81,25 @@ function App() {
   const [type, setType] = useState('buraco_calcada');
   const [severity, setSeverity] = useState(1);
 
+
+
+  function getMarkerColor(severity: number) {
+  if (severity === 1) return 'green';
+  if (severity === 2) return 'orange';
+  if (severity === 3) return 'red';
+
+  return 'blue';
+}
+
+function createCustomIcon(color: string) {
+  return new L.Icon({
+    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${color}.png`,
+    shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+  });
+}
+
   // buscar dados
   const fetchIssues = () => {
     console.log('Buscando Issues...')
@@ -173,6 +192,7 @@ function App() {
             <Marker
               key={issue.id}
               position={[issue.latitude, issue.longitude]}
+              icon={createCustomIcon(getMarkerColor(issue.severity))}
             >
               <Popup>
                 <strong>{issue.type}</strong>
