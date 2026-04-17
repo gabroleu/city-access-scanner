@@ -209,7 +209,7 @@ function createCustomIcon(color: string) {
           fontWeight: 'bold',
         }}
       >
-      {/* lemnrar de colocar uma lupinha aqui */}  {filteredIssues.length} problema(s)
+      {/* lembrar de colocar uma lupinha aqui */}  {filteredIssues.length} problema(s) encontrado(s)
         </div>
 
 
