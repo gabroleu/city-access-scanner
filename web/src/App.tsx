@@ -179,6 +179,10 @@ function createCustomIcon(color: string) {
       return matchesType && matchesSeverity;
   });
 
+
+
+
+  //facilitando a pesquisa >>>>>>>>> return do app
   return (
     <div style={{ position: 'relative' }}>
       <Toaster
@@ -190,7 +194,28 @@ function createCustomIcon(color: string) {
           },
         }}
       />
+      
+      {/* aqui eu etô colocando o contador */}
+      <div
+        style={{
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          zIndex: 2000,
+          background: 'white',
+          padding: '10px 15px',
+          borderRadius: '8px',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
+          fontWeight: 'bold',
+        }}
+      >
+      lembrar de colocar uma lupinha aqui -  {filteredIssues.length} problema(s)
+        </div>
 
+
+
+
+          {/* aqui está o mapa, pra facilitar na pesquisa -- mapa */}
       <MapContainer
         key={issues.length}
         center={position}
@@ -294,7 +319,7 @@ function createCustomIcon(color: string) {
           zIndex: 2000,
           padding: '10px',
           borderRadius: '8px',
-    }}
+      }}
       >
             <option value="all">Todos</option>
             <option value="buraco_calcada">Buraco</option>
@@ -315,8 +340,8 @@ function createCustomIcon(color: string) {
             zIndex: 2000,
             padding: '10px',
             borderRadius: '8px',
-    }}
-    >
+      }}
+      >
             <option value={0}>Todas</option>
             <option value={1}>Leve</option>
             <option value={2}>Média</option>
