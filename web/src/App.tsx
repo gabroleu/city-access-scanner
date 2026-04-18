@@ -278,12 +278,12 @@ function createCustomIcon(color: string) {
           top: '20px',
           left: '20px',
           zIndex: 2000,
-          fontSize: '24px',
+          fontSize: '26px',
           backgroundColor: '#fffff',
           color: 'white',
           border: 'none',
           borderRadius: '8px',
-          padding: '10px 16px',
+          padding: '10px 14px',
           boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
         }}
         >
@@ -312,16 +312,18 @@ function createCustomIcon(color: string) {
         position: 'fixed',
         top: 0,
         left: menuOpen ? 0 : '-300px',
-        width: '280px',
+        width: '100px',
+        maxWidth: '320px',
         height: '100%',
         backgroundColor: '#f8f8f8',
         boxShadow: '2px 0 20px rgba(0,0,0,0.3)',
-        transition: 'left 0.3s ease',
+        transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
         zIndex: 3000,
-        padding: '20px',
+        padding: '24px 16px',
         display: 'flex',
         flexDirection: 'column',
         gap: '15px',
+        overflowY: 'auto',
 
         }}
       >
@@ -333,8 +335,19 @@ function createCustomIcon(color: string) {
           justifyContent: 'space-between',
         }}>
 
-          <h3 style={{ margin: 0 }}>Filtros </h3>
-          <button onClick={() => setMenuOpen(false)}> x</button>
+          <h3 style={{ margin: 0 }}>Filtros</h3> 
+          <button onClick={() => setMenuOpen(false)}
+            style={{
+              background: 'none',
+              border: 'none',
+              fontSize: '20px',
+              cursor: 'pointer',
+            }}
+            
+            
+            > 
+            x
+            </button>
 
           <hr />
         </div>
@@ -348,6 +361,7 @@ function createCustomIcon(color: string) {
           style={{
             padding: '8px',
             borderRadius: '6px',
+            fontSize: '16px',
             }}
           >
             <option value="all">Todos</option>
@@ -365,6 +379,7 @@ function createCustomIcon(color: string) {
           style={{
             padding: '8px',
             borderRadius: '6px',
+            fontSize: '16px',
             width: '100%',
             }}
           >
