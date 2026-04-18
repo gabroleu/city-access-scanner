@@ -82,6 +82,7 @@ function App() {
   const [severity, setSeverity] = useState(1);
   const [filterType, setFilterType] = useState('all');
   const [filterSeverity, setFilterSeverity] = useState('0');
+  const [menuOpen, setMenuOpen] = useState(false);
 
 
 
@@ -221,7 +222,7 @@ function createCustomIcon(color: string) {
         center={position}
         zoom={zoom}
         style={{ height: '100vh', width: '100%' }}
-      >
+        >
         <MapController position={position} zoom={zoom} />
 
         <TileLayer
@@ -268,59 +269,61 @@ function createCustomIcon(color: string) {
         </MarkerClusterGroup>
       </MapContainer>
 
+      {/* botão abrir menu */}
 
-      <select
-        value={type}
-        onChange={(e) => setType(e.target.value)}
+      <button
+        onClick={() => setMenuOpen(!menuOpen)}
         style={{
           position: 'fixed',
           top: '20px',
-          left: '50%',
-          zIndex: 2000,
-          padding: '10px',
-          borderRadius: '8px',
-        }}
-      >
-
-          <option value="buraco_calcada">Buraco na calçada</option>
-          <option value="iluminacao">Iluminação Pública</option>
-          <option value="lixo">Acúmulo de lixo</option>
-          <option value="acessibilidade">Problema de acessibilidade</option>
-      </select>
-
-      <select
-        value={severity}
-        onChange={(e) => setSeverity(Number(e.target.value))}
-        style={{
-          position: 'fixed',
-          top: '70px',
-          left: '20%',
-          zIndex: 2000,
-          padding: '10px',
-          borderRadius: '8px',
-        }}
-      >
-          <option value={1}>🟢 Leve</option>
-          <option value={2}>🟡 Moderada</option>
-          <option value={3}>🔴 Grave</option>
-      </select>
-
-
-      // filtro de tipos e severidade
-
-
-      <select
-        value={filterType}
-        onChange={(e) => setFilterType(e.target.value)}
-          style={{
-          position: 'fixed',
-          top: '120px',
           left: '20px',
           zIndex: 2000,
-          padding: '10px',
+          fontSize: '24px',
+          backgroundColor: '#fffff',
+          color: 'white',
+          border: 'none',
           borderRadius: '8px',
-      }}
+          padding: '10px 16px',
+          boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+        }}
+        >
+        ☰
+      </button>
+
+
+      {/* aqui é o menu lateral */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: menuOpen ? 0 : '-250px',
+        width: '250px',
+        height: '100%',
+        backgroundColor: '#f8f8f8',
+        boxShadow: '2px 0 5px rgba(0,0,0,0.3)',
+        transition: 'left 0.3s ease-in-out',
+        zIndex: 2000,
+        padding: '20px',
+
+        }}
       >
+        <h3>Filtros</h3>
+        {/* aqui é de fechar o menu */}
+        <button onClick={() => setMenuOpen(false)}>
+          Fechar
+        </button>
+
+        <hr />
+
+        {/* filtro tipo aqui*/}
+        <label>Tipo</label>
+        <select
+          value={filterType}
+          onChange={(e) => setFilterType(e.target.value)}
+          style={{
+            width: '100%',
+            marginBottom: '15px',
+          }}
+          >
             <option value="all">Todos</option>
             <option value="buraco_calcada">Buraco</option>
             <option value="iluminacao">Iluminação</option>
@@ -328,25 +331,22 @@ function createCustomIcon(color: string) {
             <option value="acessibilidade">Acessibilidade</option>
         </select>
 
-    
-
+        {/* filtro severidade aqui */}
+        <label>Severidade</label>
         <select
-        value={filterSeverity}
-        onChange={(e) => setFilterSeverity(Number(e.target.value))}
-            style={{
-            position: 'fixed',
-            top: '170px',
-            left: '20px',
-            zIndex: 2000,
-            padding: '10px',
-            borderRadius: '8px',
-      }}
-      >
-            <option value={0}>Todas</option>
-            <option value={1}>Leve</option>
-            <option value={2}>Média</option>
-            <option value={3}>Grave</option>
+          value={filterSeverity}
+          onChange={(e) => setFilterSeverity(Number(e.target.value))}
+          style={{
+            width: '100%',}}
+            >
+            <option value="0">Todas</option>
+            <option value="1">Leve</option>
+            <option value="2">Média</option>
+            <option value="3">Grave</option>
           </select>
+
+      </div>
+
 
 
       {preview && (
