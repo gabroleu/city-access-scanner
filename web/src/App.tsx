@@ -181,6 +181,26 @@ function createCustomIcon(color: string) {
   });
 
 
+  //estatísticas aqui
+
+  const total = filteredIssues.length;
+  
+  const statsByType = {
+    buraco: filteredIssues.filter(issue => issue.type === 'buraco_calcada').length,
+    iluminacao: filteredIssues.filter(issue => issue.type === 'iluminacao').length,
+    lixo: filteredIssues.filter(issue => issue.type === 'lixo').length,
+    acessibilidade: filteredIssues.filter(issue => issue.type === 'acessibilidade').length,
+  };
+
+  const statsBySeverity = {
+    leve: filteredIssues.filter(issue => issue.severity === 1).length,
+    media: filteredIssues.filter(issue => issue.severity === 2).length,
+    grave: filteredIssues.filter(issue => issue.severity === 3).length,
+  };
+
+
+
+
 
 
   //facilitando a pesquisa >>>>>>>>> return do app
@@ -230,14 +250,17 @@ function createCustomIcon(color: string) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
+
         {/* marcador do usuário */}
         <Marker position={position}>
           <Popup>Você está aqui (aproximado)</Popup>
         </Marker>
 
+
+
         {/* ponto selecionado */}
         {selectedPosition && (
-          <Marker position={selectedPosition}>
+          <Marker position={selectedPosition}>issues
             <Popup>Ponto da denúncia</Popup>
           </Marker>
         )}
@@ -268,6 +291,8 @@ function createCustomIcon(color: string) {
           ))}
         </MarkerClusterGroup>
       </MapContainer>
+
+
 
       {/* botão abrir menu */}
 
@@ -328,6 +353,7 @@ function createCustomIcon(color: string) {
         }}
       >
 
+
         {/*header*/}
 
         <div style={{
@@ -371,6 +397,8 @@ function createCustomIcon(color: string) {
             <option value="acessibilidade">Acessibilidade</option>
         </select>
 
+
+
         {/* filtro severidade aqui */}
         <label>Severidade</label>
         <select
@@ -388,6 +416,27 @@ function createCustomIcon(color: string) {
             <option value="2">Média</option>
             <option value="3">Grave</option>
           </select>
+
+
+
+          <hr />
+          <h3 style={{ marginTop: '10px' }}>Estatísticas</h3>
+          <p><strong>Total:</strong> {total}</p>
+
+          <p><strong>Por tipo:</strong></p>
+          
+            <p>Buraco: {statsByType.buraco}</p>
+            <p>Iluminação: {statsByType.iluminacao}</p>
+            <p>Lixo: {statsByType.lixo}</p>
+            <p>Acessibilidade: {statsByType.acessibilidade}</p>
+          
+
+          <p><strong>Por severidade:</strong></p>
+          
+            <p>Leve: {statsBySeverity.leve}</p>
+            <p>Média: {statsBySeverity.media}</p>
+            <p>Grave: {statsBySeverity.grave}</p>
+          
 
       </div>
 
