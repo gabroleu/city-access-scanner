@@ -291,28 +291,54 @@ function createCustomIcon(color: string) {
       </button>
 
 
+      {menuOpen && (
+  <div
+    onClick={() => setMenuOpen(false)}
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      background: 'rgba(0,0,0,0.4)',
+      zIndex: 2500,
+    }}
+  />
+)}
+
+
       {/* aqui é o menu lateral */}
       <div style={{
         position: 'fixed',
         top: 0,
-        left: menuOpen ? 0 : '-250px',
-        width: '250px',
+        left: menuOpen ? 0 : '-300px',
+        width: '280px',
         height: '100%',
         backgroundColor: '#f8f8f8',
-        boxShadow: '2px 0 5px rgba(0,0,0,0.3)',
-        transition: 'left 0.3s ease-in-out',
-        zIndex: 2000,
+        boxShadow: '2px 0 20px rgba(0,0,0,0.3)',
+        transition: 'left 0.3s ease',
+        zIndex: 3000,
         padding: '20px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '15px',
 
         }}
       >
-        <h3>Filtros</h3>
-        {/* aqui é de fechar o menu */}
-        <button onClick={() => setMenuOpen(false)}>
-          Fechar
-        </button>
 
-        <hr />
+        {/*header*/}
+
+        <div style={{
+          display: 'flex',          
+          justifyContent: 'space-between',
+        }}>
+
+          <h3 style={{ margin: 0 }}>Filtros </h3>
+          <button onClick={() => setMenuOpen(false)}> x</button>
+
+          <hr />
+        </div>
+
 
         {/* filtro tipo aqui*/}
         <label>Tipo</label>
@@ -320,9 +346,9 @@ function createCustomIcon(color: string) {
           value={filterType}
           onChange={(e) => setFilterType(e.target.value)}
           style={{
-            width: '100%',
-            marginBottom: '15px',
-          }}
+            padding: '8px',
+            borderRadius: '6px',
+            }}
           >
             <option value="all">Todos</option>
             <option value="buraco_calcada">Buraco</option>
@@ -337,8 +363,11 @@ function createCustomIcon(color: string) {
           value={filterSeverity}
           onChange={(e) => setFilterSeverity(Number(e.target.value))}
           style={{
-            width: '100%',}}
-            >
+            padding: '8px',
+            borderRadius: '6px',
+            width: '100%',
+            }}
+          >
             <option value="0">Todas</option>
             <option value="1">Leve</option>
             <option value="2">Média</option>
