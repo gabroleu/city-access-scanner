@@ -237,6 +237,51 @@ function createCustomIcon(color: string) {
         </div>
 
 
+        {/*<div
+  style={{
+    position: 'fixed',
+    top: '40px', //preciso ver a altura
+    left: '50%',
+    transform: 'translateX(-50%)',
+    zIndex: 9999,
+    fontWeight: 'bold',
+    background: 'white',
+    padding: '6px 12px',
+    borderRadius: '8px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+    fontSize: '14px',
+  }}
+>
+  Severidade da denúncia (preciso verificar onde vou deixar essa severidade e se vou deixar aqui mesmo)
+</div>*/}
+
+
+
+
+
+{/* aqui fica a severidade pra selecionar no mapa quando enviar a imagem*/}
+        <select
+  value={severity}
+  onChange={(e) => setSeverity(Number(e.target.value))}
+  style={{
+    position: 'fixed',
+    top: '70px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    zIndex: 9999,
+    padding: '12px',
+    borderRadius: '8px',
+    background: '#fff',
+    boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+    fontSize: '16px',
+  }}
+>
+  <option value={1}>🟢 Leve</option>
+  <option value={2}>🟡 Moderada</option>
+  <option value={3}>🔴 Grave</option>
+</select>
+
+
 
 
           {/* aqui está o mapa, pra facilitar na pesquisa -- mapa */}
