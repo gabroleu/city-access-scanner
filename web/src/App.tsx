@@ -12,6 +12,7 @@ type Issue = {
   imageUrl: string;
   latitude: number;
   longitude: number;
+  severity: number; //adicionei a severidade.
 };
 
 // controla zoom + centralização
@@ -78,7 +79,7 @@ function App() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [type, setType] = useState('buraco_calcada');
+  const [type] = useState('buraco_calcada');
   const [severity, setSeverity] = useState(1);
   const [filterType, setFilterType] = useState('all');
   const [filterSeverity, setFilterSeverity] = useState('0');
@@ -105,22 +106,6 @@ function createCustomIcon(color: string) {
 
 
 
-  function getMarkerColor(severity: number) {
-  if (severity === 1) return 'green';
-  if (severity === 2) return 'orange';
-  if (severity === 3) return 'red';
-
-  return 'blue';
-}
-
-function createCustomIcon(color: string) {
-  return new L.Icon({
-    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${color}.png`,
-    shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-  });
-}
 
   // buscar dados
   const fetchIssues = () => {
@@ -224,7 +209,9 @@ function createCustomIcon(color: string) {
         style={{
           position: 'fixed',
           top: '20px',
-          right: '20px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          //right: '20px',
           zIndex: 2000,
           background: 'white',
           padding: '10px 15px',
@@ -265,7 +252,7 @@ function createCustomIcon(color: string) {
   onChange={(e) => setSeverity(Number(e.target.value))}
   style={{
     position: 'fixed',
-    top: '70px',
+    top: '90px',
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 9999,
@@ -352,7 +339,7 @@ function createCustomIcon(color: string) {
           left: '20px',
           zIndex: 2000,
           fontSize: '26px',
-          backgroundColor: '#fffff',
+          backgroundColor: '#2563eb',
           color: 'white',
           border: 'none',
           borderRadius: '8px',
@@ -385,7 +372,7 @@ function createCustomIcon(color: string) {
         position: 'fixed',
         top: 0,
         left: menuOpen ? 0 : '-300px',
-        width: '100px',
+        width: '80px',
         maxWidth: '320px',
         height: '100%',
         backgroundColor: '#f8f8f8',
@@ -451,7 +438,7 @@ function createCustomIcon(color: string) {
         <label>Severidade</label>
         <select
           value={filterSeverity}
-          onChange={(e) => setFilterSeverity(Number(e.target.value))}
+          onChange={(e) => setFilterSeverity(e.target.value)} //alterei porque tava passando number
           style={{
             padding: '8px',
             borderRadius: '6px',
