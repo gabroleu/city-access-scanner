@@ -19,6 +19,6 @@ app.get('/health', (req, res) => {
   return res.json({ message: "Servidor está rodando!" });
 });
 
-app.listen(PORT, () => {
-  console.log(`✅ Servidor rodando em http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Servidor rodando na rede em http://0.0.0.0:${PORT}`);
 });
