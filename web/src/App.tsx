@@ -125,7 +125,7 @@ function createCustomIcon(color: string) {
   // buscar dados
   const fetchIssues = () => {
     console.log('Buscando Issues...')
-    fetch('http://localhost:3333/issues')
+    fetch('http://192.168.0.53:3333/issues')
       .then(res => res.json())
       .then(data => {
         console.log(data);
@@ -138,33 +138,36 @@ function createCustomIcon(color: string) {
   }, []);
 
   // geolocalização
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const accuracy = pos.coords.accuracy;
-        console.log('ACCURACY:', accuracy);
+ useEffect(() => {
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const accuracy = pos.coords.accuracy;
 
-        let zoomLevel = 18;
-        if (accuracy > 100) zoomLevel = 16;
-        if (accuracy > 500) zoomLevel = 14;
+      let zoomLevel = 18;
+      if (accuracy > 100) zoomLevel = 16;
+      if (accuracy > 500) zoomLevel = 14;
 
-        setPosition([
-          pos.coords.latitude,
-          pos.coords.longitude,
-        ]);
+      setPosition([
+        pos.coords.latitude,
+        pos.coords.longitude,
+      ]);
 
-        setZoom(zoomLevel);
-      },
-      (error) => {
-        console.error('Erro ao obter localização:', error);
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0,
-      }
-    );
-  }, []);
+      setZoom(zoomLevel);
+    },
+    (error) => {
+      console.error('Erro ao obter localização:', error);
+
+      //não trava  (Manaus)
+      setPosition([-3.119, -60.0217]);
+      setZoom(14);
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 0,
+    }
+  );
+}, []);
 
   if (!position) return <p>Carregando localização...</p>;
 
@@ -536,7 +539,7 @@ function createCustomIcon(color: string) {
             setLoading(true);
 
             try {
-              await fetch('http://localhost:3333/issues', {
+              await fetch('http://192.168.0.53:3333/issues', {
                 method: 'POST',
                 body: formData,
               });
