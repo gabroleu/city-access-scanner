@@ -6,3 +6,5 @@ build/
 Thumbs.db
 
 /generated/prisma
+
+/generated/prisma

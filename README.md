@@ -26,3 +26,6 @@ Diferente de canais de reclamação tradicionais, o projeto foca em **dados estr
 - [ ] **Desduplicação Inteligente:** Backend agrupa múltiplos relatos sobre o mesmo problema.
 - [ ] **Painel de Gestão:** Filtros por tipo de ocorrência (calçada, semáforo, rampa).
 
+
+## 🚀 Vercel
+https://manaus-scanner.vercel.app/ (front)
