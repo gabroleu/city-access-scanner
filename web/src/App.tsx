@@ -110,8 +110,9 @@ function createCustomIcon(color: string) {
   // buscar dados
   const fetchIssues = () => {
     console.log('Buscando Issues...')
-    fetch('http://192.168.0.53:3333/issues')
-      .then(res => res.json())
+    //fetch('http://192.168.0.53:3333/issues')
+    fetch(`${import.meta.env.VITE_API_URL}/issues`)  //url trocada pro render.
+    .then(res => res.json())
       .then(data => {
         console.log(data);
         setIssues(data);
@@ -571,8 +572,9 @@ function createCustomIcon(color: string) {
             setLoading(true);
 
             try {
-              await fetch('http://192.168.0.53:3333/issues', {
-                method: 'POST',
+              //await fetch('http://192.168.0.53:3333/issues', {
+              await fetch(`${import.meta.env.VITE_API_URL}/issues`, {  //post atualiado pro render.
+              method: 'POST',
                 body: formData,
               });
 
