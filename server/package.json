@@ -4,7 +4,7 @@
   "description": "O **City Access Scanner** é uma plataforma de dados georreferenciados que transforma o relato de cidadãos em mapas de calor acionáveis. O objetivo é permitir que qualquer pessoa mapeie problemas de acessibilidade urbana (calçadas danificadas, ausência de rampas ou semáforos sonoros com defeito) em tempo real.",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx-node-dev src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js"
   },
