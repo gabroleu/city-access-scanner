@@ -86,7 +86,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
 
 
-  const API_URL = import.meta.env.VITE_API_URL;
+  const API_URL = import.meta.env.VITE_API_URL; 
 
 
   function getMarkerColor(severity: number) {
@@ -276,7 +276,7 @@ function createCustomIcon(color: string) {
 
         {/* ponto selecionado */}
         {selectedPosition && (
-          <Marker position={selectedPosition}>issues
+          <Marker position={selectedPosition}>
             <Popup>Ponto da denúncia</Popup>
           </Marker>
         )}
