@@ -110,8 +110,7 @@ function createCustomIcon(color: string) {
   // buscar dados
   const fetchIssues = () => {
     console.log('Buscando Issues...')
-    //fetch('http://192.168.0.53:3333/issues')
-    fetch(`${import.meta.env.VITE_API_URL}/issues`)  //url trocada pro render.
+    fetch(`${import.meta.env.VITE_API_URL}/issues`)
     .then(res => res.json())
       .then(data => {
         console.log(data);
@@ -131,7 +130,7 @@ function createCustomIcon(color: string) {
 
       let zoomLevel = 18;
       if (accuracy > 100) zoomLevel = 16;
-      if (accuracy > 500) zoomLevel = 14;
+      if (accuracy > 500) zoomLevel = 14;192
 
       setPosition([
         pos.coords.latitude,
@@ -223,27 +222,6 @@ function createCustomIcon(color: string) {
       >
       {/* lembrar de colocar uma lupinha aqui */}  {filteredIssues.length} problema(s) encontrado(s)
         </div>
-
-
-        {/*<div
-  style={{
-    position: 'fixed',
-    top: '40px', //preciso ver a altura
-    left: '50%',
-    transform: 'translateX(-50%)',
-    zIndex: 9999,
-    fontWeight: 'bold',
-    background: 'white',
-    padding: '6px 12px',
-    borderRadius: '8px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-    fontSize: '14px',
-  }}
->
-  Severidade da denúncia (preciso verificar onde vou deixar essa severidade e se vou deixar aqui mesmo)
-</div>*/}
-
-
 
 
 
@@ -572,8 +550,7 @@ function createCustomIcon(color: string) {
             setLoading(true);
 
             try {
-              //await fetch('http://192.168.0.53:3333/issues', {
-              await fetch(`${import.meta.env.VITE_API_URL}/issues`, {  //post atualiado pro render.
+              await fetch(`${import.meta.env.VITE_API_URL}/issues`, { 
               method: 'POST',
                 body: formData,
               });
