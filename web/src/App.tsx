@@ -110,7 +110,7 @@ function createCustomIcon(color: string) {
   // buscar dados
   const fetchIssues = () => {
     console.log('Buscando Issues...')
-    fetch(`${import.meta.env.VITE_API_URL}/issues`)
+    fetch('https://manaus-scanner-api.onrender.com/issues')
     .then(res => res.json())
       .then(data => {
         console.log(data);
@@ -550,7 +550,7 @@ function createCustomIcon(color: string) {
             setLoading(true);
 
             try {
-              await fetch(`${import.meta.env.VITE_API_URL}/issues`, { 
+              await fetch('https://manaus-scanner-api.onrender.com/issues', { 
               method: 'POST',
                 body: formData,
               });
