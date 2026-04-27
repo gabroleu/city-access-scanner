@@ -86,6 +86,8 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
 
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
   function getMarkerColor(severity: number) {
   if (severity === 1) return 'green';
@@ -110,7 +112,7 @@ function createCustomIcon(color: string) {
   // buscar dados
   const fetchIssues = () => {
     console.log('Buscando Issues...')
-    fetch('https://manaus-scanner-api.onrender.com/issues')
+    fetch(`${API_URL}/issues`) //troca      
     .then(res => res.json())
       .then(data => {
         console.log(data);
@@ -130,7 +132,7 @@ function createCustomIcon(color: string) {
 
       let zoomLevel = 18;
       if (accuracy > 100) zoomLevel = 16;
-      if (accuracy > 500) zoomLevel = 14;192
+      if (accuracy > 500) zoomLevel = 14;
 
       setPosition([
         pos.coords.latitude,
@@ -550,7 +552,7 @@ function createCustomIcon(color: string) {
             setLoading(true);
 
             try {
-              await fetch('https://manaus-scanner-api.onrender.com/issues', { 
+              await fetch(`${API_URL}/issues`, { //troca 
               method: 'POST',
                 body: formData,
               });
