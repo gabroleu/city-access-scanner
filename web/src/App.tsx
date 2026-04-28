@@ -3,7 +3,20 @@ import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import 'leaflet.heat';
+
+
+
+//adc para corrigr ícones do leaflet no vercel
+
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+});
 
 type Issue = {
   id: string;
@@ -144,7 +157,7 @@ function createCustomIcon(color: string) {
     (error) => {
       console.error('Erro ao obter localização:', error);
 
-      //não trava  (Manaus)
+      //não trava  (Manaaaaaaaaus)
       setPosition([-3.119, -60.0217]);
       setZoom(14);
     },
@@ -156,7 +169,7 @@ function createCustomIcon(color: string) {
   );
 }, []);
 
-  if (!position) return <p>Carregando localização...</p>;
+  if (!position) return <p>Carregando localização...</p>; //mapa renderiza depois da geolocalização
 
 
 
