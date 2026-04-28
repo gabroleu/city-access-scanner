@@ -112,7 +112,7 @@ function createCustomIcon(color: string) {
   // buscar dados
   const fetchIssues = () => {
     console.log('Buscando Issues...')
-    fetch(`${API_URL}/issues`) //troca      
+    fetch(`${ API_URL}/issues`) //troca      
     .then(res => res.json())
       .then(data => {
         console.log(data);
@@ -487,7 +487,7 @@ function createCustomIcon(color: string) {
           background: 'white',
           padding: '10px 16px',
           borderRadius: '20px',
-          boxShadow: '0 4px 10px rgba(231, 83, 14, 0.77)',
+          boxShadow: '0 4px 10px rgba(54, 52, 51, 0.77)',
           cursor: 'pointer',
           fontWeight: '500',
         }}
