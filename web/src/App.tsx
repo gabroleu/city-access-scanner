@@ -281,7 +281,10 @@ function createCustomIcon(color: string) {
 
 
         {/* marcador do usuário */}
-        <Marker position={position}>
+        <Marker
+        position={position}
+        icon={createCustomIcon('blue')}
+        >
           <Popup>Você está aqui (aproximado)</Popup>
         </Marker>
 
