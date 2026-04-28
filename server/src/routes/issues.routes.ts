@@ -69,9 +69,30 @@ issuesRoutes.post('/', upload.single('image'), async (req, res) => {
 });
 
 // Rota para listar todas as denúncias (para o mapa)
+//issuesRoutes.get('/', async (req, res) => {
+  //const issues = await prisma.issue.findMany();
+  //return res.json(issues);
+//});
+
 issuesRoutes.get('/', async (req, res) => {
-  const issues = await prisma.issue.findMany();
-  return res.json(issues);
+  try {
+    console.log('Buscando issues no banco...');
+
+    const issues = await prisma.issue.findMany();
+
+    console.log('Issues encontradas:', issues.length);
+
+    return res.json(issues);
+
+  } catch (error) {
+    console.error('ERRO AO BUSCAR ISSUES:', error);
+
+    return res.status(500).json({
+      error: 'Erro interno ao buscar issues',
+      details: String(error)
+    });
+  }
 });
+
 
 export { issuesRoutes };
