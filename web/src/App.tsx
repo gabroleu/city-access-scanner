@@ -4,19 +4,19 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import 'leaflet.heat';
 
+// correção global dos ícones do Leaflet (que estavam quebrados)
 
-
-//adc para corrigr ícones do leaflet no vercel
-
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-
-L.Icon.Default.mergeOptions({
-  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+const DefaultIcon = L.icon({
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
 });
+
+// aqui eu forço todos os markers a usarem isso
+L.Marker.prototype.options.icon = DefaultIcon;
 
 type Issue = {
   id: string;
@@ -86,7 +86,7 @@ function LocationSelector({ setSelectedPosition }: { setSelectedPosition: any })
 
 function App() {
   console.log('BUILD NOVO RODAND...');
-  
+
   const [issues, setIssues] = useState<Issue[]>([]);
   const [position, setPosition] = useState<[number, number] | null>(null);
   const [selectedPosition, setSelectedPosition] = useState<[number, number] | null>(null);
