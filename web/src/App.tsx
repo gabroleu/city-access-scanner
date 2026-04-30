@@ -85,6 +85,8 @@ function LocationSelector({ setSelectedPosition }: { setSelectedPosition: any })
 }
 
 function App() {
+  console.log('BUILD NOVO RODAND...');
+  
   const [issues, setIssues] = useState<Issue[]>([]);
   const [position, setPosition] = useState<[number, number] | null>(null);
   const [selectedPosition, setSelectedPosition] = useState<[number, number] | null>(null);
