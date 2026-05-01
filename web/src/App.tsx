@@ -585,6 +585,16 @@ function createCustomIcon(color: string) {
               return;
             }
 
+            if (!type) {
+              toast.error('Selecione um tipo de denúncia!');
+              return;
+            }
+
+            if (!severity) {
+              toast.error('Selecione a severidade da denúncia!');
+              return;
+            }
+
             const formData = new FormData();
             formData.append('type', type);
             formData.append('description', 'denúncia via mapa');
