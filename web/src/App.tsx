@@ -97,8 +97,8 @@ function App() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [type, setType] = useState('buraco_calcada');
-  const [severity, setSeverity] = useState(1);
+  const [type, setType] = useState('');
+  const [severity, setSeverity] = useState<number | ''>('');
   const [filterType, setFilterType] = useState('all');
   const [filterSeverity, setFilterSeverity] = useState('0');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -273,7 +273,7 @@ function createCustomIcon(color: string) {
   onChange={(e) => setType(e.target.value)}
   style={{
     position: 'fixed',
-    top: '140px', // abaixo do select de severidade
+    top: '150px',
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 9999,
@@ -284,6 +284,9 @@ function createCustomIcon(color: string) {
     fontSize: '16px',
   }}
 >
+  <option value="" disabled>
+    Selecione o tipo de problema
+  </option>
   <option value="buraco_calcada">Buraco</option>
   <option value="iluminacao">Iluminação</option>
   <option value="lixo">Lixo</option>
@@ -561,6 +564,8 @@ function createCustomIcon(color: string) {
           zIndex: 1000,
         }}
       >
+
+        {/* botão enviar denúncia */}
         <button
           style={{
             padding: '12px 16px',
