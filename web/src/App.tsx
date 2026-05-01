@@ -97,7 +97,7 @@ function App() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [type] = useState('buraco_calcada');
+  const [type, setType] = useState('buraco_calcada');
   const [severity, setSeverity] = useState(1);
   const [filterType, setFilterType] = useState('all');
   const [filterSeverity, setFilterSeverity] = useState('0');
@@ -245,13 +245,35 @@ function createCustomIcon(color: string) {
 
 
 
-{/* aqui fica a severidade pra selecionar no mapa quando enviar a imagem*/}
-        <select
-  value={severity}
-  onChange={(e) => setSeverity(Number(e.target.value))}
+{/* aqui fica o SELECT de severidade pra selecionar no mapa quando enviar a imagem*/}
+    <select
+       value={severity}
+      onChange={(e) => setSeverity(Number(e.target.value))}
+      style={{
+        position: 'fixed',
+        top: '90px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 9999,
+        padding: '12px',
+        borderRadius: '8px',
+        background: '#fff',
+        boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+        fontSize: '16px',
+  }}
+>
+  <option value={1}>🟢 Leve</option>
+  <option value={2}>🟡 Moderada</option>
+  <option value={3}>🔴 Grave</option>
+</select>
+
+{/* aqiu fica o SELECT DE TIPO */}
+<select
+  value={type}
+  onChange={(e) => setType(e.target.value)}
   style={{
     position: 'fixed',
-    top: '90px',
+    top: '140px', // abaixo do select de severidade
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 9999,
@@ -262,12 +284,13 @@ function createCustomIcon(color: string) {
     fontSize: '16px',
   }}
 >
-  <option value={1}>🟢 Leve</option>
-  <option value={2}>🟡 Moderada</option>
-  <option value={3}>🔴 Grave</option>
+  <option value="buraco_calcada">Buraco</option>
+  <option value="iluminacao">Iluminação</option>
+  <option value="lixo">Lixo</option>
+  <option value="acessibilidade">Acessibilidade</option>
 </select>
 
-
+  
 
 
           {/* aqui está o mapa, pra facilitar na pesquisa -- mapa */}
