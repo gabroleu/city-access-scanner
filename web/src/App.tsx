@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import 'leaflet.heat';
 
 // correção global dos ícones do Leaflet (que estavam quebrados)
 
@@ -46,6 +47,7 @@ function MapController({ position, zoom }: { position: [number, number], zoom: n
 function Heatmap({ issues }: { issues: Issue[] }) {
   const map = useMap();
 
+  const HeatLayer = (L as any).heatLayer;
   useEffect(() => {
     if (!issues.length) return;
 
@@ -55,7 +57,8 @@ function Heatmap({ issues }: { issues: Issue[] }) {
       0.5,
     ]);
 
-    const heat = (L as any).heatLayer(points, {
+    const heat = HeatLayer(points, {
+      
       radius: 25,
       blur: 15,
     });
