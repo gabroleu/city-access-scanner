@@ -86,7 +86,7 @@ function LocationSelector({ setSelectedPosition }: { setSelectedPosition: any })
 
   return null;
 }
-
+//App aqui
 function App() {
   console.log('BUILD NOVO RODAND...');
 
@@ -105,6 +105,20 @@ function App() {
 
 
   const API_URL = import.meta.env.VITE_API_URL; 
+
+ //fundo botão semi-transparente, efeito blur, borda suave e aparência flutuante
+  const glassStyle = {
+  background: 'rgba(255, 255, 255, 0.15)',
+  backdropFilter: 'blur(10px)',
+  WebkitBackdropFilter: 'blur(10px)',
+  borderRadius: '12px',
+  border: '1px solid rgba(255, 255, 255, 0.2)',
+  boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+  color: '#000',
+};
+
+
+
 
 
   function getMarkerColor(severity: number) {
@@ -250,17 +264,15 @@ function createCustomIcon(color: string) {
        value={severity}
       onChange={(e) => setSeverity(Number(e.target.value))}
       style={{
-        position: 'fixed',
-        top: '90px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        zIndex: 9999,
-        padding: '12px',
-        borderRadius: '8px',
-        background: '#fff',
-        boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
-        fontSize: '16px',
-  }}
+  ...glassStyle,
+      position: 'fixed',
+      top: '90px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: 9999,
+      padding: '12px',
+      fontSize: '16px',
+}}
 >
   <option value={1}>🟢 Leve</option>
   <option value={2}>🟡 Moderada</option>
@@ -272,17 +284,15 @@ function createCustomIcon(color: string) {
   value={type}
   onChange={(e) => setType(e.target.value)}
   style={{
-    position: 'fixed',
-    top: '150px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    zIndex: 9999,
-    padding: '12px',
-    borderRadius: '8px',
-    background: '#fff',
-    boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
-    fontSize: '16px',
-  }}
+  ...glassStyle,
+      position: 'fixed',
+      top: '150px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: 9999,
+      padding: '12px',
+      fontSize: '16px',
+}}
 >
   <option value="" disabled>
     Selecione o tipo de problema
@@ -526,18 +536,19 @@ function createCustomIcon(color: string) {
 
       <label
         style={{
-          position: 'fixed',
-          bottom: '90px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 2000,
-          background: 'white',
-          padding: '10px 16px',
-          borderRadius: '20px',
-          boxShadow: '0 4px 10px rgba(54, 52, 51, 0.77)',
-          cursor: 'pointer',
-          fontWeight: '500',
-        }}
+  ...glassStyle,
+      position: 'fixed',
+      bottom: '90px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: 2000,
+      padding: '10px 16px',
+      borderRadius: '20px',
+      cursor: 'pointer',
+      fontWeight: '500',
+          
+      
+}}
       >
         Selecionar imagem
         <input
