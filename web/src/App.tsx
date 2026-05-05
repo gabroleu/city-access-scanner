@@ -264,12 +264,12 @@ function createCustomIcon(color: string) {
   style={{
     ...glassCard,
     position: 'fixed',
-    top: '75px',
+    top: '70px',
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 9999,
-    width: '260px',
-  }}
+
+    }}
 >
   <div style={{ fontSize: '12px', opacity: 0.7 }}>
     Gravidade
@@ -279,14 +279,18 @@ function createCustomIcon(color: string) {
     value={severity}
     onChange={(e) => setSeverity(Number(e.target.value))}
     style={{
-      width: '260px',
+      width: 'fit-content',
       background: 'transparent',
       border: 'none',
-      fontSize: '14px',
+      minWidth: '22px',
+      fontSize: '15px',
       outline: 'none',
       cursor: 'pointer',
-      padding: '10px 14px',
+      padding: '4px 12px',
+      display: 'flex',
+      flexDirection: 'column',
     textAlign: 'center',
+    margin: '0 auto',
     }}
   >
     <option value="" disabled>
@@ -303,7 +307,7 @@ function createCustomIcon(color: string) {
   style={{
     ...glassCard,
     position: 'fixed',
-    top: '170px',
+    top: '155px',
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 9999,
@@ -318,14 +322,18 @@ function createCustomIcon(color: string) {
     value={type}
     onChange={(e) => setType(e.target.value)}
     style={{
-      width: '260px',
+      width: 'fit-content',
+      minWidth: '220px',
+
       background: 'transparent',
       border: 'none',
       fontSize: '14px',
       outline: 'none',
       cursor: 'pointer',
-      padding: '10px 14px',
+      padding: '4px 16px',
+      display: 'flex',
       textAlign: 'center',
+      textAlignLast: 'center',
     }}
   >
     <option value="" disabled>
@@ -581,7 +589,7 @@ function createCustomIcon(color: string) {
   <label
     style={{
       ...glassCard,
-      width: '125px',
+      width: '130px',
       height: '65px',
       display: 'flex',
       flexDirection: 'column',
@@ -594,8 +602,8 @@ function createCustomIcon(color: string) {
     {/* ícone da câmera */}
     <div
   style={{
-    width: '40px',
-    height: '40px',
+    width: '60px',
+    height: '60px',
     borderRadius: '50%',
     border: '2px solid rgba(0,0,0,0.4)',
     display: 'flex',
@@ -603,10 +611,10 @@ function createCustomIcon(color: string) {
     justifyContent: 'center',
   }}
 >
-  <Camera size={20} strokeWidth={1.5} />
+  <Camera size={26} strokeWidth={1.5} />
 </div>
 
-    {/* Texto */}
+    {/* texto */}
     <span style={{ fontSize: '14px', fontWeight: '500' }}>
       Selecionar imagem
     </span>
