@@ -264,7 +264,7 @@ function createCustomIcon(color: string) {
   style={{
     ...glassCard,
     position: 'fixed',
-    top: '90px',
+    top: '75px',
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 9999,
@@ -279,12 +279,14 @@ function createCustomIcon(color: string) {
     value={severity}
     onChange={(e) => setSeverity(Number(e.target.value))}
     style={{
-      width: '100%',
+      width: '260px',
       background: 'transparent',
       border: 'none',
-      fontSize: '16px',
+      fontSize: '14px',
       outline: 'none',
       cursor: 'pointer',
+      padding: '10px 14px',
+    textAlign: 'center',
     }}
   >
     <option value="" disabled>
@@ -301,7 +303,7 @@ function createCustomIcon(color: string) {
   style={{
     ...glassCard,
     position: 'fixed',
-    top: '160px',
+    top: '170px',
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 9999,
@@ -316,12 +318,14 @@ function createCustomIcon(color: string) {
     value={type}
     onChange={(e) => setType(e.target.value)}
     style={{
-      width: '100%',
+      width: '260px',
       background: 'transparent',
       border: 'none',
-      fontSize: '16px',
+      fontSize: '14px',
       outline: 'none',
       cursor: 'pointer',
+      padding: '10px 14px',
+      textAlign: 'center',
     }}
   >
     <option value="" disabled>
@@ -577,8 +581,8 @@ function createCustomIcon(color: string) {
   <label
     style={{
       ...glassCard,
-      width: '130px',
-      height: '70px',
+      width: '125px',
+      height: '65px',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
