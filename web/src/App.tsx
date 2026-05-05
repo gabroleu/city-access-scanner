@@ -5,6 +5,7 @@ import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.heat';
+import { Camera } from 'lucide-react';
 
 // correção global dos ícones do Leaflet (que estavam quebrados)
 
@@ -107,17 +108,16 @@ function App() {
   const API_URL = import.meta.env.VITE_API_URL; 
 
  //fundo botão semi-transparente, efeito blur, borda suave e aparência flutuante
-  const glassStyle = {
+  
+  const glassCard = {
   background: 'rgba(255, 255, 255, 0.15)',
-  backdropFilter: 'blur(10px)',
-  WebkitBackdropFilter: 'blur(10px)',
-  borderRadius: '12px',
+  backdropFilter: 'blur(12px)',
+  WebkitBackdropFilter: 'blur(12px)',
+  borderRadius: '16px',
   border: '1px solid rgba(255, 255, 255, 0.2)',
-  boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
-  color: '#000',
-};
-
-
+  boxShadow: '0 8px 20px rgba(0,0,0,0.25)',
+  padding: '12px 16px',
+  }
 
 
 
@@ -260,48 +260,79 @@ function createCustomIcon(color: string) {
 
 
 {/* aqui fica o SELECT de severidade pra selecionar no mapa quando enviar a imagem*/}
-    <select
-       value={severity}
-      onChange={(e) => setSeverity(Number(e.target.value))}
-      style={{
-  ...glassStyle,
-      position: 'fixed',
-      top: '90px',
-      left: '50%',
-      transform: 'translateX(-50%)',
-      zIndex: 9999,
-      padding: '12px',
-      fontSize: '16px',
-}}
+    <div
+  style={{
+    ...glassCard,
+    position: 'fixed',
+    top: '90px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    zIndex: 9999,
+    width: '260px',
+  }}
 >
-  <option value={1}>🟢 Leve</option>
-  <option value={2}>🟡 Moderada</option>
-  <option value={3}>🔴 Grave</option>
-</select>
+  <div style={{ fontSize: '12px', opacity: 0.7 }}>
+    Gravidade
+  </div>
+
+  <select
+    value={severity}
+    onChange={(e) => setSeverity(Number(e.target.value))}
+    style={{
+      width: '100%',
+      background: 'transparent',
+      border: 'none',
+      fontSize: '16px',
+      outline: 'none',
+      cursor: 'pointer',
+    }}
+  >
+    <option value="" disabled>
+      Selecione a gravidade
+    </option>
+    <option value={1}>🟢 Leve</option>
+    <option value={2}>🟡 Moderada</option>
+    <option value={3}>🔴 Grave</option>
+  </select>
+</div>
 
 {/* aqiu fica o SELECT DE TIPO */}
-<select
-  value={type}
-  onChange={(e) => setType(e.target.value)}
+<div
   style={{
-  ...glassStyle,
-      position: 'fixed',
-      top: '150px',
-      left: '50%',
-      transform: 'translateX(-50%)',
-      zIndex: 9999,
-      padding: '12px',
-      fontSize: '16px',
-}}
+    ...glassCard,
+    position: 'fixed',
+    top: '160px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    zIndex: 9999,
+    width: '260px',
+  }}
 >
-  <option value="" disabled>
-    Selecione o tipo de problema
-  </option>
-  <option value="buraco_calcada">Buraco</option>
-  <option value="iluminacao">Iluminação</option>
-  <option value="lixo">Lixo</option>
-  <option value="acessibilidade">Acessibilidade</option>
-</select>
+  <div style={{ fontSize: '12px', opacity: 0.7 }}>
+    Tipo de problema
+  </div>
+
+  <select
+    value={type}
+    onChange={(e) => setType(e.target.value)}
+    style={{
+      width: '100%',
+      background: 'transparent',
+      border: 'none',
+      fontSize: '16px',
+      outline: 'none',
+      cursor: 'pointer',
+    }}
+  >
+    <option value="" disabled>
+      Selecione o tipo de problema
+    </option>
+    <option value="buraco_calcada">Buraco</option>
+    <option value="iluminacao">Iluminação</option>
+    <option value="lixo">Lixo</option>
+    <option value="acessibilidade">Acessibilidade</option>
+  </select>
+</div>
 
   
 
@@ -534,38 +565,64 @@ function createCustomIcon(color: string) {
         />
       )}
 
-      <label
-        style={{
-  ...glassStyle,
-      position: 'fixed',
-      bottom: '90px',
-      left: '50%',
-      transform: 'translateX(-50%)',
-      zIndex: 2000,
-      padding: '10px 16px',
-      borderRadius: '20px',
+      <div
+  style={{
+    position: 'fixed',
+    bottom: '110px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    zIndex: 2000,
+  }}
+>
+  <label
+    style={{
+      ...glassCard,
+      width: '130px',
+      height: '70px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '8px',
       cursor: 'pointer',
-      fontWeight: '500',
-          
-      
-}}
-      >
-        Selecionar imagem
-        <input
-          type="file"
-          accept="image/*"
-          style={{ display: 'none' }}
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) {
-              setSelectedImage(file);
-              const imageUrl = URL.createObjectURL(file);
-              setPreview(imageUrl);
-              console.log(' PREVIEW:', imageUrl);
-            }
-          }}
-        />
-      </label>
+    }}
+  >
+    {/* ícone da câmera */}
+    <div
+  style={{
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    border: '2px solid rgba(0,0,0,0.4)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}
+>
+  <Camera size={20} strokeWidth={1.5} />
+</div>
+
+    {/* Texto */}
+    <span style={{ fontSize: '14px', fontWeight: '500' }}>
+      Selecionar imagem
+    </span>
+
+    <input
+      type="file"
+      accept="image/*"
+      style={{ display: 'none' }}
+      onChange={(e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+          setSelectedImage(file);
+          const imageUrl = URL.createObjectURL(file);
+          setPreview(imageUrl);
+          console.log(' PREVIEW:', imageUrl);
+        }
+      }}
+    />
+  </label>
+</div>
 
       <div
         style={{
