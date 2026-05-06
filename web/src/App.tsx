@@ -260,6 +260,8 @@ function createCustomIcon(color: string) {
 
 
 {/* aqui fica o SELECT de severidade pra selecionar no mapa quando enviar a imagem*/}
+    {!menuOpen && ( //esconde o select quando o menu lateral estiver aberto, pra não poluir a interface
+      <>
     <div
   style={{
     ...glassCard,
@@ -267,7 +269,7 @@ function createCustomIcon(color: string) {
     top: '90px',
     left: '50%',
     transform: 'translateX(-50%)',
-    zIndex: 9999,
+    zIndex: 1000,
 
     }}
 >
@@ -310,7 +312,7 @@ function createCustomIcon(color: string) {
     top: '170px',
     left: '50%',
     transform: 'translateX(-50%)',
-    zIndex: 9999,
+    zIndex: 1000,
     width: '260px',
   }}
 >
@@ -345,6 +347,8 @@ function createCustomIcon(color: string) {
     <option value="acessibilidade">Acessibilidade</option>
   </select>
 </div>
+</>
+    )}
 
   
 
