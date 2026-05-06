@@ -354,6 +354,7 @@ function createCustomIcon(color: string) {
         key={issues.length}
         center={position}
         zoom={zoom}
+        zoomControl={false}
         style={{ height: '100vh', width: '100%' }}
         >
         <MapController position={position} zoom={zoom} />
