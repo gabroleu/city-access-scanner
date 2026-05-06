@@ -264,7 +264,7 @@ function createCustomIcon(color: string) {
   style={{
     ...glassCard,
     position: 'fixed',
-    top: '70px',
+    top: '90px',
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 9999,
@@ -307,7 +307,7 @@ function createCustomIcon(color: string) {
   style={{
     ...glassCard,
     position: 'fixed',
-    top: '155px',
+    top: '170px',
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 9999,
