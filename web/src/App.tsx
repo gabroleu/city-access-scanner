@@ -640,16 +640,20 @@ function createCustomIcon(color: string) {
         style={{
           position: 'fixed',
           bottom: '20px',
-          left: '20px',
+          left: '50%',
+          transform: 'translateX(-50%)',
           zIndex: 1000,
+          width: '90%',
+          maxWidth: '400px',
         }}
       >
 
         {/* botão enviar denúncia */}
         <button
           style={{
-            padding: '12px 16px',
-            fontSize: '14px',
+            width: '100%',
+            padding: '14px',
+            fontSize: '16px',
             backgroundColor: '#2563eb',
             color: 'white',
             border: 'none',
