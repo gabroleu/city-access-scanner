@@ -652,12 +652,12 @@ function createCustomIcon(color: string) {
         <button
           style={{
             width: '100%',
-            padding: '14px',
-            fontSize: '16px',
+            padding: '10px',
+            fontSize: '14px',
             backgroundColor: '#2563eb',
             color: 'white',
             border: 'none',
-            borderRadius: '8px',
+            borderRadius: '12px',
             boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
             opacity: loading ? 0.7 : 1,
             cursor: loading ? 'not-allowed' : 'pointer',
