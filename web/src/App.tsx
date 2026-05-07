@@ -456,27 +456,39 @@ function createCustomIcon(color: string) {
 
       {/* aqui é o menu lateral */}
       <div style={{
-        position: 'fixed',
-        top: 0,
-        left: menuOpen ? 0 : '-300px',
-        width: '260px',
-        height: '100%',
-        background: 'rgba(255, 255, 255, 0.18)',
-        backdropFilter: 'blur(18px)',
-        WebkitBackdropFilter: 'blur(18px)',
-        borderRight: '1px solid rgba(255, 255, 255, 0.2)',
-        
+  position: 'fixed',
+  top: '12px',
+  bottom: '16px',
+  left: menuOpen ? '12px' : '-320px',
 
-        boxShadow: '2px 0 20px rgba(0,0,0,0.25)',
-        transition: 'all 0.35s ease',
-        zIndex: 3000,
-        padding: '24px 16px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '15px',
-        overflowY: 'auto',
+  width: '260px',
+  
 
-        }}
+  background: 'rgba(255,255,255,0.18)',
+  backdropFilter: 'blur(18px)',
+  WebkitBackdropFilter: 'blur(18px)',
+
+  border: '1px solid rgba(255,255,255,0.2)',
+
+  borderRadius: '28px',
+
+  boxShadow: `
+    0 8px 32px rgba(0,0,0,0.18),
+    inset 0 1px 1px rgba(255,255,255,0.15)
+  `,
+
+  transition: 'all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1)',
+
+  zIndex: 3000,
+
+  padding: '24px 18px 80px 18px',
+
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '15px',
+
+  overflowY: 'auto',
+}}
       >
 
 
