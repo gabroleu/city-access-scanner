@@ -446,7 +446,8 @@ function createCustomIcon(color: string) {
       left: 0,
       width: '100%',
       height: '100%',
-      background: 'rgba(0,0,0,0.4)',
+      background: 'rgba(0,0,0,0.25)',
+      backdropFilter: 'blur(3px)',
       zIndex: 2500,
     }}
   />
@@ -460,9 +461,14 @@ function createCustomIcon(color: string) {
         left: menuOpen ? 0 : '-300px',
         width: '260px',
         height: '100%',
-        backgroundColor: '#f8f8f8',
-        boxShadow: '2px 0 20px rgba(0,0,0,0.3)',
-        transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
+        background: 'rgba(255, 255, 255, 0.18)',
+        backdropFilter: 'blur(18px)',
+        WebkitBackdropFilter: 'blur(18px)',
+        borderRight: '1px solid rgba(255, 255, 255, 0.2)',
+        
+
+        boxShadow: '2px 0 20px rgba(0,0,0,0.25)',
+        transition: 'all 0.35s ease',
         zIndex: 3000,
         padding: '24px 16px',
         display: 'flex',
@@ -476,26 +482,51 @@ function createCustomIcon(color: string) {
 
         {/*header*/}
 
-        <div style={{
-          display: 'flex',          
-          justifyContent: 'space-between',
-        }}>
-
-          <h3 style={{ margin: 0 }}>Filtros</h3> 
-          <button onClick={() => setMenuOpen(false)}
+        <div
             style={{
-              background: 'none',
-              border: 'none',
-              fontSize: '20px',
-              cursor: 'pointer',
-            }}
-            
-            
-            > 
-            x
-            </button>
+            display: 'flex',
+            justifyContent: 'space-between',
+             alignItems: 'center',
+             marginBottom: '20px',
+             }}
+        >
 
-          <hr />
+          <h3
+            style={{
+              margin: 0,
+              fontSize: '28px',
+              fontWeight: '700',
+              letterSpacing: '-1px',
+            }}
+          >
+            Filtros
+          </h3>
+
+
+
+          <button
+  onClick={() => setMenuOpen(false)}
+  style={{
+    background: 'rgba(255,255,255,0.15)',
+    border: '1px solid rgba(255,255,255,0.2)',
+    width: '38px',
+    height: '38px',
+    borderRadius: '12px',
+    fontSize: '22px',
+    fontWeight: '300',
+    color: '#444',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backdropFilter: 'blur(10px)',
+    WebkitBackdropFilter: 'blur(10px)',
+  }}
+>
+  ✕
+</button>
+
+          
         </div>
 
 
@@ -539,23 +570,52 @@ function createCustomIcon(color: string) {
 
 
 
-          <hr />
-          <h3 style={{ marginTop: '10px' }}>Estatísticas</h3>
-          <p><strong>Total:</strong> {total}</p>
+          <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.2)' }} />
 
-          <p><strong>Por tipo:</strong></p>
-          
-            <p>Buraco: {statsByType.buraco}</p>
-            <p>Iluminação: {statsByType.iluminacao}</p>
-            <p>Lixo: {statsByType.lixo}</p>
-            <p>Acessibilidade: {statsByType.acessibilidade}</p>
-          
+<h3
+  style={{
+    marginTop: '10px',
+    fontSize: '24px',
+    fontWeight: '700',
+  }}
+>
+  Estatísticas
+</h3>
 
-          <p><strong>Por severidade:</strong></p>
-          
-            <p>Leve: {statsBySeverity.leve}</p>
-            <p>Média: {statsBySeverity.media}</p>
-            <p>Grave: {statsBySeverity.grave}</p>
+<div
+  style={{
+    background: 'rgba(255,255,255,0.12)',
+    borderRadius: '16px',
+    padding: '14px',
+    marginTop: '10px',
+    backdropFilter: 'blur(10px)',
+  }}
+>
+  <p style={{ fontSize: '16px', fontWeight: '700' }}>
+    Total: {total}
+  </p>
+
+  <div style={{ marginTop: '18px' }}>
+    <p style={{ fontWeight: '700', marginBottom: '10px' }}>
+      Por tipo
+    </p>
+    {/* não esquecer de colocar ícones nos problemas aqui depois */}
+    <p> Buraco: {statsByType.buraco}</p>
+    <p>Iluminação: {statsByType.iluminacao}</p>
+    <p>Lixo: {statsByType.lixo}</p>
+    <p>Acessibilidade: {statsByType.acessibilidade}</p>
+  </div>
+
+  <div style={{ marginTop: '18px' }}>
+    <p style={{ fontWeight: '700', marginBottom: '10px' }}>
+      Por severidade
+    </p>
+{/* não esquecer de colocar ícones de gravidade aqui depois */}
+    <p>Leve: {statsBySeverity.leve}</p>
+    <p>Média: {statsBySeverity.media}</p>
+    <p>Grave: {statsBySeverity.grave}</p>
+  </div>
+</div>
           
 
       </div>
