@@ -31,15 +31,29 @@ type Issue = {
 };
 
 // controla zoom + centralização
-function MapController({ position, zoom }: { position: [number, number], zoom: number }) {
+function MapController({
+  position,
+  zoom,
+  hasCentered,
+  setHasCentered,
+}: {
+  position: [number, number];
+  zoom: number;
+  hasCentered: boolean;
+  setHasCentered: (value: boolean) => void;
+}) {
   const map = useMap();
 
   useEffect(() => {
-    map.flyTo(position, zoom, {
-      animate: true,
-      duration: 1.5,
-    });
-  }, [position, zoom, map]);
+    if (!hasCentered) {
+      map.flyTo(position, zoom, {
+        animate: true,
+        duration: 1.5,
+      });
+
+      setHasCentered(true);
+    }
+  }, [position, zoom, map, hasCentered, setHasCentered]);
 
   return null;
 }
@@ -103,6 +117,7 @@ function App() {
   const [filterType, setFilterType] = useState('all');
   const [filterSeverity, setFilterSeverity] = useState('0');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hasCentered, setHasCentered] = useState(false); //novo estado para controlar centralização inicial
 
 
   const API_URL = import.meta.env.VITE_API_URL; 
@@ -156,36 +171,43 @@ function createCustomIcon(color: string) {
     fetchIssues();
   }, []);
 
-  // geolocalização
+  // geolocalização - teste ao vivo
  useEffect(() => {
-  navigator.geolocation.getCurrentPosition(
+  const watchId = navigator.geolocation.watchPosition(
     (pos) => {
       const accuracy = pos.coords.accuracy;
 
       let zoomLevel = 18;
+
       if (accuracy > 100) zoomLevel = 16;
       if (accuracy > 500) zoomLevel = 14;
 
-      setPosition([
+      const newPosition: [number, number] = [
         pos.coords.latitude,
         pos.coords.longitude,
-      ]);
+      ];
 
+      setPosition(newPosition);
       setZoom(zoomLevel);
     },
+
     (error) => {
       console.error('Erro ao obter localização:', error);
 
-      //não trava  (Manaaaaaaaaus)
       setPosition([-3.119, -60.0217]);
       setZoom(14);
     },
+
     {
       enableHighAccuracy: true,
-      timeout: 10000,
       maximumAge: 0,
+      timeout: 10000,
     }
   );
+
+  return () => {
+    navigator.geolocation.clearWatch(watchId);
+  };
 }, []);
 
   if (!position) return <p>Carregando localização...</p>; //mapa renderiza depois da geolocalização
@@ -269,7 +291,7 @@ function createCustomIcon(color: string) {
     top: '90px',
     left: '50%',
     transform: 'translateX(-50%)',
-    zIndex: 1000,
+    zIndex: 600,
 
     }}
 >
@@ -312,7 +334,7 @@ function createCustomIcon(color: string) {
     top: '170px',
     left: '50%',
     transform: 'translateX(-50%)',
-    zIndex: 1000,
+    zIndex: 600,
     width: '260px',
   }}
 >
@@ -361,7 +383,12 @@ function createCustomIcon(color: string) {
         zoomControl={false}
         style={{ height: '100vh', width: '100%' }}
         >
-        <MapController position={position} zoom={zoom} />
+        <MapController
+            position={position}
+            zoom={zoom}
+            hasCentered={hasCentered}
+            setHasCentered={setHasCentered}
+        />
 
         <TileLayer
           attribution="&copy; OpenStreetMap"
@@ -397,7 +424,10 @@ function createCustomIcon(color: string) {
               position={[issue.latitude, issue.longitude]}
               icon={createCustomIcon(getMarkerColor(issue.severity))}
             >
-              <Popup>
+              <Popup
+                maxWidth={240}
+                className="custom-popup"
+              >
                 <strong>{issue.type}</strong>
                 <br />
                 {issue.description}
