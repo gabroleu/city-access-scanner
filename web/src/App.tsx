@@ -33,27 +33,16 @@ type Issue = {
 // controla zoom + centralização
 function MapController({
   position,
-  zoom,
-  hasCentered,
-  setHasCentered,
 }: {
   position: [number, number];
-  zoom: number;
-  hasCentered: boolean;
-  setHasCentered: (value: boolean) => void;
 }) {
   const map = useMap();
 
   useEffect(() => {
-    if (!hasCentered) {
-      map.flyTo(position, zoom, {
-        animate: true,
-        duration: 1.5,
-      });
-
-      setHasCentered(true);
-    }
-  }, [position, zoom, map, hasCentered, setHasCentered]);
+    map.setView(position, map.getZoom(), {
+      animate: true,
+    });
+  }, [position, map]);
 
   return null;
 }
@@ -117,7 +106,7 @@ function App() {
   const [filterType, setFilterType] = useState('all');
   const [filterSeverity, setFilterSeverity] = useState('0');
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hasCentered, setHasCentered] = useState(false); //novo estado para controlar centralização inicial
+  //const [hasCentered, setHasCentered] = useState(false); //novo estado para controlar centralização inicial
 
 
   const API_URL = import.meta.env.VITE_API_URL; 
@@ -377,18 +366,18 @@ function createCustomIcon(color: string) {
 
           {/* aqui está o mapa, pra facilitar na pesquisa -- mapa */}
       <MapContainer
-        key={issues.length}
+        
         center={position}
         zoom={zoom}
         zoomControl={false}
+        dragging={true}
+        touchZoom={true}
+        scrollWheelZoom={true}
+        doubleClickZoom={true}
         style={{ height: '100vh', width: '100%' }}
-        >
-        <MapController
-            position={position}
-            zoom={zoom}
-            hasCentered={hasCentered}
-            setHasCentered={setHasCentered}
-        />
+      >
+        <MapController position={position} />
+        
 
         <TileLayer
           attribution="&copy; OpenStreetMap"
