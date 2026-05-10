@@ -134,6 +134,7 @@ function App() {
 }
 
 function createCustomIcon(color: string) {
+  
   return new L.Icon({
     iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${color}.png`,
     shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
@@ -141,7 +142,21 @@ function createCustomIcon(color: string) {
     iconAnchor: [12, 41],
   });
 }
-
+const userIcon = L.divIcon({ //marcador usuário tamanho pequeno, só um pontinho azul com glow
+  className: '',
+  html: `
+    <div style="
+      width: 15px;
+      height: 15px;
+      background: #3e72e0;
+      border: 4px solid white;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(37, 99, 235, 0.9);
+    "></div>
+  `,
+  iconSize: [15, 15],
+  iconAnchor: [11, 11],
+});
 
 
 
@@ -387,10 +402,10 @@ function createCustomIcon(color: string) {
 
         {/* marcador do usuário */}
         <Marker
-        position={position}
-        icon={createCustomIcon('blue')}
-        >
-          <Popup>Você está aqui (aproximado)</Popup>
+          position={position}
+          icon={userIcon}
+          >
+            <Popup>Você está aqui</Popup>
         </Marker>
 
 
