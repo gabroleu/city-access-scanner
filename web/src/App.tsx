@@ -1,5 +1,5 @@
 import toast, { Toaster } from 'react-hot-toast';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
@@ -106,6 +106,9 @@ function App() {
   const [filterType, setFilterType] = useState('all');
   const [filterSeverity, setFilterSeverity] = useState('0');
   const [menuOpen, setMenuOpen] = useState(false);
+  const mapRef = useRef<L.Map | null>(null);
+
+  
   //const [hasCentered, setHasCentered] = useState(false); //novo estado para controlar centralização inicial
 
 
@@ -384,6 +387,7 @@ const userIcon = L.divIcon({ //marcador usuário tamanho pequeno, só um pontinh
         
         center={position}
         zoom={zoom}
+        ref={mapRef}
         zoomControl={false}
         dragging={true}
         touchZoom={true}
@@ -446,6 +450,44 @@ const userIcon = L.divIcon({ //marcador usuário tamanho pequeno, só um pontinh
           ))}
         </MarkerClusterGroup>
       </MapContainer>
+
+
+          <button
+  onClick={() => {
+    if (!mapRef.current || !position) return;
+
+    mapRef.current.flyTo(position, 18, {
+      animate: true,
+      duration: 1.5,
+    });
+  }}
+  style={{
+    position: 'fixed',
+    bottom: '190px',
+    right: '20px',
+    zIndex: 2500,
+
+    width: '58px',
+    height: '58px',
+
+    borderRadius: '50%',
+
+    border: 'none',
+
+    background: 'rgba(255,255,255,0.18)',
+
+    backdropFilter: 'blur(16px)',
+    WebkitBackdropFilter: 'blur(16px)',
+
+    boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
+
+    fontSize: '24px',
+    cursor: 'pointer',
+  }}
+>
+  📍
+</button>
+
 
 
 
