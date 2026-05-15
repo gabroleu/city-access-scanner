@@ -6,6 +6,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.heat';
 import { Camera } from 'lucide-react';
+import {  } from './types/issue';
 
 // correção global dos ícones do Leaflet (que estavam quebrados)
 
@@ -20,15 +21,7 @@ const DefaultIcon = L.icon({
 // aqui eu forço todos os markers a usarem isso
 L.Marker.prototype.options.icon = DefaultIcon;
 
-type Issue = {
-  id: string;
-  type: string;
-  description: string;
-  imageUrl: string;
-  latitude: number;
-  longitude: number;
-  severity: number; //adicionei a severidade.
-};
+
 
 // controla zoom + centralização
 function MapController({
@@ -151,6 +144,12 @@ const userIcon = L.divIcon({ //marcador usuário tamanho pequeno, só um pontinh
     <div style="
       width: 15px;
       height: 15px;
+    zIndex: 2500,
+
+    width: '58px',
+    height: '58px',
+
+    borderRadius: '50%',
       background: #3e72e0;
       border: 4px solid white;
       border-radius: 50%;
