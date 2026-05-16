@@ -45,6 +45,9 @@ function MapController({
   followUser: boolean;
 }) {
   const map = useMap();
+  const lastPositionRef = useRef<[number, number] | null>(null);
+  
+
 
   useEffect(() => {
     if (!hasCentered.current) {
@@ -57,15 +60,27 @@ function MapController({
     }
 
     if (followUser) {
-      map.flyTo(position, map.getZoom(), {
-        animate: true,
-        duration: 1.2,
-      });
-    }
+  const lastPosition = lastPositionRef.current;
+
+  if (lastPosition) {
+    const distance = map.distance(lastPosition, position);
+
+    if (distance < 10) return;
+  }
+
+  lastPositionRef.current = position;
+
+  map.flyTo(position, map.getZoom(), {
+    animate: true,
+    duration: 1.2,
+  });
+}
   }, [position, map, hasCentered, followUser]);
 
   return null;
 }
+
+
 
 
   function MapEvents({

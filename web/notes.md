@@ -1,6 +1,6 @@
-pg 11.
+pg 11./14
 botão centralizar localização - ok
-modo seguir usuário ON/OFF
+modo seguir usuário ON/OFF - ok
 suavização da câmera 
 heading/bússola
 migração para Maplibre
