@@ -160,6 +160,7 @@ function App() {
   const [position, setPosition] = useState<[number, number] | null>(null);
   const [selectedPosition, setSelectedPosition] = useState<[number, number] | null>(null);
   const [zoom, setZoom] = useState(18);
+  const [heading, setHeading] = useState<number>(0);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -208,27 +209,40 @@ function createCustomIcon(color: string) {
     iconAnchor: [12, 41],
   });
 }
-const userIcon = L.divIcon({ //marcador personalizado do usuário, um ponto azul com glow
-  className: '',
-  html: `
-    <div style="
-      width: 15px;
-      height: 15px;
-    zIndex: 2500,
+function createUserIcon(rotation: number) {
+  return L.divIcon({
+    className: '',
+    html: `
+      <div style="
+        width: 15px;
+        height: 15px;
+        background: #396bce;
+        border: 4px solid white;
+        border-radius: 50%;
+        box-shadow: 0 0 12px rgba(37,99,235,0.9);
 
-    width: '58px',
-    height: '58px',
+        display:flex;
+        align-items:center;
+        justify-content:center;
 
-    borderRadius: '50%',
-      background: #3e72e0;
-      border: 4px solid white;
-      border-radius: 50%;
-      box-shadow: 0 0 12px rgba(37, 99, 235, 0.9);
-    "></div>
-  `,
-  iconSize: [15, 15],
-  iconAnchor: [11, 11],
-});
+        transform: rotate(${rotation}deg);
+        transition: transform 0.4s ease;
+      ">
+        <div style="
+          width:0;
+          height:0;
+          border-left:6px solid transparent;
+          border-right:6px solid transparent;
+          border-bottom:10px solid white;
+          position:absolute;
+          top:-10px;
+        "></div>
+      </div>
+    `,
+    iconSize: [22, 22],
+    iconAnchor: [11, 11],
+  });
+}
 
 
 
@@ -252,6 +266,7 @@ const userIcon = L.divIcon({ //marcador personalizado do usuário, um ponto azul
   const watchId = navigator.geolocation.watchPosition(
     (pos) => {
       const accuracy = pos.coords.accuracy;
+      const gpsHeading = pos.coords.heading;
 
       let zoomLevel = 18;
 
@@ -265,6 +280,10 @@ const userIcon = L.divIcon({ //marcador personalizado do usuário, um ponto azul
 
       setPosition(newPosition);
       setZoom(zoomLevel);
+
+      if (gpsHeading !== null) {
+      setHeading(gpsHeading);
+}
     },
 
     (error) => {
@@ -352,7 +371,7 @@ const userIcon = L.divIcon({ //marcador personalizado do usuário, um ponto azul
           fontWeight: 'bold',
         }}
       >
-      {/* lembrar de colocar uma lupinha aqui */}  {filteredIssues.length} problema(s) encontrado(s)
+      {/* lembrar de colocar uma lupinha aqui */}  {filteredIssues.length} problema(s) | direção: {Math.round(heading)}°
         </div>
 
 
@@ -483,7 +502,7 @@ const userIcon = L.divIcon({ //marcador personalizado do usuário, um ponto azul
         {/* marcador do usuário */}
         <Marker
           position={position}
-          icon={userIcon}
+          icon={createUserIcon(heading) /* ícone personalizado que gira conforme a direção do GPS */}
           >
             <Popup>Você está aqui</Popup>
         </Marker>
