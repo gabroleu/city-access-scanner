@@ -8,6 +8,17 @@ import 'leaflet.heat';
 import { Camera } from 'lucide-react';
 import {  } from './types/issue';
 
+type Issue = {
+  id: number;
+  type: string;
+  description: string;
+  latitude: number;
+  longitude: number;
+  imageUrl: string;
+  severity: number;
+};
+
+
 // correção global dos ícones do Leaflet (que estavam quebrados)
 
 const DefaultIcon = L.icon({
@@ -138,7 +149,7 @@ function createCustomIcon(color: string) {
     iconAnchor: [12, 41],
   });
 }
-const userIcon = L.divIcon({ //marcador usuário tamanho pequeno, só um pontinho azul com glow
+const userIcon = L.divIcon({ //marcador personalizado do usuário, um ponto azul com glow
   className: '',
   html: `
     <div style="
