@@ -37,16 +37,22 @@ L.Marker.prototype.options.icon = DefaultIcon;
 // controla zoom + centralização
 function MapController({
   position,
+  hasCentered,
 }: {
   position: [number, number];
+  hasCentered: React.MutableRefObject<boolean>;
 }) {
   const map = useMap();
 
   useEffect(() => {
-    map.setView(position, map.getZoom(), {
-      animate: true,
-    });
-  }, [position, map]);
+    if (!hasCentered.current) {
+      map.setView(position, 18, {
+        animate: true,
+      });
+
+      hasCentered.current = true;
+    }
+  }, [position, map, hasCentered]);
 
   return null;
 }
@@ -111,9 +117,9 @@ function App() {
   const [filterSeverity, setFilterSeverity] = useState('0');
   const [menuOpen, setMenuOpen] = useState(false);
   const mapRef = useRef<L.Map | null>(null);
+  const hasCentered = useRef(false);
 
   
-  //const [hasCentered, setHasCentered] = useState(false); //novo estado para controlar centralização inicial
 
 
   const API_URL = import.meta.env.VITE_API_URL; 
@@ -405,7 +411,10 @@ const userIcon = L.divIcon({ //marcador personalizado do usuário, um ponto azul
         doubleClickZoom={true}
         style={{ height: '100vh', width: '100%' }}
       >
-        <MapController position={position} />
+        <MapController
+        position={position}
+        hasCentered={hasCentered}
+      />
         
 
         <TileLayer
