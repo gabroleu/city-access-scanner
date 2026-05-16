@@ -38,9 +38,11 @@ L.Marker.prototype.options.icon = DefaultIcon;
 function MapController({
   position,
   hasCentered,
+  followUser,
 }: {
   position: [number, number];
   hasCentered: React.MutableRefObject<boolean>;
+  followUser: boolean;
 }) {
   const map = useMap();
 
@@ -51,11 +53,46 @@ function MapController({
       });
 
       hasCentered.current = true;
+      return;
     }
-  }, [position, map, hasCentered]);
+
+    if (followUser) {
+      map.flyTo(position, map.getZoom(), {
+        animate: true,
+        duration: 1.2,
+      });
+    }
+  }, [position, map, hasCentered, followUser]);
 
   return null;
 }
+
+
+  function MapEvents({
+  setFollowUser,
+}: {
+  setFollowUser: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const map = useMap();
+
+  useEffect(() => {
+    const disableFollow = () => {
+      setFollowUser(false);
+    };
+
+    map.on('dragstart', disableFollow);
+    map.on('zoomstart', disableFollow);
+
+    return () => {
+      map.off('dragstart', disableFollow);
+      map.off('zoomstart', disableFollow);
+    };
+  }, [map, setFollowUser]);
+
+  return null;
+}
+
+
 
 // heatmap
 function Heatmap({ issues }: { issues: Issue[] }) {
@@ -116,6 +153,7 @@ function App() {
   const [filterType, setFilterType] = useState('all');
   const [filterSeverity, setFilterSeverity] = useState('0');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [followUser, setFollowUser] = useState(true);
   const mapRef = useRef<L.Map | null>(null);
   const hasCentered = useRef(false);
 
@@ -412,9 +450,13 @@ const userIcon = L.divIcon({ //marcador personalizado do usuário, um ponto azul
         style={{ height: '100vh', width: '100%' }}
       >
         <MapController
-        position={position}
-        hasCentered={hasCentered}
-      />
+          position={position}
+          hasCentered={hasCentered}
+          followUser={followUser}
+        />
+
+      <MapEvents setFollowUser={setFollowUser} />
+
         
 
         <TileLayer
@@ -472,14 +514,19 @@ const userIcon = L.divIcon({ //marcador personalizado do usuário, um ponto azul
 
 
           <button
-  onClick={() => {
-    if (!mapRef.current || !position) return;
 
-    mapRef.current.flyTo(position, 18, {
-      animate: true,
-      duration: 1.5,
-    });
-  }}
+  onClick={() => {
+  if (!mapRef.current || !position) return;
+
+  setFollowUser(true);
+
+  mapRef.current.flyTo(position, 18, {
+    animate: true,
+    duration: 1.5,
+  });
+}}
+
+
   style={{
     position: 'fixed',
     bottom: '190px',
@@ -507,7 +554,37 @@ const userIcon = L.divIcon({ //marcador personalizado do usuário, um ponto azul
   📍
 </button>
 
+    <button
+  onClick={() => setFollowUser(!followUser)}
+  style={{
+    position: 'fixed',
+    bottom: '260px',
+    right: '20px',
+    zIndex: 2500,
 
+    width: '58px',
+    height: '58px',
+
+    borderRadius: '50%',
+    border: 'none',
+
+    background: followUser
+      ? 'rgba(37,99,235,0.85)'
+      : 'rgba(255,255,255,0.18)',
+
+    color: followUser ? 'white' : 'black',
+
+    backdropFilter: 'blur(16px)',
+    WebkitBackdropFilter: 'blur(16px)',
+
+    boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
+
+    fontSize: '22px',
+    cursor: 'pointer',
+  }}
+>
+  🧭
+</button>
 
 
       {/* botão abrir menu */}
