@@ -162,7 +162,7 @@ function App() {
   const [zoom, setZoom] = useState(18);
   const [heading, setHeading] = useState<number>(0);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  //const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState('');
   const [severity, setSeverity] = useState<number | ''>('');
@@ -916,8 +916,10 @@ function createUserIcon(rotation: number) {
             if (file) {
               setSelectedImage(file);
 
-              const imageUrl = URL.createObjectURL(file);
-              setPreview(imageUrl);
+              
+
+              //const imageUrl = URL.createObjectURL(file);
+              //setPreview(imageUrl);
             }
           }}
         />
@@ -1014,7 +1016,7 @@ function createUserIcon(rotation: number) {
           );
         } finally {
           setLoading(false);
-          setPreview(null);
+          //setPreview(null);
           setSelectedImage(null);
         }
       }}
