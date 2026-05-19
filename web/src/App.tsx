@@ -838,7 +838,7 @@ function createUserIcon(rotation: number) {
 
       </div>
 
-
+//bottom bar com efeito glassmorphism, botão de enviar denúncia, preview da imagem selecionada e texto de orientação
 
       <div
   style={{
@@ -859,9 +859,9 @@ function createUserIcon(rotation: number) {
       backdropFilter: 'blur(20px)',
       WebkitBackdropFilter: 'blur(20px)',
 
-      borderRadius: '32px',
+      borderRadius: '34px',
 
-      padding: '18px',
+      padding: '14px 16px',
 
       boxShadow: `
         0 12px 40px rgba(0,0,0,0.35),
@@ -884,14 +884,14 @@ function createUserIcon(rotation: number) {
         gap: '16px',
       }}
     >
-      {/* BOTÃO CÂMERA */}
+      {/* BOTÃODA CÂMERA */}
       <label
         style={{
-          minWidth: '62px',
-          width: '62px',
-          height: '62px',
+          minWidth: '58px',
+          width: '58px',
+          height: '58px',
 
-          borderRadius: '22px',
+          borderRadius: '20px',
 
           background: 'rgba(255,255,255,0.12)',
 
@@ -923,13 +923,13 @@ function createUserIcon(rotation: number) {
         />
       </label>
 
-      {/* TEXTO */}
+      {/* TEXTO ENVIAR DENÚNCIA */}
       <div>
         <h3
           style={{
             margin: 0,
             color: 'white',
-            fontSize: '26px',
+            fontSize: '22px',
             fontWeight: 700,
           }}
         >
@@ -941,7 +941,7 @@ function createUserIcon(rotation: number) {
             margin: 0,
             marginTop: '4px',
             color: 'rgba(255,255,255,0.82)',
-            fontSize: '15px',
+            fontSize: '13px',
           }}
         >
           {selectedPosition
@@ -1019,11 +1019,11 @@ function createUserIcon(rotation: number) {
         }
       }}
       style={{
-        minWidth: '74px',
-        width: '74px',
-        height: '74px',
+        minWidth: '64px',
+        width: '64px',
+        height: '64px',
 
-        borderRadius: '24px',
+        borderRadius: '22px',
 
         border: 'none',
 
@@ -1032,7 +1032,7 @@ function createUserIcon(rotation: number) {
 
         color: 'white',
 
-        fontSize: '32px',
+        fontSize: '28px',
         fontWeight: 300,
 
         cursor: 'pointer',
@@ -1040,7 +1040,7 @@ function createUserIcon(rotation: number) {
         transition: '0.2s ease',
       }}
     >
-      ↑
+      ➤
     </button>
   </div>
 </div>
