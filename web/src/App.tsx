@@ -840,163 +840,214 @@ function createUserIcon(rotation: number) {
 
 
 
-      {preview && (
-        <img
-          src={preview}
-          alt="Preview"
-          style={{
-            position: 'fixed',
-            bottom: '140px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '120px',
-            height: '120px',
-            objectFit: 'cover',
-            borderRadius: '12px',
-            zIndex: 2000,
-            boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
-          }}
-        />
-      )}
-
       <div
   style={{
     position: 'fixed',
-    bottom: '110px',
+    bottom: '20px',
     left: '50%',
     transform: 'translateX(-50%)',
-    zIndex: 2000,
+    width: '92%',
+    maxWidth: '420px',
+    zIndex: 3000,
   }}
 >
-  <label
+  <div
     style={{
-      ...glassCard,
-      width: '130px',
-      height: '65px',
+      background:
+        'linear-gradient(135deg, rgba(67,56,202,0.96), rgba(37,99,235,0.96))',
+
+      backdropFilter: 'blur(20px)',
+      WebkitBackdropFilter: 'blur(20px)',
+
+      borderRadius: '32px',
+
+      padding: '18px',
+
+      boxShadow: `
+        0 12px 40px rgba(0,0,0,0.35),
+        inset 0 1px 1px rgba(255,255,255,0.15)
+      `,
+
+      border: '1px solid rgba(255,255,255,0.12)',
+
       display: 'flex',
-      flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
-      gap: '8px',
-      cursor: 'pointer',
+      justifyContent: 'space-between',
+      gap: '16px',
     }}
   >
-    {/* ícone da câmera */}
+    {/* LADO ESQUERDO */}
     <div
-  style={{
-    width: '60px',
-    height: '60px',
-    borderRadius: '50%',
-    border: '2px solid rgba(0,0,0,0.4)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }}
->
-  <Camera size={26} strokeWidth={1.5} />
-</div>
-
-    {/* texto */}
-    <span style={{ fontSize: '14px', fontWeight: '500' }}>
-      Selecionar imagem
-    </span>
-
-    <input
-      type="file"
-      accept="image/*"
-      style={{ display: 'none' }}
-      onChange={(e) => {
-        const file = e.target.files?.[0];
-        if (file) {
-          setSelectedImage(file);
-          const imageUrl = URL.createObjectURL(file);
-          setPreview(imageUrl);
-          console.log(' PREVIEW:', imageUrl);
-        }
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '16px',
       }}
-    />
-  </label>
-</div>
-
-      <div
+    >
+      {/* BOTÃO CÂMERA */}
+      <label
         style={{
-          position: 'fixed',
-          bottom: '20px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 1000,
-          width: '90%',
-          maxWidth: '400px',
+          minWidth: '62px',
+          width: '62px',
+          height: '62px',
+
+          borderRadius: '22px',
+
+          background: 'rgba(255,255,255,0.12)',
+
+          border: '1px solid rgba(255,255,255,0.12)',
+
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+
+          cursor: 'pointer',
         }}
       >
+        <Camera color="white" size={28} />
 
-        {/* botão enviar denúncia */}
-        <button
-          style={{
-            width: '100%',
-            padding: '10px',
-            fontSize: '14px',
-            backgroundColor: '#2563eb',
-            color: 'white',
-            border: 'none',
-            borderRadius: '12px',
-            boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
-            opacity: loading ? 0.7 : 1,
-            cursor: loading ? 'not-allowed' : 'pointer',
+        <input
+          type="file"
+          accept="image/*"
+          style={{ display: 'none' }}
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+
+            if (file) {
+              setSelectedImage(file);
+
+              const imageUrl = URL.createObjectURL(file);
+              setPreview(imageUrl);
+            }
           }}
-          disabled={loading}
-          onClick={async () => {
-            if (!selectedPosition) {
-              toast.error('Selecione um ponto no mapa!');
-              return;
-            }
+        />
+      </label>
 
-            if (!selectedImage) {
-              toast.error('Selecione uma imagem!');
-              return;
-            }
-
-            if (!type) {
-              toast.error('Selecione um tipo de denúncia!');
-              return;
-            }
-
-            if (!severity) {
-              toast.error('Selecione a severidade da denúncia!');
-              return;
-            }
-
-            const formData = new FormData();
-            formData.append('type', type);
-            formData.append('description', 'denúncia via mapa');
-            formData.append('latitude', selectedPosition[0].toString());
-            formData.append('longitude', selectedPosition[1].toString());
-            formData.append('image', selectedImage);
-            formData.append('severity', severity.toString());
-
-            setLoading(true);
-
-            try {
-              await fetch(`${API_URL}/issues`, { //troca 
-              method: 'POST',
-                body: formData,
-              });
-
-              fetchIssues();
-              toast.success('Denúncia enviada com sucesso!');
-            } catch (error) {
-              console.error(error);
-              toast.error('Erro ao enviar denúncia!');
-            } finally {
-              setLoading(false);
-              setPreview(null);
-              setSelectedImage(null);
-            }
+      {/* TEXTO */}
+      <div>
+        <h3
+          style={{
+            margin: 0,
+            color: 'white',
+            fontSize: '26px',
+            fontWeight: 700,
           }}
         >
-          {loading ? 'Enviando...' : 'Enviar denúncia'}
-        </button>
+          Enviar denúncia
+        </h3>
+
+        <p
+          style={{
+            margin: 0,
+            marginTop: '4px',
+            color: 'rgba(255,255,255,0.82)',
+            fontSize: '15px',
+          }}
+        >
+          {selectedPosition
+            ? 'Ponto selecionado no mapa'
+            : 'Selecione um ponto no mapa'}
+        </p>
       </div>
+    </div>
+
+    {/* BOTÃO ENVIAR */}
+    <button
+      disabled={loading}
+      onClick={async () => {
+        if (!selectedPosition) {
+          toast.error('Selecione um ponto no mapa!');
+          return;
+        }
+
+        if (!selectedImage) {
+          toast.error('Selecione uma imagem!');
+          return;
+        }
+
+        if (!type) {
+          toast.error('Selecione um tipo de denúncia!');
+          return;
+        }
+
+        if (!severity) {
+          toast.error('Selecione a severidade da denúncia!');
+          return;
+        }
+
+        const formData = new FormData();
+
+        formData.append('type', type);
+        formData.append('description', 'denúncia via mapa');
+        formData.append(
+          'latitude',
+          selectedPosition[0].toString()
+        );
+        formData.append(
+          'longitude',
+          selectedPosition[1].toString()
+        );
+        formData.append('image', selectedImage);
+        formData.append(
+          'severity',
+          severity.toString()
+        );
+
+        setLoading(true);
+
+        try {
+          await fetch(`${API_URL}/issues`, {
+            method: 'POST',
+            body: formData,
+          });
+
+          fetchIssues();
+
+          toast.success(
+            'Denúncia enviada com sucesso!'
+          );
+        } catch (error) {
+          console.error(error);
+
+          toast.error(
+            'Erro ao enviar denúncia!'
+          );
+        } finally {
+          setLoading(false);
+          setPreview(null);
+          setSelectedImage(null);
+        }
+      }}
+      style={{
+        minWidth: '74px',
+        width: '74px',
+        height: '74px',
+
+        borderRadius: '24px',
+
+        border: 'none',
+
+        background:
+          'rgba(255,255,255,0.14)',
+
+        color: 'white',
+
+        fontSize: '32px',
+        fontWeight: 300,
+
+        cursor: 'pointer',
+
+        transition: '0.2s ease',
+      }}
+    >
+      ↑
+    </button>
+  </div>
+</div>
+
+
+
+
     </div>
   );
 }
