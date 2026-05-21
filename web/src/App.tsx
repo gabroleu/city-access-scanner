@@ -15,6 +15,7 @@ import {
   ShieldAlert,
   ShieldCheck,
   ChevronDown,
+  LocateFixed,
 } from 'lucide-react';
 import {  } from './types/issue';
 
@@ -846,45 +847,55 @@ severity === 1
       </MapContainer>
 
 
-          <button
-
+  <button
   onClick={() => {
-  if (!mapRef.current || !position) return;
+    if (!mapRef.current || !position) return;
 
-  setFollowUser(true);
+    setFollowUser(true);
 
-  mapRef.current.flyTo(position, 18, {
-    animate: true,
-    duration: 1.5,
-  });
-}}
-
-
+    mapRef.current.flyTo(position, 18, {
+      animate: true,
+      duration: 1.5,
+    });
+  }}
   style={{
     position: 'fixed',
-    bottom: '190px',
+    bottom: '185px',
     right: '20px',
     zIndex: 2500,
 
-    width: '58px',
-    height: '58px',
+    width: '56px',
+    height: '56px',
 
-    borderRadius: '50%',
+    borderRadius: '20px',
 
-    border: 'none',
+    border: '1px solid rgba(255,255,255,0.08)',
 
-    background: 'rgba(255,255,255,0.18)',
+    background:
+  'linear-gradient(180deg, rgba(74,85,120,0.78), rgba(54,63,92,0.78))',
 
-    backdropFilter: 'blur(16px)',
-    WebkitBackdropFilter: 'blur(16px)',
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
 
-    boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
+    boxShadow: `
+  inset 0 1px 1px rgba(255,255,255,0.08),
+  0 6px 18px rgba(15,23,42,0.18)
+`,
 
-    fontSize: '24px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
     cursor: 'pointer',
+
+    transition: 'all 0.2s ease',
   }}
 >
-  📍
+  <LocateFixed
+    size={24}
+    color="rgba(255,255,255,0.92)"
+    strokeWidth={2}
+  />
 </button>
 
     <button
