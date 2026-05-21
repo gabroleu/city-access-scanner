@@ -414,56 +414,120 @@ function createUserIcon(rotation: number) {
     borderRadius: '999px',
 
     background:
-    'linear-gradient(180deg, rgba(55,65,92,0.94), rgba(37,45,68,0.94))',
+type === 'buraco_calcada'
+? 'linear-gradient(180deg, rgba(120,86,38,0.92), rgba(84,63,33,0.92))'
+
+: type === 'iluminacao'
+? 'linear-gradient(180deg, rgba(187, 156, 70, 0.92), rgba(150, 128, 77, 0.92))'
+
+: type === 'lixo'
+? 'linear-gradient(180deg, rgba(74,61,116,0.92), rgba(54,44,88,0.92))'
+
+: type === 'acessibilidade'
+? 'linear-gradient(180deg, rgba(47,96,112,0.92), rgba(36,71,84,0.92))'
+
+: 'linear-gradient(180deg, rgba(55,65,92,0.94), rgba(37,45,68,0.94))',
 
     backdropFilter: 'blur(20px)',
     WebkitBackdropFilter: 'blur(20px)',
 
-    padding: '8px 14px',
+    padding: '7px 12px',
 
     display: 'flex',
     alignItems: 'center',
-    gap: '10px',
+    gap: '8px',
 
-    boxShadow: `
-      inset 0 1px 1px rgba(255,255,255,0.14),
-      0 10px 28px rgba(15,23,42,0.35)
-    `,
+    boxShadow:
+type === 'buraco_calcada'
+? `
+  inset 0 1px 1px rgba(255,255,255,0.10),
+  0 0 18px rgba(180,120,40,0.12)
+`
+
+: type === 'iluminacao'
+? `
+  inset 0 1px 1px rgba(255,255,255,0.10),
+  0 0 18px rgba(180,150,50,0.12)
+`
+
+: type === 'lixo'
+? `
+  inset 0 1px 1px rgba(255,255,255,0.10),
+  0 0 18px rgba(120,90,180,0.12)
+`
+
+: type === 'acessibilidade'
+? `
+  inset 0 1px 1px rgba(255,255,255,0.10),
+  0 0 18px rgba(80,170,200,0.12)
+`
+
+: `
+  inset 0 1px 1px rgba(255,255,255,0.14),
+  0 10px 28px rgba(15,23,42,0.35)
+`,
 
     cursor: 'pointer',
+
+    transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+    transform:
+      type !== ''
+        ? 'translateY(-1px)'
+        : 'translateY(0)',
   }}
 >
   {/* Ícone */}
   <div
   style={{
-    width: '26px',
-    height: '26px',
-    borderRadius: '999px',
+  width: '30px',
+  height: '30px',
 
-    background:
-  type === 'buraco_calcada'
-    ? 'linear-gradient(135deg,#06b6d4,#0891b2)'
-    : type === 'iluminacao'
-    ? 'linear-gradient(135deg,#f59e0b,#f97316)'
-    : type === 'lixo'
-    ? 'linear-gradient(135deg,#9333ea,#c026d3)'
-    : 'linear-gradient(135deg,#14b8a6,#0f766e)',
+  borderRadius: '999px',
 
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }}
+  background:
+    type === 'buraco_calcada'
+      ? 'linear-gradient(180deg, rgba(6,182,212,0.22), rgba(8,145,178,0.16))'
+
+      : type === 'iluminacao'
+      ? 'linear-gradient(180deg, rgba(245,158,11,0.22), rgba(217,119,6,0.16))'
+
+      : type === 'lixo'
+      ? 'linear-gradient(180deg, rgba(147,51,234,0.22), rgba(126,34,206,0.16))'
+
+      : type === 'acessibilidade'
+      ? 'linear-gradient(180deg, rgba(20,184,166,0.22), rgba(15,118,110,0.16))'
+
+      : 'rgba(255,255,255,0.08)',
+
+  border: '1px solid rgba(255,255,255,0.08)',
+
+  backdropFilter: 'blur(10px)',
+  WebkitBackdropFilter: 'blur(10px)',
+
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+
+  boxShadow: `
+    inset 0 1px 1px rgba(255,255,255,0.10),
+    0 4px 12px rgba(0,0,0,0.18)
+  `,
+}}
 >
   {type === 'buraco_calcada' ? (
-    <Construction size={15} color="white" />
+    <Construction size={16} 
+    strokeWidth={2.1} 
+    color="white" />
   ) : type === 'iluminacao' ? (
-    <Lightbulb size={15} color="white" />
+    <Lightbulb size={16}
+    strokeWidth={2.1}
+    color="white" />
   ) : type === 'lixo' ? (
-    <Trash2 size={15} color="white" />
+    <Trash2 size={16} strokeWidth={2.1} color="white" />
   ) : type === 'acessibilidade' ? (
-    <Accessibility size={15} color="white" />
+    <Accessibility size={16} strokeWidth={2.1} color="white" />
   ) : (
-    <Construction size={15} color="white" />
+    <Construction size={16} strokeWidth={2.1} color="white" />
   )}
 </div>
 
@@ -471,7 +535,7 @@ function createUserIcon(rotation: number) {
   <span
     style={{
       color: 'rgba(255,255,255,0.96)',
-      fontSize: '14px',
+      fontSize: '13px',
       fontWeight: 600,
       letterSpacing: '-0.3px',
     }}
@@ -517,50 +581,100 @@ function createUserIcon(rotation: number) {
     borderRadius: '999px',
 
     background:
-  'linear-gradient(180deg, rgba(55,65,92,0.94), rgba(37,45,68,0.94))',
+severity === 1
+? 'linear-gradient(180deg, rgba(44,94,67,0.92), rgba(31,68,49,0.92))'
+
+: severity === 2
+? 'linear-gradient(180deg, rgba(112,84,40,0.92), rgba(80,60,30,0.92))'
+
+: severity === 3
+? 'linear-gradient(180deg, rgba(108,48,48,0.92), rgba(78,34,34,0.92))'
+
+: 'linear-gradient(180deg, rgba(67,78,110,0.95), rgba(46,54,82,0.95))',
 
     backdropFilter: 'blur(20px)',
     WebkitBackdropFilter: 'blur(20px)',
 
-    padding: '8px 14px',
+    padding: '7px 12px',
 
     display: 'flex',
     alignItems: 'center',
-    gap: '10px',
+    gap: '8px',
 
-    boxShadow: `
-      inset 0 1px 1px rgba(255,255,255,0.14),
-      0 10px 28px rgba(0,0,0,0.35)
-    `,
+    boxShadow:
+severity === 1
+? `
+  inset 0 1px 1px rgba(255,255,255,0.10),
+  0 0 18px rgba(50,160,90,0.12)
+`
+
+: severity === 2
+? `
+  inset 0 1px 1px rgba(255,255,255,0.10),
+  0 0 18px rgba(180,130,40,0.12)
+`
+
+: severity === 3
+? `
+  inset 0 1px 1px rgba(255,255,255,0.10),
+  0 0 18px rgba(180,70,70,0.12)
+`
+
+: `
+  inset 0 1px 1px rgba(255,255,255,0.14),
+  0 10px 28px rgba(0,0,0,0.35)
+`,
 
     cursor: 'pointer',
+
+    transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+    transform:
+    severity !== ''
+    ? 'translateY(-1px)'
+    : 'translateY(0)',
   }}
 >
   {/* Ícone */}
   <div
   style={{
-    width: '26px',
-    height: '26px',
-    borderRadius: '999px',
+  width: '30px',
+  height: '30px',
 
-    background:
-  severity === 1
-    ? 'linear-gradient(135deg,#22c55e,#16a34a)'
-    : severity === 2
-    ? 'linear-gradient(135deg,#f59e0b,#ea580c)'
-    : 'linear-gradient(135deg,#ef4444,#dc2626)',
+  borderRadius: '999px',
 
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }}
+  background:
+    severity === 1
+      ? 'linear-gradient(180deg, rgba(34,197,94,0.22), rgba(22,163,74,0.16))'
+
+      : severity === 2
+      ? 'linear-gradient(180deg, rgba(245,158,11,0.22), rgba(217,119,6,0.16))'
+
+      : severity === 3
+      ? 'linear-gradient(180deg, rgba(239,68,68,0.22), rgba(185,28,28,0.16))'
+
+      : 'rgba(255,255,255,0.08)',
+
+  border: '1px solid rgba(255,255,255,0.08)',
+
+  backdropFilter: 'blur(10px)',
+  WebkitBackdropFilter: 'blur(10px)',
+
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+
+  boxShadow: `
+    inset 0 1px 1px rgba(255,255,255,0.10),
+    0 4px 12px rgba(0,0,0,0.18)
+  `,
+}}
 >
   {severity === 3 ? (
-    <ShieldAlert size={15} color="white" />
+    <ShieldAlert size={16} strokeWidth={2.1} color="white" />
   ) : severity === 2 ? (
-    <AlertTriangle size={15} color="white" />
+    <AlertTriangle size={16} strokeWidth={2.1} color="white" />
   ) : (
-    <ShieldCheck size={15} color="white" />
+    <ShieldCheck size={16} strokeWidth={2.1}color="white" />
   )}
 </div>
 
@@ -568,7 +682,7 @@ function createUserIcon(rotation: number) {
   <span
     style={{
       color: 'white',
-      fontSize: '14px',
+      fontSize: '13px',
       fontWeight: 600,
       letterSpacing: '-0.2px',
     }}
