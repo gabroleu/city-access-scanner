@@ -357,23 +357,79 @@ function createUserIcon(rotation: number) {
       />
       
       {/* aqui eu etô colocando o contador */}
-      <div
-        style={{
-          position: 'fixed',
-          top: '20px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          //right: '20px',
-          zIndex: 2000,
-          background: 'white',
-          padding: '10px 15px',
-          borderRadius: '8px',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
-          fontWeight: 'bold',
-        }}
-      >
-      {/* lembrar de colocar uma lupinha aqui */}  {filteredIssues.length} problema(s) | direção: {Math.round(heading)}°
-        </div>
+      
+<div
+  style={{
+  position: 'fixed',
+  top: '20px',
+  left: '50%',
+  transform: 'translateX(-50%)',
+  zIndex: 2000,
+
+  width: '230px',
+
+  background: 'rgba(10, 15, 30, 0.72)',
+  backdropFilter: 'blur(18px)',
+  WebkitBackdropFilter: 'blur(18px)',
+
+  border: '1px solid rgba(255,255,255,0.08)',
+
+  borderRadius: '999px',
+
+  padding: '8px 13px',
+
+  boxShadow: `
+    0 8px 24px rgba(0,0,0,0.35),
+    inset 0 1px 1px rgba(255,255,255,0.08)
+  `,
+
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+}}
+>
+  {/* linha principal */}
+  <div
+    style={{
+      display: 'flex',
+alignItems: 'center',
+justifyContent: 'center',
+gap: '8px',
+fontSize: '15px',
+fontWeight: '600',
+color: 'white',
+textAlign: 'center',
+    }}
+  >
+    <span
+      style={{
+        color: '#f9fbfd',
+        fontWeight: '500',
+        fontSize: '18px',
+      }}
+    >
+      {filteredIssues.length}
+    </span>
+
+    <span>problemas encontrados</span>
+  </div>
+
+  {/* subtítulo */}
+  <div
+    style={{
+      display: 'flex',
+alignItems: 'center',
+justifyContent: 'center',
+gap: '6px',
+fontSize: '12px',
+color: 'rgba(255,255,255,0.72)',
+textAlign: 'center',
+    }}
+  >
+    <span style={{ color: '#67ff5f' }}>●</span>
+    <span>Atualizado agora</span>
+  </div>
+</div>
 
 
 
