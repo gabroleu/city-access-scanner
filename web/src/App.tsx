@@ -859,76 +859,42 @@ severity === 1
     });
   }}
   style={{
-    position: 'fixed',
-    bottom: '185px',
-    right: '20px',
-    zIndex: 2500,
+  position: 'fixed',
+  bottom: '190px',
+  right: '18px',
+  zIndex: 2500,
 
-    width: '56px',
-    height: '56px',
+  width: '44px',
+  height: '44px',
 
-    borderRadius: '20px',
+  borderRadius: '999px',
 
-    border: '1px solid rgba(255,255,255,0.08)',
+  border: '1px solid rgba(255,255,255,0.08)',
 
-    background:
-  'linear-gradient(180deg, rgba(74,85,120,0.78), rgba(54,63,92,0.78))',
+  background: 'rgba(255,255,255,0.08)',
 
-    backdropFilter: 'blur(20px)',
-    WebkitBackdropFilter: 'blur(20px)',
+  backdropFilter: 'blur(14px)',
+  WebkitBackdropFilter: 'blur(14px)',
 
-    boxShadow: `
-  inset 0 1px 1px rgba(255,255,255,0.08),
-  0 6px 18px rgba(15,23,42,0.18)
-`,
+  boxShadow: '0 4px 14px rgba(0,0,0,0.12)',
 
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 
-    cursor: 'pointer',
+  cursor: 'pointer',
 
-    transition: 'all 0.2s ease',
-  }}
+  transition: 'all 0.2s ease',
+}}
 >
   <LocateFixed
-    size={24}
-    color="rgba(255,255,255,0.92)"
-    strokeWidth={2}
+    size={22}
+    color="rgba(145, 130, 130, 0.82)"
+    strokeWidth={2.2}
   />
 </button>
 
-    <button
-  onClick={() => setFollowUser(!followUser)}
-  style={{
-    position: 'fixed',
-    bottom: '260px',
-    right: '20px',
-    zIndex: 2500,
-
-    width: '58px',
-    height: '58px',
-
-    borderRadius: '50%',
-    border: 'none',
-
-    background: followUser
-      ? 'rgba(37,99,235,0.85)'
-      : 'rgba(255,255,255,0.18)',
-
-    color: followUser ? 'white' : 'black',
-
-    backdropFilter: 'blur(16px)',
-    WebkitBackdropFilter: 'blur(16px)',
-
-    boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
-
-    fontSize: '22px',
-    cursor: 'pointer',
-  }}
->
-  🧭
-</button>
+    
 
 
       {/* botão abrir menu */}
