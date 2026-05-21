@@ -5,7 +5,17 @@ import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.heat';
-import { Camera } from 'lucide-react';
+import {
+  Camera,
+  AlertTriangle,
+  Lightbulb,
+  Trash2,
+  Accessibility,
+  Construction,
+  ShieldAlert,
+  ShieldCheck,
+  ChevronDown,
+} from 'lucide-react';
 import {  } from './types/issue';
 
 type Issue = {
@@ -180,15 +190,6 @@ function App() {
 
  //fundo botão semi-transparente, efeito blur, borda suave e aparência flutuante
   
-  const glassCard = {
-  background: 'rgba(255, 255, 255, 0.15)',
-  backdropFilter: 'blur(12px)',
-  WebkitBackdropFilter: 'blur(12px)',
-  borderRadius: '16px',
-  border: '1px solid rgba(255, 255, 255, 0.2)',
-  boxShadow: '0 8px 20px rgba(0,0,0,0.25)',
-  padding: '12px 16px',
-  }
 
 
 
@@ -376,96 +377,224 @@ function createUserIcon(rotation: number) {
 
 
 
-{/* aqui fica o SELECT de severidade pra selecionar no mapa quando enviar a imagem*/}
-    {!menuOpen && ( //esconde o select quando o menu lateral estiver aberto, pra não poluir a interface
-      <>
-    <div
-  style={{
-    ...glassCard,
-    position: 'fixed',
-    top: '90px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    zIndex: 600,
-
-    }}
->
-  <div style={{ fontSize: '12px', opacity: 0.7 }}>
-    Gravidade
-  </div>
-
-  <select
-    value={severity}
-    onChange={(e) => setSeverity(Number(e.target.value))}
+{/* botões tipo e gravidade */}
+   
+{!menuOpen && (
+  <div
     style={{
-      width: 'fit-content',
-      background: 'transparent',
-      border: 'none',
-      minWidth: '22px',
-      fontSize: '15px',
-      outline: 'none',
-      cursor: 'pointer',
-      padding: '4px 12px',
+      position: 'fixed',
+      bottom: '128px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: 2500,
+
       display: 'flex',
-      flexDirection: 'column',
-    textAlign: 'center',
-    margin: '0 auto',
+      gap: '12px',
+      alignItems: 'center',
     }}
   >
-    <option value="" disabled>
-      Selecione a gravidade
-    </option>
-    <option value={1}>🟢 Leve</option>
-    <option value={2}>🟡 Moderada</option>
-    <option value={3}>🔴 Grave</option>
-  </select>
-</div>
-
-{/* aqiu fica o SELECT DE TIPO */}
-<div
+    {/* botão tipo */}
+    
+    <button
+  onClick={() => {
+    if (type === '') {
+      setType('buraco_calcada');
+    } else if (type === 'buraco_calcada') {
+      setType('iluminacao');
+    } else if (type === 'iluminacao') {
+      setType('lixo');
+    } else if (type === 'lixo') {
+      setType('acessibilidade');
+    } else {
+      setType('');
+    }
+  }}
   style={{
-    ...glassCard,
-    position: 'fixed',
-    top: '170px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    zIndex: 600,
-    width: '260px',
+    border: '1px solid rgba(255,255,255,0.14)',
+    borderRadius: '999px',
+
+    background:
+    'linear-gradient(180deg, rgba(55,65,92,0.94), rgba(37,45,68,0.94))',
+
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
+
+    padding: '8px 14px',
+
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+
+    boxShadow: `
+      inset 0 1px 1px rgba(255,255,255,0.14),
+      0 10px 28px rgba(15,23,42,0.35)
+    `,
+
+    cursor: 'pointer',
   }}
 >
-  <div style={{ fontSize: '12px', opacity: 0.7 }}>
-    Tipo de problema
-  </div>
+  {/* Ícone */}
+  <div
+  style={{
+    width: '26px',
+    height: '26px',
+    borderRadius: '999px',
 
-  <select
-    value={type}
-    onChange={(e) => setType(e.target.value)}
+    background:
+  type === 'buraco_calcada'
+    ? 'linear-gradient(135deg,#06b6d4,#0891b2)'
+    : type === 'iluminacao'
+    ? 'linear-gradient(135deg,#f59e0b,#f97316)'
+    : type === 'lixo'
+    ? 'linear-gradient(135deg,#9333ea,#c026d3)'
+    : 'linear-gradient(135deg,#14b8a6,#0f766e)',
+
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}
+>
+  {type === 'buraco_calcada' ? (
+    <Construction size={15} color="white" />
+  ) : type === 'iluminacao' ? (
+    <Lightbulb size={15} color="white" />
+  ) : type === 'lixo' ? (
+    <Trash2 size={15} color="white" />
+  ) : type === 'acessibilidade' ? (
+    <Accessibility size={15} color="white" />
+  ) : (
+    <Construction size={15} color="white" />
+  )}
+</div>
+
+  {/* Texto */}
+  <span
     style={{
-      width: 'fit-content',
-      minWidth: '220px',
-
-      background: 'transparent',
-      border: 'none',
+      color: 'rgba(255,255,255,0.96)',
       fontSize: '14px',
-      outline: 'none',
-      cursor: 'pointer',
-      padding: '4px 16px',
-      display: 'flex',
-      textAlign: 'center',
-      textAlignLast: 'center',
+      fontWeight: 600,
+      letterSpacing: '-0.3px',
     }}
   >
-    <option value="" disabled>
-      Selecione o tipo de problema
-    </option>
-    <option value="buraco_calcada">Buraco</option>
-    <option value="iluminacao">Iluminação</option>
-    <option value="lixo">Lixo</option>
-    <option value="acessibilidade">Acessibilidade</option>
-  </select>
+    {type === ''
+      ? 'Tipo'
+      : type === 'buraco_calcada'
+      ? 'Buraco'
+      : type === 'iluminacao'
+      ? 'Iluminação'
+      : type === 'lixo'
+      ? 'Lixo'
+      : 'Acessibilidade'}
+  </span>
+
+  {/* seta */}
+  <span
+    style={{
+      color: 'rgba(255,255,255,0.8)',
+      fontSize: '12px',
+    }}
+  >
+    <ChevronDown size={14} color="rgba(255,255,255,0.75)" />
+
+  </span>
+</button>
+
+    {/* botão gravidade */}
+    <button
+  onClick={() => {
+    if (severity === '') {
+      setSeverity(1);
+    } else if (severity === 1) {
+      setSeverity(2);
+    } else if (severity === 2) {
+      setSeverity(3);
+    } else {
+      setSeverity('');
+    }
+  }}
+  style={{
+    border: '1px solid rgba(255,255,255,0.14)',
+    borderRadius: '999px',
+
+    background:
+  'linear-gradient(180deg, rgba(55,65,92,0.94), rgba(37,45,68,0.94))',
+
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
+
+    padding: '8px 14px',
+
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+
+    boxShadow: `
+      inset 0 1px 1px rgba(255,255,255,0.14),
+      0 10px 28px rgba(0,0,0,0.35)
+    `,
+
+    cursor: 'pointer',
+  }}
+>
+  {/* Ícone */}
+  <div
+  style={{
+    width: '26px',
+    height: '26px',
+    borderRadius: '999px',
+
+    background:
+  severity === 1
+    ? 'linear-gradient(135deg,#22c55e,#16a34a)'
+    : severity === 2
+    ? 'linear-gradient(135deg,#f59e0b,#ea580c)'
+    : 'linear-gradient(135deg,#ef4444,#dc2626)',
+
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}
+>
+  {severity === 3 ? (
+    <ShieldAlert size={15} color="white" />
+  ) : severity === 2 ? (
+    <AlertTriangle size={15} color="white" />
+  ) : (
+    <ShieldCheck size={15} color="white" />
+  )}
 </div>
-</>
-    )}
+
+  {/* Texto */}
+  <span
+    style={{
+      color: 'white',
+      fontSize: '14px',
+      fontWeight: 600,
+      letterSpacing: '-0.2px',
+    }}
+  >
+    {severity === ''
+      ? 'Severidade'
+      : severity === 1
+      ? 'Leve'
+      : severity === 2
+      ? 'Moderada'
+      : 'Grave'}
+  </span>
+
+  {/* seta */}
+  <span
+    style={{
+      color: 'rgba(255,255,255,0.8)',
+      fontSize: '12px',
+    }}
+  >
+    ▼
+  </span>
+</button>
+    
+  </div>
+)}
 
   
 
@@ -838,7 +967,6 @@ function createUserIcon(rotation: number) {
 
       </div>
 
-//bottom bar com efeito glassmorphism, botão de enviar denúncia, preview da imagem selecionada e texto de orientação
 
       <div
   style={{
