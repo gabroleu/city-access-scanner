@@ -206,14 +206,81 @@ function App() {
 }
 
 function createCustomIcon(color: string) {
-  
-  return new L.Icon({
-    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${color}.png`,
-    shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
+  const colors = {
+    green: {
+      primary: '#34d399',
+      glow: 'rgba(52,211,153,0.22)',
+    },
+    orange: {
+      primary: '#fbbf24',
+      glow: 'rgba(251,191,36,0.22)',
+    },
+    red: {
+      primary: '#f87171',
+      glow: 'rgba(248,113,113,0.22)',
+    },
+    blue: {
+      primary: '#60a5fa',
+      glow: 'rgba(96,165,250,0.22)',
+    },
+  };
+
+  const selected =
+    colors[color as keyof typeof colors] ||
+    colors.blue;
+
+  return L.divIcon({
+    className: '',
+    html: `
+      <div style="
+        position: relative;
+        width: 20px;
+        height: 20px;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      ">
+
+        <!-- glow -->
+        <div style="
+          position:absolute;
+          width:34px;
+          height:34px;
+          border-radius:50%;
+
+          background:${selected.glow};
+          filter: blur(6px);
+        "></div>
+
+        <!-- ponto -->
+        <div style="
+          width:14px;
+          height:14px;
+
+          border-radius:50%;
+
+          background:
+          linear-gradient(
+            180deg,
+            ${selected.primary},
+            ${selected.primary}
+          );
+
+          border:2.5px solid rgba(255,255,255,0.92);
+
+          box-shadow:
+            0 4px 12px rgba(0,0,0,0.18),
+            inset 0 1px 1px rgba(255,255,255,0.25);
+        "></div>
+      </div>
+    `,
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
   });
 }
+
+
 function createUserIcon(rotation: number) {
   return L.divIcon({
     className: '',
@@ -234,8 +301,8 @@ function createUserIcon(rotation: number) {
         <!-- glow -->
         <div style="
           position:absolute;
-          width:36px;
-          height:36px;
+          width:28px;
+          height:28px;
           border-radius:50%;
 
           background:
@@ -244,7 +311,7 @@ function createUserIcon(rotation: number) {
             rgba(59,130,246,0.02)
           );
 
-          filter: blur(4px);
+          filter: blur(5px);
         "></div>
 
         <!-- seta -->
@@ -865,7 +932,63 @@ severity === 1
 
         <Heatmap issues={issues} />
 
-        <MarkerClusterGroup key={issues.length}>
+        
+
+        <MarkerClusterGroup
+  key={issues.length}
+  iconCreateFunction={(cluster: any) => {
+    const count = cluster.getChildCount();
+
+    let background = '';
+    let glow = '';
+
+    if (count < 5) {
+      background =
+        'linear-gradient(180deg,#4ade80,#22c55e)'
+      glow = 'rgba(52,211,153,0.22)';
+    } else if (count < 15) {
+      background =
+        'linear-gradient(180deg,#fbbf24,#f59e0b)'
+      glow = 'rgba(251,191,36,0.22)';
+    } else {
+      background =
+        'linear-gradient(180deg,#fb7185,#f43f5e)'
+      glow = 'rgba(248,113,113,0.22)';
+    }
+//bolinhas do cluster, com contagem e efeito de brilho que varia conforme a quantidade de pontos agrupados, antes 52px
+    return L.divIcon({
+      html: `
+        <div style="
+          width:38px; 
+          height:38px;
+          border-radius:50%;
+
+          display:flex;
+          align-items:center;
+          justify-content:center;
+
+          background:${background};
+
+          border:2px solid rgba(255,255,255,0.88);
+
+          color:white;
+          font-weight:700;
+          font-size:13px;
+
+          box-shadow:
+            0 8px 24px rgba(0,0,0,0.18),
+            0 0 12px ${glow},
+            inset 0 1px 1px rgba(255,255,255,0.22);
+        ">
+          ${count}
+        </div>
+      `,
+      className: '',
+      iconSize: [52, 52],
+    });
+  }}
+>
+
           {filteredIssues.map(issue => (
             <Marker
               key={issue.id}
