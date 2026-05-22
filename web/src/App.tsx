@@ -17,7 +17,6 @@ import {
   ChevronDown,
   LocateFixed,
   Loader2,
-  Check,
 } from 'lucide-react';
 import {  } from './types/issue';
 
@@ -175,8 +174,9 @@ function App() {
   const [zoom, setZoom] = useState(18);
   const [heading, setHeading] = useState<number>(0);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const [imageLoading, setImageLoading] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
+  
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState('');
   const [severity, setSeverity] = useState<number | ''>('');
@@ -186,6 +186,8 @@ function App() {
   const [followUser, setFollowUser] = useState(true);
   const mapRef = useRef<L.Map | null>(null);
   const hasCentered = useRef(false);
+  const fileInputRef =
+  useRef<HTMLInputElement | null>(null);
 
   
 
@@ -1432,71 +1434,82 @@ severity === 1
         gap: '16px',
       }}
     >
-      {/* BOTÃODA CÂMERA */}
-      <label
-        style={{
-          minWidth: '58px',
-          width: '58px',
-          height: '58px',
+      {/* BOTÃO DA CÂMERA */}
+<label
+  style={{
+    minWidth: '58px',
+    width: '58px',
+    height: '58px',
 
-          borderRadius: '20px',
+    borderRadius: '20px',
 
-          background: 'rgba(255,255,255,0.12)',
+    background: 'rgba(255,255,255,0.12)',
 
-          border: '1px solid rgba(255,255,255,0.12)',
+    border: '1px solid rgba(255,255,255,0.12)',
 
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
 
-          cursor: 'pointer',
-        }}
-      >
-        {imageLoading ? (
-  <Loader2
-    size={24}
-    color="white"
-    className="animate-spin"
+    overflow: 'hidden',
+
+    cursor: 'pointer',
+  }}
+>
+  {imageLoading ? (
+    <Loader2
+      size={24}
+      color="white"
+      className="animate-spin"
+    />
+  ) : preview ? (
+    <img
+      src={preview}
+      alt="preview"
+      style={{
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+      }}
+    />
+  ) : (
+    <Camera
+      color="white"
+      size={28}
+    />
+  )}
+
+  <input
+    ref={fileInputRef}
+    type="file"
+    accept="image/*"
+    style={{ display: 'none' }}
+    onChange={(e) => {
+      const file = e.target.files?.[0];
+
+      if (!file) return;
+
+      setImageLoading(true);
+
+      const img = new Image();
+
+      img.onload = () => {
+        const imageUrl =
+          URL.createObjectURL(file);
+
+        setSelectedImage(file);
+        setPreview(imageUrl);
+
+        setTimeout(() => {
+          setImageLoading(false);
+        }, 500);
+      };
+
+      img.src =
+        URL.createObjectURL(file);
+    }}
   />
-) : imageLoaded ? (
-  <Check
-    size={24}
-    color="white"
-  />
-) : (
-  <Camera
-    color="white"
-    size={28}
-  />
-)}
-
-        <input
-          type="file"
-          accept="image/*"
-          style={{ display: 'none' }}
-          onChange={(e) => {
-         const file = e.target.files?.[0];
-
-            if (!file) return;
-
-            setImageLoading(true);
-            setImageLoaded(false);
-
-          const img = new Image();
-
-             img.onload = () => {
-             setSelectedImage(file);
-
-      setTimeout(() => {
-        setImageLoading(false);
-        setImageLoaded(true);
-    }, 500);
-  };
-
-  img.src = URL.createObjectURL(file);
-}}
-        />
-      </label>
+</label>
 
       {/* TEXTO ENVIAR DENÚNCIA */}
       <div>
@@ -1589,9 +1602,15 @@ severity === 1
           );
         } finally {
           setLoading(false);
+
           setSelectedImage(null);
-          setImageLoaded(false);
+          setPreview(null);
           setImageLoading(false);
+
+          if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+          }
+
         }
       }}
       style={{
