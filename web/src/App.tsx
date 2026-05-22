@@ -873,19 +873,124 @@ severity === 1
               icon={createCustomIcon(getMarkerColor(issue.severity))}
             >
               <Popup
-                maxWidth={240}
-                className="custom-popup"
-              >
-                <strong>{issue.type}</strong>
-                <br />
-                {issue.description}
-                <br />
-                <img
-                  src={issue.imageUrl}
-                  alt="denúncia"
-                  style={{ width: '200px', marginTop: '10px' }}
-                />
-              </Popup>
+  maxWidth={280}
+  className="custom-popup"
+>
+  <div
+    style={{
+      width: '240px',
+      overflow: 'hidden',
+      borderRadius: '22px',
+      background: '#0f172a',
+      color: 'white',
+    }}
+  >
+    {/* imagem */}
+    <div
+      style={{
+        width: '100%',
+        height: '150px',
+        overflow: 'hidden',
+      }}
+    >
+      <img
+        src={issue.imageUrl}
+        alt="denúncia"
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          display: 'block',
+        }}
+      />
+    </div>
+
+    {/* conteúdo */}
+    <div
+      style={{
+        padding: '14px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
+      }}
+    >
+      {/* badges */}
+      <div
+        style={{
+          display: 'flex',
+          gap: '8px',
+          flexWrap: 'wrap',
+        }}
+      >
+        <div
+          style={{
+            padding: '6px 10px',
+            borderRadius: '999px',
+            background: 'rgba(255,255,255,0.08)',
+            fontSize: '12px',
+            fontWeight: 600,
+          }}
+        >
+          {issue.type === 'buraco_calcada'
+            ? 'Buraco'
+            : issue.type === 'iluminacao'
+            ? 'Iluminação'
+            : issue.type === 'lixo'
+            ? 'Lixo'
+            : 'Acessibilidade'}
+        </div>
+
+        <div
+          style={{
+            padding: '6px 10px',
+            borderRadius: '999px',
+            background:
+              issue.severity === 1
+              ? 'rgba(16,185,129,0.10)'
+              : issue.severity === 2
+              ? 'rgba(245,158,11,0.10)'
+              : 'rgba(239,68,68,0.10)',
+
+            border:
+              issue.severity === 1
+              ? '1px solid rgba(52,211,153,0.18)'
+              : issue.severity === 2
+              ? '1px solid rgba(251,191,36,0.18)'
+              : '1px solid rgba(248,113,113,0.18)',
+
+            color:
+              issue.severity === 1
+              ? '#6ee7b7'
+              : issue.severity === 2
+              ? '#fcd34d'
+              : '#fca5a5',
+
+            fontSize: '12px',
+            fontWeight: 700,
+          }}
+        >
+          {issue.severity === 1
+            ? 'Leve'
+            : issue.severity === 2
+            ? 'Moderada'
+            : 'Grave'}
+        </div>
+      </div>
+
+      {/* descrição */}
+      <p
+        style={{
+          margin: 0,
+          color: 'rgba(255,255,255,0.78)',
+          fontSize: '13px',
+          lineHeight: 1.5,
+        }}
+      >
+        {issue.description}
+      </p>
+    </div>
+  </div>
+</Popup>
             </Marker>
           ))}
         </MarkerClusterGroup>
