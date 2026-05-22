@@ -219,29 +219,71 @@ function createUserIcon(rotation: number) {
     className: '',
     html: `
       <div style="
-        width: 15px;
-        height: 15px;
-        background: #396bce;
-        border: 4px solid white;
-        border-radius: 50%;
-        box-shadow: 0 0 12px rgba(37,99,235,0.9);
+        position: relative;
+        width: 22px;
+        height: 22px;
 
         display:flex;
         align-items:center;
         justify-content:center;
 
         transform: rotate(${rotation}deg);
-        transition: transform 0.4s ease;
+        transition: transform 0.35s ease;
       ">
+
+        <!-- glow -->
         <div style="
+          position:absolute;
+          width:36px;
+          height:36px;
+          border-radius:50%;
+
+          background:
+          radial-gradient(
+            rgba(59,130,246,0.22),
+            rgba(59,130,246,0.02)
+          );
+
+          filter: blur(4px);
+        "></div>
+
+        <!-- seta -->
+        <div style="
+          position:absolute;
+          top:-7px;
+
           width:0;
           height:0;
-          border-left:6px solid transparent;
-          border-right:6px solid transparent;
-          border-bottom:10px solid white;
-          position:absolute;
-          top:-10px;
+
+          border-left:7px solid transparent;
+          border-right:7px solid transparent;
+          border-bottom:12px solid #60a5fa;
+
+          filter: drop-shadow(
+            0 2px 6px rgba(59,130,246,0.25)
+          );
         "></div>
+
+        <!-- ponto central -->
+        <div style="
+          width:16px;
+          height:16px;
+
+          background:
+          linear-gradient(
+            180deg,
+            #60a5fa,
+            #2563eb
+          );
+
+          border:3px solid rgba(255,255,255,0.95);
+          border-radius:50%;
+
+          box-shadow:
+            0 2px 10px rgba(37,99,235,0.20),
+            inset 0 1px 1px rgba(255,255,255,0.35);
+        "></div>
+
       </div>
     `,
     iconSize: [22, 22],
