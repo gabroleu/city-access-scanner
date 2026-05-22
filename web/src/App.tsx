@@ -16,6 +16,8 @@ import {
   ShieldCheck,
   ChevronDown,
   LocateFixed,
+  Loader2,
+  Check,
 } from 'lucide-react';
 import {  } from './types/issue';
 
@@ -173,7 +175,8 @@ function App() {
   const [zoom, setZoom] = useState(18);
   const [heading, setHeading] = useState<number>(0);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  //const [preview, setPreview] = useState<string | null>(null);
+  const [imageLoading, setImageLoading] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState('');
   const [severity, setSeverity] = useState<number | ''>('');
@@ -1179,24 +1182,49 @@ severity === 1
           cursor: 'pointer',
         }}
       >
-        <Camera color="white" size={28} />
+        {imageLoading ? (
+  <Loader2
+    size={24}
+    color="white"
+    className="animate-spin"
+  />
+) : imageLoaded ? (
+  <Check
+    size={24}
+    color="white"
+  />
+) : (
+  <Camera
+    color="white"
+    size={28}
+  />
+)}
 
         <input
           type="file"
           accept="image/*"
           style={{ display: 'none' }}
           onChange={(e) => {
-            const file = e.target.files?.[0];
+         const file = e.target.files?.[0];
 
-            if (file) {
-              setSelectedImage(file);
+            if (!file) return;
 
-              
+            setImageLoading(true);
+            setImageLoaded(false);
 
-              //const imageUrl = URL.createObjectURL(file);
-              //setPreview(imageUrl);
-            }
-          }}
+          const img = new Image();
+
+             img.onload = () => {
+             setSelectedImage(file);
+
+      setTimeout(() => {
+        setImageLoading(false);
+        setImageLoaded(true);
+    }, 500);
+  };
+
+  img.src = URL.createObjectURL(file);
+}}
         />
       </label>
 
@@ -1291,8 +1319,9 @@ severity === 1
           );
         } finally {
           setLoading(false);
-          //setPreview(null);
           setSelectedImage(null);
+          setImageLoaded(false);
+          setImageLoading(false);
         }
       }}
       style={{
