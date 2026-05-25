@@ -454,7 +454,34 @@ function createUserIcon(rotation: number) {
   };
 
 
+ <style>
+  {`
+    @keyframes shimmer {
+      0% {
+        background-position: 200% 0;
+      }
 
+      100% {
+        background-position: -200% 0;
+      }
+
+      @keyframes popupEnter {
+        0% {          
+          opacity: 0;
+          transform: translateY(0)
+          scale(1);
+        }
+        100% {
+          opacity: 1;
+          translalteY(0);
+          scale(1);
+        }
+      }
+
+    }
+  `}
+  
+</style>
 
 
 
@@ -1001,34 +1028,76 @@ severity === 1
   maxWidth={280}
   className="custom-popup"
 >
+
+   
+
   <div
     style={{
       width: '240px',
       overflow: 'hidden',
       borderRadius: '22px',
-      background: '#0f172a',
+      background: 'linear-gradient(180deg, rgba(15,23,42,0.98), rgba(17,24,39,0.96))',
+      border: '1px solid rgba(255,255,255,0.08)',
+      backdropFilter: 'blur(18px)',
+      boxShadow: '0 20px 40px rgba(0,0,0,0.35), 0 8px 20px rgba(0,0,0,0.18), inset 0 1px 1px rgba(255,255,255,0.05)',
       color: 'white',
+      animation: 'popupEnter 22ms ease',
+      transformOrigin: 'bottom center',
     }}
   >
     {/* imagem */}
     <div
-      style={{
-        width: '100%',
-        height: '150px',
-        overflow: 'hidden',
-      }}
-    >
-      <img
-        src={issue.imageUrl}
-        alt="denúncia"
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          display: 'block',
-        }}
-      />
-    </div>
+  style={{
+    width: '100%',
+    height: '150px',
+    overflow: 'hidden',
+    position: 'relative',
+    background: '#111827',
+  }}
+>
+  {/* skeleton */}
+  <div
+    style={{
+      position: 'absolute',
+      inset: 0,
+      background:
+        'linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%)',
+      backgroundSize: '200% 100%',
+      animation: 'shimmer 1.4s infinite',
+    }}
+  />
+
+  <img
+  src={issue.imageUrl}
+  alt="denúncia"
+  onLoad={(e) => {
+    const target =
+      e.currentTarget;
+
+    target.style.opacity = '1';
+    target.style.filter =
+      'blur(0px)';
+    target.style.transform =
+      'scale(1)';
+  }}
+  style={{
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    display: 'block',
+
+    position: 'relative',
+    zIndex: 1,
+
+    opacity: 0,
+    filter: 'blur(12px)',
+    transform: 'scale(1.04)',
+
+    transition:
+      'opacity 400ms ease, filter 500ms ease, transform 500ms ease',
+  }}
+/>
+</div>
 
     {/* conteúdo */}
     <div
