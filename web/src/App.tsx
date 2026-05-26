@@ -194,6 +194,34 @@ function App() {
 
   const API_URL = import.meta.env.VITE_API_URL; 
 
+// identificação única do dispositivo, para editar ou deletar denúncias feitas por ele, mesmo após fechar
+// o app ou atualizar a página. O ID é salvo no localStorage do navegador e gerado com crypto.randomUUID() caso não exista um ID salvo.
+// Assim, cada usuário tem um ID persistente e único para associar suas denúncias.
+  const [deviceId] = useState(() => {
+  const savedId =
+    localStorage.getItem(
+      'urban_device_id'
+    );
+
+  if (savedId) {
+    return savedId;
+  }
+
+  const newId =
+    crypto.randomUUID();
+
+  localStorage.setItem(
+    'urban_device_id',
+    newId
+  );
+
+  return newId;
+});
+
+
+
+
+
  //fundo botão semi-transparente, efeito blur, borda suave e aparência flutuante
   
 
@@ -2145,6 +2173,11 @@ severity === 1
         formData.append(
           'severity',
           severity.toString()
+        );
+//envia deviceId junto da denúncia. Agora toda denúncia irá retornar um json com o id da denúncia criada.
+        formData.append(
+          'devicedId',
+          deviceId
         );
 
         setLoading(true);
