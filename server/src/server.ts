@@ -21,7 +21,9 @@ app.get('/health', (req, res) => {
 
 
   app.listen(PORT, '0.0.0.0', () => { //o 0.0.0.0 aceita conexões de qualquer endereço IP
-  console.log(`Server running on port ${PORT}`);
+  console.log(
+  'BACKEND NOVO RODANDO NA PORTA 3333'
+);
 });
 
 

@@ -12,8 +12,9 @@ const upload = multer({ storage: multer.memoryStorage() });
 // Rota para cadastrar uma nova denúncia
 issuesRoutes.post('/', upload.single('image'), async (req, res) => {
   try {
-    const { type, description, latitude, longitude, severity } = req.body;
-      console.log('Body recebido:', req.body);
+    const { type, description, latitude, longitude, severity, deviceId } = req.body;
+      console.log('REQ BODY:', req.body);
+      console.log('DEVICE ID:', req.body.deviceId);
 
     const file = req.file;
 
@@ -57,7 +58,8 @@ issuesRoutes.post('/', upload.single('image'), async (req, res) => {
         imageUrl,
         latitude: lat,
         longitude: lng,
-        severity: Number(severity)
+        severity: Number(severity),
+        deviceId,
       },
     });
 
@@ -78,11 +80,29 @@ issuesRoutes.get('/', async (req, res) => {
   try {
     console.log('Buscando issues no banco...');
 
-    const issues = await prisma.issue.findMany();
+    const issues =
+      await prisma.issue.findMany();
 
-    console.log('Issues encontradas:', issues.length);
+    const deviceId =
+      req.query.deviceId;
 
-    return res.json(issues);
+    const formattedIssues =
+      issues.map(issue => ({
+        ...issue,
+
+        isOwner:
+          issue.deviceId ===
+          deviceId,
+      }));
+
+    console.log(
+      'Issues encontradas:',
+      issues.length
+    );
+
+    return res.json(
+      formattedIssues
+    );
 
   } catch (error) {
     console.error('ERRO AO BUSCAR ISSUES:', error);
