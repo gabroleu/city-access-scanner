@@ -1387,7 +1387,7 @@ severity === 1
 <div>
   <p
     style={{
-      marginBottom: '10px',
+      marginBottom: '4px',
       fontSize: '15px',
       fontWeight: 700,
       color: '#fff',
@@ -1587,7 +1587,8 @@ severity === 1
 
 <h3
   style={{
-    marginTop: '1px',
+    marginTop: '0px',
+    marginBottom: '4px',
     fontSize: '24px',
     fontWeight: '700',  
   }}
@@ -1600,7 +1601,7 @@ severity === 1
     background: 'rgba(255,255,255,0.12)',
     borderRadius: '16px',
     padding: '14px',
-    marginTop: '10px',
+    marginTop: '0px',
     backdropFilter: 'blur(10px)',
   }}
 >
@@ -1666,7 +1667,7 @@ severity === 1
     display: 'grid',
     gridTemplateColumns:
       '1fr 1fr',
-    gap: '8px',
+    gap: '6px',
   }}
 >
   {[
@@ -1731,9 +1732,9 @@ severity === 1
           '1px solid rgba(255,255,255,0.08)',
 
         borderRadius:
-          '16px',
+          '14px',
 
-        padding: '10px',
+        padding: '8px',
 
         backdropFilter:
           'blur(12px)',
@@ -1748,7 +1749,7 @@ severity === 1
         justifyContent:
           'space-between',
 
-        minHeight: '72px',
+        minHeight: '66px',
 
         boxShadow:
           'inset 0 1px 1px rgba(255,255,255,0.06)',
@@ -1756,10 +1757,10 @@ severity === 1
     >
       <div
         style={{
-          width: '34px',
-          height: '34px',
+          width: '28px',
+          height: '28px',
 
-          borderRadius: '14px',
+          borderRadius: '10px',
 
           background:
             'rgba(255,255,255,0.08)',
@@ -1780,7 +1781,7 @@ severity === 1
           style={{
             color: 'white',
             fontWeight: 800,
-            fontSize: '24px',
+            fontSize: '18px',
           }}
         >
           {item.value}
@@ -1791,7 +1792,7 @@ severity === 1
             color:
               'rgba(255,255,255,0.72)',
 
-            fontSize: '13px',
+            fontSize: '11px',
             marginTop: '2px',
           }}
         >
