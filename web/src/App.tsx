@@ -1659,21 +1659,294 @@ severity === 1
     <p style={{ fontWeight: '700', marginBottom: '10px' }}>
       Por tipo
     </p>
-    {/* não esquecer de colocar ícones nos problemas aqui depois */}
-    <p> Buraco: {statsByType.buraco}</p>
-    <p>Iluminação: {statsByType.iluminacao}</p>
-    <p>Lixo: {statsByType.lixo}</p>
-    <p>Acessibilidade: {statsByType.acessibilidade}</p>
+    {/* icones do tipo de problema */}
+    <div
+  style={{
+    display: 'grid',
+    gridTemplateColumns:
+      '1fr 1fr',
+    gap: '12px',
+  }}
+>
+  {[
+    {
+      label: 'Buraco',
+      value:
+        statsByType.buraco,
+      icon: (
+        <Construction
+          size={18}
+          color="#ffffff"
+          strokeWidth={2.2}
+        />
+      ),
+    },
+    {
+      label: 'Iluminação',
+      value:
+        statsByType.iluminacao,
+      icon: (
+        <Lightbulb
+          size={18}
+          color="#ffffff"
+          strokeWidth={2.2}
+        />
+      ),
+    },
+    {
+      label: 'Lixo',
+      value:
+        statsByType.lixo,
+      icon: (
+        <Trash2
+          size={18}
+          color="#ffffff"
+          strokeWidth={2.2}
+        />
+      ),
+    },
+    {
+      label:
+        'Acessibilidade',
+      value:
+        statsByType
+          .acessibilidade,
+      icon: (
+        <Accessibility
+          size={18}
+          color="#ffffff"
+          strokeWidth={2.2}
+        />
+      ),
+    },
+  ].map((item) => (
+    <div
+      key={item.label}
+      style={{
+        background:
+          'rgba(255,255,255,0.08)',
+
+        border:
+          '1px solid rgba(255,255,255,0.08)',
+
+        borderRadius:
+          '20px',
+
+        padding: '16px',
+
+        backdropFilter:
+          'blur(12px)',
+
+        WebkitBackdropFilter:
+          'blur(12px)',
+
+        display: 'flex',
+        flexDirection:
+          'column',
+
+        justifyContent:
+          'space-between',
+
+        minHeight: '110px',
+
+        boxShadow:
+          'inset 0 1px 1px rgba(255,255,255,0.06)',
+      }}
+    >
+      <div
+        style={{
+          width: '40px',
+          height: '40px',
+
+          borderRadius: '14px',
+
+          background:
+            'rgba(255,255,255,0.08)',
+
+          border:
+            '1px solid rgba(255,255,255,0.08)',
+
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        {item.icon}
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: 'white',
+            fontWeight: 800,
+            fontSize: '24px',
+          }}
+        >
+          {item.value}
+        </div>
+
+        <div
+          style={{
+            color:
+              'rgba(255,255,255,0.72)',
+
+            fontSize: '13px',
+            marginTop: '2px',
+          }}
+        >
+          {item.label}
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
   </div>
 
   <div style={{ marginTop: '18px' }}>
     <p style={{ fontWeight: '700', marginBottom: '10px' }}>
       Por severidade
     </p>
-{/* não esquecer de colocar ícones de gravidade aqui depois */}
-    <p>Leve: {statsBySeverity.leve}</p>
-    <p>Média: {statsBySeverity.media}</p>
-    <p>Grave: {statsBySeverity.grave}</p>
+
+
+{/* ícones de severidade */}
+    <div
+  style={{
+    display: 'grid',
+    gridTemplateColumns:
+      'repeat(3, 1fr)',
+    gap: '12px',
+  }}
+>
+  {[
+    {
+      label: 'Leve',
+      value:
+        statsBySeverity.leve,
+      icon: (
+        <ShieldCheck
+          size={18}
+          color="#86efac"
+          strokeWidth={2.2}
+        />
+      ),
+      glow:
+        'rgba(34,197,94,0.10)',
+      border:
+        'rgba(34,197,94,0.12)',
+    },
+    {
+      label: 'Moderada',
+      value:
+        statsBySeverity.media,
+      icon: (
+        <AlertTriangle
+          size={18}
+          color="#fcd34d"
+          strokeWidth={2.2}
+        />
+      ),
+      glow:
+        'rgba(245,158,11,0.10)',
+      border:
+        'rgba(245,158,11,0.12)',
+    },
+    {
+      label: 'Grave',
+      value:
+        statsBySeverity.grave,
+      icon: (
+        <ShieldAlert
+          size={18}
+          color="#fca5a5"
+          strokeWidth={2.2}
+        />
+      ),
+      glow:
+        'rgba(239,68,68,0.10)',
+      border:
+        'rgba(239,68,68,0.12)',
+    },
+  ].map((item) => (
+    <div
+      key={item.label}
+      style={{
+        background:
+          item.glow,
+
+        border:
+          `1px solid ${item.border}`,
+
+        borderRadius:
+          '20px',
+
+        padding: '16px',
+
+        backdropFilter:
+          'blur(12px)',
+
+        WebkitBackdropFilter:
+          'blur(12px)',
+
+        display: 'flex',
+        flexDirection:
+          'column',
+
+        justifyContent:
+          'space-between',
+
+        minHeight: '96px',
+
+        boxShadow:
+          'inset 0 1px 1px rgba(255,255,255,0.05)',
+      }}
+    >
+      <div
+        style={{
+          width: '40px',
+          height: '40px',
+
+          borderRadius: '14px',
+
+          background:
+            'rgba(255,255,255,0.05)',
+
+          border:
+            '1px solid rgba(255,255,255,0.06)',
+
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        {item.icon}
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: 'white',
+            fontWeight: 800,
+            fontSize: '24px',
+          }}
+        >
+          {item.value}
+        </div>
+
+        <div
+          style={{
+            color:
+              'rgba(255,255,255,0.72)',
+
+            fontSize: '13px',
+            marginTop: '2px',
+          }}
+        >
+          {item.label}
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
   </div>
 </div>
           
