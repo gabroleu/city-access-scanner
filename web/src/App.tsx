@@ -1283,35 +1283,50 @@ severity === 1
       {/* aqui é o menu lateral */}
       <div style={{
   position: 'fixed',
-  top: '12px',
-  bottom: '16px',
-  left: menuOpen ? '12px' : '-320px',
 
-  width: '260px',
-  
+  left: '50%',
+  top: '50%',
 
-  background: 'rgba(255,255,255,0.18)',
-  backdropFilter: 'blur(18px)',
-  WebkitBackdropFilter: 'blur(18px)',
+  transform: menuOpen
+    ? 'translate(-50%, -50%) scale(1)'
+    : 'translate(-50%, -50%) scale(0.96)',
 
-  border: '1px solid rgba(255,255,255,0.2)',
+  opacity: menuOpen ? 1 : 0,
+  pointerEvents: menuOpen
+    ? 'auto'
+    : 'none',
 
-  borderRadius: '28px',
+  width: '92%',
+  maxWidth: '420px',
+  height: '78vh',
+
+  background:
+    'linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.10))',
+
+  backdropFilter: 'blur(28px)',
+  WebkitBackdropFilter:
+    'blur(28px)',
+
+  border:
+    '1px solid rgba(255,255,255,0.20)',
+
+  borderRadius: '34px',
 
   boxShadow: `
-    0 8px 32px rgba(0,0,0,0.18),
-    inset 0 1px 1px rgba(255,255,255,0.15)
+    0 20px 80px rgba(0,0,0,0.28),
+    inset 0 1px 1px rgba(255,255,255,0.18)
   `,
 
-  transition: 'all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1)',
+  transition:
+    'all 280ms cubic-bezier(0.22,1,0.36,1)',
 
   zIndex: 3000,
 
-  padding: '24px 18px 80px 18px',
+  padding: '28px 22px',
 
   display: 'flex',
   flexDirection: 'column',
-  gap: '15px',
+  gap: '16px',
 
   overflowY: 'auto',
 }}
@@ -1467,7 +1482,7 @@ severity === 1
     transform: 'translateX(-50%)',
     width: '92%',
     maxWidth: '420px',
-    zIndex: 3000,
+    zIndex: 2000,
   }}
 >
   <div
@@ -1608,7 +1623,7 @@ severity === 1
       </div>
     </div>
 
-    {/* BOTÃO ENVIAR */}
+    {/* BOTÃO ENVIAR DENÚNCIA */}
     <button
       disabled={loading}
       onClick={async () => {
