@@ -1384,42 +1384,201 @@ severity === 1
 
 
         {/* filtro tipo aqui*/}
-        <label>Tipo</label>
-        <select
-          value={filterType}
-          onChange={(e) => setFilterType(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '6px',
-            fontSize: '16px',
-            }}
-          >
-            <option value="all">Todos</option>
-            <option value="buraco_calcada">Buraco</option>
-            <option value="iluminacao">Iluminação</option>
-            <option value="lixo">Lixo</option>
-            <option value="acessibilidade">Acessibilidade</option>
-        </select>
+<div>
+  <p
+    style={{
+      marginBottom: '14px',
+      fontSize: '15px',
+      fontWeight: 700,
+      color: '#fff',
+    }}
+  >
+    Tipo
+  </p>
+
+  <div
+    style={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '10px',
+    }}
+  >
+    {[
+      {
+        label: 'Todos',
+        value: 'all',
+      },
+      {
+        label: 'Buraco',
+        value: 'buraco_calcada',
+      },
+      {
+        label: 'Iluminação',
+        value: 'iluminacao',
+      },
+      {
+        label: 'Lixo',
+        value: 'lixo',
+      },
+      {
+        label: 'Acessibilidade',
+        value: 'acessibilidade',
+      },
+    ].map((item) => (
+      <button
+        key={item.value}
+        onClick={() =>
+          setFilterType(item.value)
+        }
+        style={{
+          border:
+            filterType === item.value
+              ? '1px solid rgba(255,255,255,0.20)'
+              : '1px solid rgba(255,255,255,0.08)',
+
+          background:
+            filterType === item.value
+              ? 'rgba(255,255,255,0.18)'
+              : 'rgba(255,255,255,0.08)',
+
+          backdropFilter:
+            'blur(12px)',
+
+          WebkitBackdropFilter:
+            'blur(12px)',
+
+          borderRadius:
+            '999px',
+
+          padding:
+            '10px 16px',
+
+          color: 'white',
+
+          fontSize: '13px',
+          fontWeight: 600,
+
+          cursor: 'pointer',
+
+          transition:
+            'all 180ms ease',
+
+          boxShadow:
+            filterType === item.value
+              ? '0 8px 24px rgba(255,255,255,0.08)'
+              : 'none',
+        }}
+      >
+        {item.label}
+      </button>
+    ))}
+  </div>
+</div>
 
 
 
         {/* filtro severidade aqui */}
-        <label>Severidade</label>
-        <select
-          value={filterSeverity}
-          onChange={(e) => setFilterSeverity(e.target.value)} //alterei porque tava passando number
-          style={{
-            padding: '8px',
-            borderRadius: '6px',
-            fontSize: '16px',
-            width: '100%',
-            }}
-          >
-            <option value="0">Todas</option>
-            <option value="1">Leve</option>
-            <option value="2">Média</option>
-            <option value="3">Grave</option>
-          </select>
+      
+<div>
+  <p
+    style={{
+      marginBottom: '14px',
+      marginTop: '20px',
+
+      fontSize: '15px',
+      fontWeight: 700,
+
+      color: '#fff',
+    }}
+  >
+    Severidade
+  </p>
+
+  <div
+    style={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '10px',
+    }}
+  >
+    {[
+      {
+        label: 'Todas',
+        value: '0',
+      },
+      {
+        label: 'Leve',
+        value: '1',
+      },
+      {
+        label: 'Moderada',
+        value: '2',
+      },
+      {
+        label: 'Grave',
+        value: '3',
+      },
+    ].map((item) => (
+      <button
+        key={item.value}
+        onClick={() =>
+          setFilterSeverity(
+            item.value
+          )
+        }
+        style={{
+          border:
+            filterSeverity ===
+            item.value
+              ? '1px solid rgba(255,255,255,0.20)'
+              : '1px solid rgba(255,255,255,0.08)',
+
+          background:
+            filterSeverity ===
+            item.value
+              ? item.value === '1'
+                ? 'rgba(34,197,94,0.18)'
+                : item.value === '2'
+                ? 'rgba(245,158,11,0.18)'
+                : item.value === '3'
+                ? 'rgba(239,68,68,0.18)'
+                : 'rgba(255,255,255,0.18)'
+              : 'rgba(255,255,255,0.08)',
+
+          backdropFilter:
+            'blur(12px)',
+
+          WebkitBackdropFilter:
+            'blur(12px)',
+
+          borderRadius:
+            '999px',
+
+          padding:
+            '10px 16px',
+
+          color: 'white',
+
+          fontSize: '13px',
+          fontWeight: 600,
+
+          cursor: 'pointer',
+
+          transition:
+            'all 180ms ease',
+
+          boxShadow:
+            filterSeverity ===
+            item.value
+              ? '0 8px 24px rgba(255,255,255,0.08)'
+              : 'none',
+        }}
+      >
+        {item.label}
+      </button>
+    ))}
+  </div>
+</div>
 
 
 
@@ -1444,9 +1603,57 @@ severity === 1
     backdropFilter: 'blur(10px)',
   }}
 >
-  <p style={{ fontSize: '16px', fontWeight: '700' }}>
-    Total: {total}
-  </p>
+  <div
+  style={{
+    background:
+      'rgba(255,255,255,0.08)',
+
+    border:
+      '1px solid rgba(255,255,255,0.10)',
+
+    borderRadius: '26px',
+
+    padding: '22px',
+
+    backdropFilter:
+      'blur(16px)',
+
+    WebkitBackdropFilter:
+      'blur(16px)',
+
+    boxShadow:
+      'inset 0 1px 1px rgba(255,255,255,0.08)',
+
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}
+>
+  <span
+    style={{
+      fontSize: '42px',
+      fontWeight: 800,
+      color: 'white',
+      lineHeight: 1,
+    }}
+  >
+    {total}
+  </span>
+
+  <span
+    style={{
+      marginTop: '8px',
+      color:
+        'rgba(255,255,255,0.72)',
+
+      fontSize: '14px',
+      fontWeight: 500,
+    }}
+  >
+    problemas encontrados
+  </span>
+</div>
 
   <div style={{ marginTop: '18px' }}>
     <p style={{ fontWeight: '700', marginBottom: '10px' }}>
