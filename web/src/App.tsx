@@ -1298,7 +1298,7 @@ severity === 1
 
   width: '92%',
   maxWidth: '420px',
-  height: '78vh',
+  height: '68vh',
 
   background:
     'linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.10))',
@@ -1310,7 +1310,7 @@ severity === 1
   border:
     '1px solid rgba(255,255,255,0.20)',
 
-  borderRadius: '34px',
+  borderRadius: '28px',
 
   boxShadow: `
     0 20px 80px rgba(0,0,0,0.28),
@@ -1322,11 +1322,11 @@ severity === 1
 
   zIndex: 3000,
 
-  padding: '28px 22px',
+  padding: '18px 16px',
 
   display: 'flex',
   flexDirection: 'column',
-  gap: '16px',
+  gap: '10px',
 
   overflowY: 'auto',
 }}
@@ -1347,7 +1347,7 @@ severity === 1
           <h3
             style={{
               margin: 0,
-              fontSize: '28px',
+              fontSize: '24px',
               fontWeight: '700',
               letterSpacing: '-1px',
             }}
@@ -1362,10 +1362,10 @@ severity === 1
   style={{
     background: 'rgba(255,255,255,0.15)',
     border: '1px solid rgba(255,255,255,0.2)',
-    width: '38px',
-    height: '38px',
-    borderRadius: '12px',
-    fontSize: '22px',
+    width: '34px',
+    height: '34px',
+    borderRadius: '10px',
+    fontSize: '20px',
     fontWeight: '300',
     color: '#444',
     cursor: 'pointer',
@@ -1387,7 +1387,7 @@ severity === 1
 <div>
   <p
     style={{
-      marginBottom: '14px',
+      marginBottom: '10px',
       fontSize: '15px',
       fontWeight: 700,
       color: '#fff',
@@ -1398,9 +1398,9 @@ severity === 1
 
   <div
     style={{
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: '10px',
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: '8px',
     }}
   >
     {[
@@ -1448,17 +1448,18 @@ severity === 1
             'blur(12px)',
 
           borderRadius:
-            '999px',
+            '14px',
 
           padding:
-            '10px 16px',
+            '10px 12px',
 
           color: 'white',
 
-          fontSize: '13px',
-          fontWeight: 600,
+          fontSize: '12px',
+          fontWeight: 700,
 
           cursor: 'pointer',
+          
 
           transition:
             'all 180ms ease',
@@ -1482,8 +1483,8 @@ severity === 1
 <div>
   <p
     style={{
-      marginBottom: '14px',
-      marginTop: '20px',
+      marginBottom: '10px',
+      marginTop: '14px',
 
       fontSize: '15px',
       fontWeight: 700,
@@ -1496,9 +1497,9 @@ severity === 1
 
   <div
     style={{
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: '10px',
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: '8px',
     }}
   >
     {[
@@ -1555,11 +1556,11 @@ severity === 1
             '999px',
 
           padding:
-            '10px 16px',
+            '8px 14px',
 
           color: 'white',
 
-          fontSize: '13px',
+          fontSize: '12px',
           fontWeight: 600,
 
           cursor: 'pointer',
@@ -1586,9 +1587,9 @@ severity === 1
 
 <h3
   style={{
-    marginTop: '10px',
+    marginTop: '1px',
     fontSize: '24px',
-    fontWeight: '700',
+    fontWeight: '700',  
   }}
 >
   Estatísticas
@@ -1611,9 +1612,9 @@ severity === 1
     border:
       '1px solid rgba(255,255,255,0.10)',
 
-    borderRadius: '26px',
+    borderRadius: '20px',
 
-    padding: '22px',
+    padding: '12px',
 
     backdropFilter:
       'blur(16px)',
@@ -1632,7 +1633,7 @@ severity === 1
 >
   <span
     style={{
-      fontSize: '42px',
+      fontSize: '28px',
       fontWeight: 800,
       color: 'white',
       lineHeight: 1,
@@ -1647,7 +1648,7 @@ severity === 1
       color:
         'rgba(255,255,255,0.72)',
 
-      fontSize: '14px',
+      fontSize: '12px',
       fontWeight: 500,
     }}
   >
@@ -1665,7 +1666,7 @@ severity === 1
     display: 'grid',
     gridTemplateColumns:
       '1fr 1fr',
-    gap: '12px',
+    gap: '8px',
   }}
 >
   {[
@@ -1730,9 +1731,9 @@ severity === 1
           '1px solid rgba(255,255,255,0.08)',
 
         borderRadius:
-          '20px',
+          '16px',
 
-        padding: '16px',
+        padding: '10px',
 
         backdropFilter:
           'blur(12px)',
@@ -1747,7 +1748,7 @@ severity === 1
         justifyContent:
           'space-between',
 
-        minHeight: '110px',
+        minHeight: '72px',
 
         boxShadow:
           'inset 0 1px 1px rgba(255,255,255,0.06)',
@@ -1755,8 +1756,8 @@ severity === 1
     >
       <div
         style={{
-          width: '40px',
-          height: '40px',
+          width: '34px',
+          height: '34px',
 
           borderRadius: '14px',
 
@@ -1879,7 +1880,7 @@ severity === 1
         borderRadius:
           '20px',
 
-        padding: '16px',
+        padding: '12px',
 
         backdropFilter:
           'blur(12px)',
@@ -1894,7 +1895,7 @@ severity === 1
         justifyContent:
           'space-between',
 
-        minHeight: '96px',
+        minHeight: '84px',
 
         boxShadow:
           'inset 0 1px 1px rgba(255,255,255,0.05)',
@@ -1902,8 +1903,8 @@ severity === 1
     >
       <div
         style={{
-          width: '40px',
-          height: '40px',
+          width: '34px',
+          height: '34px',
 
           borderRadius: '14px',
 
@@ -1937,7 +1938,7 @@ severity === 1
             color:
               'rgba(255,255,255,0.72)',
 
-            fontSize: '13px',
+            fontSize: '12px',
             marginTop: '2px',
           }}
         >
