@@ -17,17 +17,24 @@ import {
   ChevronDown,
   LocateFixed,
   Loader2,
+  Pencil,
 } from 'lucide-react';
 import {  } from './types/issue';
 
 type Issue = {
-  id: number;
+  id: string;
   type: string;
   description: string;
   latitude: number;
   longitude: number;
   imageUrl: string;
   severity: number;
+
+  deviceId?: string;
+  isOwner?: boolean;
+
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 
@@ -392,8 +399,12 @@ function createUserIcon(rotation: number) {
 
   // buscar dados
   const fetchIssues = () => {
-    console.log('Buscando Issues...')
-    fetch(`${ API_URL}/issues`) //troca      
+    console.log(
+      'Buscando Issues...'
+    )
+    fetch(
+  `${API_URL}/issues?deviceId=${deviceId}`
+)     
     .then(res => res.json())
       .then(data => {
         console.log(data);
@@ -1210,6 +1221,100 @@ severity === 1
       >
         {issue.description}
       </p>
+
+      {issue.isOwner && (
+  <div
+    style={{
+      display: 'flex',
+      gap: '10px',
+      marginTop: '14px',
+    }}
+  >
+    {/* EDITAR */}
+    <button
+      style={{
+        flex: 1,
+
+        border:
+          '1px solid rgba(59,130,246,0.15)',
+
+        background:
+          'rgba(59,130,246,0.10)',
+
+        borderRadius: '14px',
+
+        padding: '12px',
+
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '8px',
+
+        color: '#93c5fd',
+
+        cursor: 'pointer',
+      }}
+    >
+      <Pencil
+        size={16}
+        strokeWidth={2.2}
+      />
+
+      <span
+        style={{
+          fontWeight: 600,
+          fontSize: '13px',
+        }}
+      >
+        Editar
+      </span>
+    </button>
+
+    {/* EXCLUIR */}
+    <button
+      style={{
+        flex: 1,
+
+        border:
+          '1px solid rgba(239,68,68,0.15)',
+
+        background:
+          'rgba(239,68,68,0.10)',
+
+        borderRadius: '14px',
+
+        padding: '12px',
+
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '8px',
+
+        color: '#fca5a5',
+
+        cursor: 'pointer',
+      }}
+    >
+      <Trash2
+        size={16}
+        strokeWidth={2.2}
+      />
+
+      <span
+        style={{
+          fontWeight: 600,
+          fontSize: '13px',
+        }}
+      >
+        Excluir
+      </span>
+    </button>
+  </div>
+)}
+
+
+
+
     </div>
   </div>
 </Popup>
@@ -2176,9 +2281,16 @@ severity === 1
         );
 //envia deviceId junto da denúncia. Agora toda denúncia irá retornar um json com o id da denúncia criada.
         formData.append(
-          'devicedId',
+          'deviceId',
           deviceId
         );
+
+        console.log(
+        'DEVICE ENVIADO:',
+        deviceId
+        );
+
+
 
         setLoading(true);
 
