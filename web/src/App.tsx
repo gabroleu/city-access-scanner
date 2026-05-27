@@ -470,6 +470,92 @@ console.log(
 };
 
 
+const compressImage = (
+  file: File
+): Promise<File> => {
+  return new Promise(
+    (resolve) => {
+      const reader =
+        new FileReader();
+
+      reader.readAsDataURL(
+        file
+      );
+
+      reader.onload = (
+        event
+      ) => {
+        const img =
+          new Image();
+
+        img.src =
+          event.target
+            ?.result as string;
+
+        img.onload = () => {
+          const canvas =
+            document.createElement(
+              'canvas'
+            );
+
+          const ctx =
+            canvas.getContext(
+              '2d'
+            );
+
+          const MAX_WIDTH = 1280;
+
+          const scale =
+            MAX_WIDTH /
+            img.width;
+
+          canvas.width =
+            MAX_WIDTH;
+
+          canvas.height =
+            img.height *
+            scale;
+
+          ctx?.drawImage(
+            img,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+
+          canvas.toBlob(
+            (blob) => {
+              if (!blob) {
+                resolve(file);
+                return;
+              }
+
+              const compressedFile =
+                new File(
+                  [blob],
+                  file.name,
+                  {
+                    type:
+                      'image/jpeg',
+                  }
+                );
+
+              resolve(
+                compressedFile
+              );
+            },
+
+            'image/jpeg',
+            0.72
+          );
+        };
+      };
+    }
+  );
+};
+
+
   useEffect(() => {
     fetchIssues();
   }, []);
@@ -2308,7 +2394,17 @@ severity === 1
           'longitude',
           selectedPosition[1].toString()
         );
-        formData.append('image', selectedImage);
+
+        {/* imagem fica com baixa resolução, conforme for eu tiro */}
+        const compressedImage =
+          await compressImage(
+          selectedImage
+        );
+
+          formData.append(
+          'image',
+          compressedImage
+        );
         formData.append(
           'severity',
           severity.toString()
