@@ -114,5 +114,139 @@ issuesRoutes.get('/', async (req, res) => {
   }
 });
 
+    // excluir denúncia
+issuesRoutes.delete(
+  '/:id',
+  async (req, res) => {
+    try {
+      const { id } =
+        req.params;
+
+      const {
+        deviceId
+      } = req.body;
+
+      const issue =
+        await prisma.issue.findUnique({
+          where: { id },
+        });
+
+      if (!issue) {
+        return res
+          .status(404)
+          .json({
+            error:
+              'Denúncia não encontrada',
+          });
+      }
+
+      if (
+        issue.deviceId !==
+        deviceId
+      ) {
+        return res
+          .status(403)
+          .json({
+            error:
+              'Você não pode excluir essa denúncia',
+          });
+      }
+
+      await prisma.issue.delete({
+        where: { id },
+      });
+
+      return res.json({
+        success: true,
+      });
+
+    } catch (error) {
+      console.error(
+        error
+      );
+
+      return res
+        .status(500)
+        .json({
+          error:
+            'Erro ao excluir denúncia',
+        });
+    }
+  }
+);
+
+
+    // editar denúncia
+issuesRoutes.patch(
+  '/:id',
+  async (req, res) => {
+    try {
+      const { id } =
+        req.params;
+
+      const {
+        type,
+        severity,
+        description,
+        deviceId,
+      } = req.body;
+
+      const issue =
+        await prisma.issue.findUnique({
+          where: { id },
+        });
+
+      if (!issue) {
+        return res
+          .status(404)
+          .json({
+            error:
+              'Denúncia não encontrada',
+          });
+      }
+
+      if (
+        issue.deviceId !==
+        deviceId
+      ) {
+        return res
+          .status(403)
+          .json({
+            error:
+              'Você não pode editar essa denúncia',
+          });
+      }
+
+      const updatedIssue =
+        await prisma.issue.update({
+          where: { id },
+
+          data: {
+            type,
+            severity:
+              Number(severity),
+
+            description,
+          },
+        });
+
+      return res.json(
+        updatedIssue
+      );
+
+    } catch (error) {
+      console.error(
+        error
+      );
+
+      return res
+        .status(500)
+        .json({
+          error:
+            'Erro ao editar denúncia',
+        });
+    }
+  }
+);
 
 export { issuesRoutes };
