@@ -412,6 +412,65 @@ function createUserIcon(rotation: number) {
       });
   };
 
+  const handleDeleteIssue = async (
+  issueId: string
+) => {
+  try {
+    const response =
+      await fetch(
+        `${API_URL}/issues/${issueId}`,
+        {
+          method: 'DELETE',
+
+          headers: {
+            'Content-Type':
+              'application/json',
+          },
+
+          body: JSON.stringify({
+            deviceId,
+          }),
+        }
+      );
+
+    const data =
+      await response.json();
+
+      console.log(
+      'DELETE RESPONSE:',
+        data
+    );
+
+console.log(
+  'STATUS:',
+  response.status
+);
+
+    if (!response.ok) {
+      toast.error(
+        data.error ||
+        'Erro ao excluir'
+      );
+
+      return;
+    }
+
+    toast.success(
+      'Denúncia removida'
+    );
+
+    fetchIssues();
+
+  } catch (error) {
+    console.error(error);
+
+    toast.error(
+      'Erro ao excluir denúncia'
+    );
+  }
+};
+
+
   useEffect(() => {
     fetchIssues();
   }, []);
@@ -1272,6 +1331,9 @@ severity === 1
 
     {/* EXCLUIR */}
     <button
+      onClick={() =>
+        handleDeleteIssue(issue.id)
+        }
       style={{
         flex: 1,
 
@@ -1326,6 +1388,7 @@ severity === 1
 
   <button
   onClick={() => {
+    
     if (!mapRef.current || !position) return;
 
     setFollowUser(true);
