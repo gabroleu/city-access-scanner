@@ -17,7 +17,6 @@ import {
   ChevronDown,
   LocateFixed,
   Loader2,
-  Pencil,
 } from 'lucide-react';
 import {  } from './types/issue';
 
@@ -574,6 +573,16 @@ console.log(
           translalteY(0);
           scale(1);
         }
+
+        @keyframes spin {
+          from {
+          transform: rotate(0deg);
+        }
+
+          to {
+          transform: rotate(360deg);
+        }
+}
       }
 
     }
@@ -1289,45 +1298,7 @@ severity === 1
       marginTop: '14px',
     }}
   >
-    {/* EDITAR */}
-    <button
-      style={{
-        flex: 1,
-
-        border:
-          '1px solid rgba(59,130,246,0.15)',
-
-        background:
-          'rgba(59,130,246,0.10)',
-
-        borderRadius: '14px',
-
-        padding: '12px',
-
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '8px',
-
-        color: '#93c5fd',
-
-        cursor: 'pointer',
-      }}
-    >
-      <Pencil
-        size={16}
-        strokeWidth={2.2}
-      />
-
-      <span
-        style={{
-          fontWeight: 600,
-          fontSize: '13px',
-        }}
-      >
-        Editar
-      </span>
-    </button>
+    {/* futuramente devo colocar um botão de editar as denúncias */}
 
     {/* EXCLUIR */}
     <button
@@ -2387,30 +2358,130 @@ severity === 1
 
         }
       }}
+      
+      
       style={{
-        minWidth: '64px',
-        width: '64px',
-        height: '64px',
+  minWidth: '64px',
+  width: '64px',
 
-        borderRadius: '22px',
+  height: '64px',
 
-        border: 'none',
+  borderRadius: '22px',
 
-        background:
-          'rgba(255,255,255,0.14)',
+  border: 'none',
 
-        color: 'white',
+  background: loading
+    ? 'rgba(59,130,246,0.22)'
+    : 'rgba(255,255,255,0.14)',
 
-        fontSize: '28px',
-        fontWeight: 300,
+  color: 'white',
 
-        cursor: 'pointer',
+  fontSize: '28px',
+  fontWeight: 300,
 
-        transition: '0.2s ease',
+  cursor: loading
+    ? 'not-allowed'
+    : 'pointer',
+
+  opacity: loading
+    ? 0.92
+    : 1,
+
+  pointerEvents: loading
+    ? 'none'
+    : 'auto',
+
+  boxShadow: loading
+    ? '0 0 24px rgba(59,130,246,0.22)'
+    : 'none',
+
+  transition:
+    'all 220ms cubic-bezier(0.22,1,0.36,1)',
+}}
+    
+   >
+  
+  <div
+    style={{
+      position: 'relative',
+
+      width: '28px',
+      height: '28px',
+
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+  >
+    {/* círculo loading */}
+    {loading && (
+  <svg
+    width="42"
+    height="42"
+
+    viewBox="0 0 42 42"
+
+    style={{
+      position: 'absolute',
+
+      inset: '-7px',
+
+      animation:
+        'spin 0.9s linear infinite',
+    }}
+  >
+    <circle
+      cx="21"
+      cy="21"
+      r="18"
+
+      fill="none"
+
+      stroke="rgba(255,255,255,0.14)"
+
+      strokeWidth="2"
+    />
+
+    <circle
+      cx="21"
+      cy="21"
+      r="18"
+
+      fill="none"
+
+      stroke="white"
+
+      strokeWidth="2"
+
+      strokeLinecap="round"
+
+      strokeDasharray="60 120"
+    />
+  </svg>
+)}
+
+    {/* seta */}
+    <span
+      style={{
+        fontSize: '24px',
+
+        transform: loading
+          ? 'scale(0.92)'
+          : 'scale(1)',
+
+        opacity: loading
+          ? 0.92
+          : 1,
+
+        transition:
+          'all 180ms ease',
       }}
     >
-      ➤
-    </button>
+       ➤
+    </span>
+  </div>
+</button>
+
   </div>
 </div>
 
