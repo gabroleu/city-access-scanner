@@ -2063,7 +2063,7 @@ severity === 1
     </p>
 
 
-{/* ícones de severidade */}
+{/* ícones de severidade/gravidade */}
     <div
   style={{
     display: 'grid',
@@ -2578,11 +2578,33 @@ severity === 1
   </div>
 </button>
 
+
   </div>
 </div>
 
 
+<div
+  style={{
+    position: 'fixed',
 
+    left: '8px',
+    bottom: '0px',
+
+    zIndex: 1000,
+
+    fontSize: '12px',
+
+    color: 'rgba(0, 0, 0, 0.43)',
+
+    fontWeight: 500,
+
+    pointerEvents: 'none',
+
+    userSelect: 'none',
+  }}
+>
+  Built by Gabriel Chaves
+</div>
 
     </div>
   );
