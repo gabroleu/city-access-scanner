@@ -63,7 +63,7 @@ function MapController({
   followUser: boolean;
 }) {
   const map = useMap();
-  const lastPositionRef = useRef<[number, number] | null>(null);
+  
   
 
 
@@ -77,22 +77,7 @@ function MapController({
       return;
     }
 
-    if (followUser) {
-  const lastPosition = lastPositionRef.current;
-
-  if (lastPosition) {
-    const distance = map.distance(lastPosition, position);
-
-    if (distance < 10) return;
-  }
-
-  lastPositionRef.current = position;
-
-  map.flyTo(position, map.getZoom(), {
-    animate: true,
-    duration: 1.2,
-  });
-}
+    
   }, [position, map, hasCentered, followUser]);
 
   return null;
@@ -639,28 +624,7 @@ const compressImage = (
 
  <style>
   {`
-    @keyframes shimmer {
-      0% {
-        background-position: 200% 0;
-      }
-
-      100% {
-        background-position: -200% 0;
-      }
-
-      @keyframes popupEnter {
-        0% {          
-          opacity: 0;
-          transform: translateY(0)
-          scale(1);
-        }
-        100% {
-          opacity: 1;
-          translalteY(0);
-          scale(1);
-        }
-
-        @keyframes spin {
+            @keyframes spin {
           from {
           transform: rotate(0deg);
         }
@@ -1156,33 +1120,33 @@ severity === 1
 
         
 
-        <MarkerClusterGroup
-  key={issues.length}
-  iconCreateFunction={(cluster: any) => {
-    const count = cluster.getChildCount();
+    <MarkerClusterGroup
+      //key={issues.length}
+      iconCreateFunction={(cluster: any) => {
+        const count = cluster.getChildCount();
 
-    let background = '';
-    let glow = '';
+        let background = '';
+        let glow = '';
 
-    if (count < 5) {
-      background =
-        'linear-gradient(180deg,#4ade80,#22c55e)'
-      glow = 'rgba(52,211,153,0.22)';
-    } else if (count < 15) {
-      background =
-        'linear-gradient(180deg,#fbbf24,#f59e0b)'
-      glow = 'rgba(251,191,36,0.22)';
-    } else {
-      background =
-        'linear-gradient(180deg,#fb7185,#f43f5e)'
-      glow = 'rgba(248,113,113,0.22)';
-    }
+          if (count < 5) {
+          background =
+          'linear-gradient(180deg,#4ade80,#22c55e)'
+          glow = 'rgba(52,211,153,0.22)';
+          } else if (count < 15) {
+          background =
+          'linear-gradient(180deg,#fbbf24,#f59e0b)'
+          glow = 'rgba(251,191,36,0.22)';
+          } else {
+          background =
+          'linear-gradient(180deg,#fb7185,#f43f5e)'
+          glow = 'rgba(248,113,113,0.22)';
+         }
 //bolinhas do cluster, com contagem e efeito de brilho que varia conforme a quantidade de pontos agrupados, antes 52px
     return L.divIcon({
       html: `
         <div style="
-          width:38px; 
-          height:38px;
+          width:32px; 
+          height:32px;
           border-radius:50%;
 
           display:flex;
@@ -1191,11 +1155,11 @@ severity === 1
 
           background:${background};
 
-          border:2px solid rgba(255,255,255,0.88);
+          border:1.5px solid rgba(255,255,255,0.88);
 
           color:white;
           font-weight:700;
-          font-size:13px;
+          font-size:12px;
 
           box-shadow:
             0 8px 24px rgba(0,0,0,0.18),
@@ -1206,7 +1170,7 @@ severity === 1
         </div>
       `,
       className: '',
-      iconSize: [52, 52],
+      iconSize: [32, 32],
     });
   }}
 >
@@ -1234,7 +1198,7 @@ severity === 1
       backdropFilter: 'blur(18px)',
       boxShadow: '0 20px 40px rgba(0,0,0,0.35), 0 8px 20px rgba(0,0,0,0.18), inset 0 1px 1px rgba(255,255,255,0.05)',
       color: 'white',
-      animation: 'popupEnter 22ms ease',
+      //animation: 'popupEnter 22ms ease',
       transformOrigin: 'bottom center',
     }}
   >
@@ -1248,7 +1212,7 @@ severity === 1
     background: '#111827',
   }}
 >
-  {/* skeleton */}
+  {/* skeleton -- futuramente posso voltar um SVG animado aqui
   <div
     style={{
       position: 'absolute',
@@ -1258,9 +1222,9 @@ severity === 1
       backgroundSize: '200% 100%',
       animation: 'shimmer 1.4s infinite',
     }}
-  />
+  /> */}
 
-  <img
+  {/* <img
   src={issue.imageUrl}
   alt="denúncia"
   onLoad={(e) => {
@@ -1289,7 +1253,21 @@ severity === 1
     transition:
       'opacity 400ms ease, filter 500ms ease, transform 500ms ease',
   }}
+/> */}
+
+
+<img
+  src={issue.imageUrl}
+  alt="denúncia"
+  style={{
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    display: 'block',
+  }}
 />
+
+
 </div>
 
     {/* conteúdo */}
