@@ -1121,7 +1121,7 @@ severity === 1
         
 
     <MarkerClusterGroup
-      key={issues.length}
+      //key={issues.length}
       iconCreateFunction={(cluster: any) => {
         const count = cluster.getChildCount();
 
