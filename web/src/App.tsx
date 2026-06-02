@@ -1120,33 +1120,33 @@ severity === 1
 
         
 
-        <MarkerClusterGroup
-  key={issues.length}
-  iconCreateFunction={(cluster: any) => {
-    const count = cluster.getChildCount();
+    <MarkerClusterGroup
+      key={issues.length}
+      iconCreateFunction={(cluster: any) => {
+        const count = cluster.getChildCount();
 
-    let background = '';
-    let glow = '';
+        let background = '';
+        let glow = '';
 
-    if (count < 5) {
-      background =
-        'linear-gradient(180deg,#4ade80,#22c55e)'
-      glow = 'rgba(52,211,153,0.22)';
-    } else if (count < 15) {
-      background =
-        'linear-gradient(180deg,#fbbf24,#f59e0b)'
-      glow = 'rgba(251,191,36,0.22)';
-    } else {
-      background =
-        'linear-gradient(180deg,#fb7185,#f43f5e)'
-      glow = 'rgba(248,113,113,0.22)';
-    }
+          if (count < 5) {
+          background =
+          'linear-gradient(180deg,#4ade80,#22c55e)'
+          glow = 'rgba(52,211,153,0.22)';
+          } else if (count < 15) {
+          background =
+          'linear-gradient(180deg,#fbbf24,#f59e0b)'
+          glow = 'rgba(251,191,36,0.22)';
+          } else {
+          background =
+          'linear-gradient(180deg,#fb7185,#f43f5e)'
+          glow = 'rgba(248,113,113,0.22)';
+         }
 //bolinhas do cluster, com contagem e efeito de brilho que varia conforme a quantidade de pontos agrupados, antes 52px
     return L.divIcon({
       html: `
         <div style="
-          width:38px; 
-          height:38px;
+          width:32px; 
+          height:32px;
           border-radius:50%;
 
           display:flex;
@@ -1155,11 +1155,11 @@ severity === 1
 
           background:${background};
 
-          border:2px solid rgba(255,255,255,0.88);
+          border:1.5px solid rgba(255,255,255,0.88);
 
           color:white;
           font-weight:700;
-          font-size:13px;
+          font-size:12px;
 
           box-shadow:
             0 8px 24px rgba(0,0,0,0.18),
@@ -1170,7 +1170,7 @@ severity === 1
         </div>
       `,
       className: '',
-      iconSize: [52, 52],
+      iconSize: [32, 32],
     });
   }}
 >
