@@ -1120,60 +1120,7 @@ severity === 1
 
         
 
-    <MarkerClusterGroup
-      //key={issues.length}
-      iconCreateFunction={(cluster: any) => {
-        const count = cluster.getChildCount();
-
-        let background = '';
-        let glow = '';
-
-          if (count < 5) {
-          background =
-          'linear-gradient(180deg,#4ade80,#22c55e)'
-          glow = 'rgba(52,211,153,0.22)';
-          } else if (count < 15) {
-          background =
-          'linear-gradient(180deg,#fbbf24,#f59e0b)'
-          glow = 'rgba(251,191,36,0.22)';
-          } else {
-          background =
-          'linear-gradient(180deg,#fb7185,#f43f5e)'
-          glow = 'rgba(248,113,113,0.22)';
-         }
-//bolinhas do cluster, com contagem e efeito de brilho que varia conforme a quantidade de pontos agrupados, antes 52px
-    return L.divIcon({
-      html: `
-        <div style="
-          width:32px; 
-          height:32px;
-          border-radius:50%;
-
-          display:flex;
-          align-items:center;
-          justify-content:center;
-
-          background:${background};
-
-          border:1.5px solid rgba(255,255,255,0.88);
-
-          color:white;
-          font-weight:700;
-          font-size:12px;
-
-          box-shadow:
-            0 8px 24px rgba(0,0,0,0.18),
-            0 0 12px ${glow},
-            inset 0 1px 1px rgba(255,255,255,0.22);
-        ">
-          ${count}
-        </div>
-      `,
-      className: '',
-      iconSize: [32, 32],
-    });
-  }}
->
+    
 
           {filteredIssues.map(issue => (
             <Marker
@@ -1182,8 +1129,8 @@ severity === 1
               icon={createCustomIcon(getMarkerColor(issue.severity))}
             >
               <Popup
-  maxWidth={280}
-  className="custom-popup"
+                maxWidth={280}
+                className="custom-popup"
 >
 
    
@@ -1417,7 +1364,7 @@ severity === 1
 </Popup>
             </Marker>
           ))}
-        </MarkerClusterGroup>
+        
       </MapContainer>
 
 
