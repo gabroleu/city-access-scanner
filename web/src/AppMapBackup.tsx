@@ -562,7 +562,10 @@ const compressImage = (
         pos.coords.longitude,
       ];
 
-      setPosition(newPosition);
+      //setPosition(newPosition);
+      if (!hasCentered.current) {
+       setPosition(newPosition);
+}
       setZoom(zoomLevel);
 
       if (gpsHeading !== null) {
