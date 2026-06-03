@@ -1,7 +1,7 @@
 import toast, { Toaster } from 'react-hot-toast';
 import { useEffect, useState, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-cluster';
+//import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.heat';
