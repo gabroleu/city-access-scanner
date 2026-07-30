@@ -1,27 +1,32 @@
-// Configura o banco de dados (PostgreSQL)
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-// Gera o cliente que usaremos no código Node.js
-generator client {
-  provider = "prisma-client-js"
-}
-
-// Tabela principal: Denúncias de Acessibilidade
 model Issue {
   id          String   @id @default(uuid())
-  type        String   // Ex: "buraco_calcada", "falta_rampa", "semaforo_mudo"
-  description String?  // Descrição opcional do problema
-  imageUrl    String   // URL da foto armazenada no Cloudinary
-  latitude    Float    // Coordenada GPS
-  longitude   Float    // Coordenada GPS
-  severity    Int      @default(1) // Nível de gravidade (1 a 5)
+  type        String
+  description String?
+  imageUrl    String
+  latitude    Float
+  longitude   Float
+  severity    Int      @default(1)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  deviceId    String?
+  status      String   @default("Aberto")
 
-  deviceId    String?   // ID do dispositivo que fez a denúncia
+  @@map("issues")
+}
 
-  @@map("issues") // Nome da tabela no banco de dados será "issues"
+model Admin {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

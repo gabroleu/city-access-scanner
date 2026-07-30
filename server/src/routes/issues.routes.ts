@@ -188,6 +188,7 @@ issuesRoutes.patch(
         type,
         severity,
         description,
+        status,
         deviceId,
       } = req.body;
 
@@ -227,6 +228,7 @@ issuesRoutes.patch(
               Number(severity),
 
             description,
+            status,
           },
         });
 
@@ -245,6 +247,55 @@ issuesRoutes.patch(
           error:
             'Erro ao editar denúncia',
         });
+    }
+  }
+);
+
+issuesRoutes.patch(
+  '/:id/status',
+  async (req, res) => {
+    try {
+
+
+console.log('==========================');
+console.log('PATCH STATUS CHAMADO');
+console.log('ID:', req.params.id);
+console.log('BODY:', req.body);
+console.log('==========================');
+
+      const { id } = req.params;
+
+      const { status } = req.body;
+
+      const issue =
+        await prisma.issue.findUnique({
+          where: { id },
+        });
+
+
+      if (!issue) {
+        return res.status(404).json({
+          error: 'Denúncia não encontrada',
+        });
+      }
+
+      const updatedIssue =
+        await prisma.issue.update({
+          where: { id },
+
+          data: {
+            status,
+          },
+        });
+
+      return res.json(updatedIssue);
+
+    } catch (error) {
+      console.error(error);
+
+      return res.status(500).json({
+        error: 'Erro ao atualizar status',
+      });
     }
   }
 );
