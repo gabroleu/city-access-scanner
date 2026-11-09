@@ -106,17 +106,6 @@ export function AdminPage() {
 
 const [issues, setIssues] = useState<any[]>([]);
 
-const [currentPage, setCurrentPage] =
-  useState<
-    | 'overview'
-    | 'heatmap'
-    | 'activeIssues'
-    | 'teams'
-    | 'resolvedIssues'
-    | 'reports'
-    | 'settings'
-  >('overview');
-
 useEffect(() => {
   const fetchIssues = async () => {
     try {
@@ -382,53 +371,9 @@ function formatDate(date: string) {
   }
 
   return (
-
-    /* ===========================================================
-   MENU LATERAL - BOTÕES DE NAVEGAÇÃO DO DASHBOARD
-   Cada botão altera a página exibida através do currentPage.
-=========================================================== */
-
-
     <button
-    key={item.label}
-
-    onClick={() => {
-
-      switch (item.label) {
-
-        case 'Visão Geral':
-          setCurrentPage('overview');
-          break;
-
-        case 'Mapa de Calor':
-          setCurrentPage('heatmap');
-          break;
-
-        case 'Denúncias Ativas':
-          setCurrentPage('activeIssues');
-          break;
-
-        case 'Equipes':
-          setCurrentPage('teams');
-          break;
-
-        case 'Ocorrências Resolvidas':
-          setCurrentPage('resolvedIssues');
-          break;
-
-        case 'Relatórios':
-          setCurrentPage('reports');
-          break;
-
-        case 'Configurações':
-          setCurrentPage('settings');
-          break;
-
-      }
-
-    }}
-
-    style={{
+      key={item.label}
+      style={{
         width: '100%',
         height: '48px',
 
